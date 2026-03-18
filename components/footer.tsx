@@ -45,7 +45,7 @@ export function Footer() {
               <img src="/anonymos.avif" alt="Gamblers Anonymous" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
             <Link href="https://gamblingcare.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-white px-2 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-100">
-              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 rounded bg-white px-2 py-1" />
+              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 rounded  px-2 py-1" />
             </Link>
             <Link href="https://problemgambling.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-white px-2 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-100">
               <img src="/ProblemGambling-w.png" alt="ProblemGambling" className="h-8 rounded bg-white px-2 py-1" />
