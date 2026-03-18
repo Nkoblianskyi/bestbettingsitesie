@@ -4,31 +4,18 @@ import { SiteWordmark } from "@/components/site-wordmark"
 
 export function Header() {
   return (
-    <header className="text-white mb-2 border-b border-slate-700/80 bg-slate-900/95 backdrop-blur-sm">
-      <div className="container mx-auto px-3 sm:px-4 max-w-5xl xl:max-w-6xl">
-        <div className="md:hidden flex items-center justify-center py-2.5 min-h-[44px]">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-slate-800/90 flex items-center justify-center border border-slate-600/80 shadow-inner group-hover:border-slate-500 transition-all duration-300">
-              <Image src="/logo.png" alt="bestbettingsitesie" width={26} height={26} className="w-[1.35rem] h-[1.35rem]" />
-            </div>
-            <SiteWordmark variant="header-compact" className="text-[0.9375rem] sm:text-base" />
-          </Link>
-        </div>
-
-        <div className="hidden md:flex items-center justify-center py-3.5 lg:py-4">
-          <Link href="/" className="flex items-center gap-4 lg:gap-5 group">
-            <div className="w-12 h-12 lg:w-[3.65rem] lg:h-[3.65rem] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-slate-600/90 shadow-lg shadow-black/25 group-hover:border-slate-500 transition-all duration-300">
-              <Image
-                src="/logo.png"
-                alt="bestbettingsitesie"
-                width={44}
-                height={44}
-                className="w-9 h-9 lg:w-11 lg:h-11"
-              />
-            </div>
-            <SiteWordmark variant="header-hero" />
-          </Link>
-        </div>
+    <header className="sticky top-0 z-40 mb-3 border-b border-slate-700/60 bg-slate-900/90 backdrop-blur-sm">
+      <div className="container mx-auto max-w-5xl px-4 py-3 xl:max-w-6xl md:py-3.5">
+        <Link
+          href="/"
+          className="flex items-center justify-center gap-3 transition-opacity hover:opacity-90 md:gap-4"
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-800 ring-1 ring-slate-600/80 md:h-10 md:w-10">
+            <Image src="/favicon.ico" alt="" width={32} height={32} className="h-6 w-6 object-contain md:h-7 md:w-7" />
+          </div>
+          <SiteWordmark variant="header-compact" className="md:hidden" />
+          <SiteWordmark variant="header-hero" className="hidden md:inline" />
+        </Link>
       </div>
     </header>
   )

@@ -32,14 +32,22 @@ export function Card({ site, rank }: SiteCardProps) {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
+  const termsText = site.terms ?? ""
+  const welcomeOffer = site.welcomeOffer ?? site.bonus
   useEffect(() => {
     const limit = isMobile ? 72 : 350
-    setShowReadMore(site.terms.length > limit)
-  }, [site.terms, site.name, isMobile])
+    setShowReadMore(termsText.length > limit)
+  }, [termsText, site.name, isMobile])
 
   const formatVotes = (votes: number) => votes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  const filledStars = Math.floor(site.rating)
-  const hasHalfStar = site.rating % 1 !== 0
+  // score 0–10 → зірки 0–5; заповнення з кроком 0.2
+  const starRating = site.score / 2
+  const getStarFill = (index: number) => {
+    const raw = Math.max(0, Math.min(1, starRating - index))
+    return Math.round(raw * 5) / 5
+  }
+  const starOutlineClass = "fill-none stroke-amber-500 stroke-[1.5]"
+  const starFillClass = "fill-amber-500 stroke-amber-500 stroke-0"
 
   const handleTermsClick = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -75,7 +83,7 @@ export function Card({ site, rank }: SiteCardProps) {
             !isTermsExpanded ? (mobile ? "line-clamp-1" : "line-clamp-2") : ""
           }`}
         >
-          {site.terms}
+          {termsText}
         </div>
         {showReadMore && (
           <button
@@ -122,7 +130,7 @@ export function Card({ site, rank }: SiteCardProps) {
             <div className="flex-1 min-w-0 flex flex-col justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-2.5 text-center group-hover/cell:border-slate-400 transition-colors">
               <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-600 mb-1">Offer</p>
               <p className="text-base xl:text-lg font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-              <p className="text-base xl:text-lg font-extrabold text-slate-800 leading-tight">{site.welcomeOffer}</p>
+              <p className="text-base xl:text-lg font-extrabold text-slate-800 leading-tight">{welcomeOffer}</p>
             </div>
 
             <div className="flex-[0_0_18%] flex flex-col items-center justify-center gap-1">
@@ -130,20 +138,24 @@ export function Card({ site, rank }: SiteCardProps) {
                 className="w-[4.25rem] h-[4.25rem] xl:w-[4.75rem] xl:h-[4.75rem] rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center ring-2 ring-slate-200"
                 aria-hidden
               >
-                <span className="text-2xl xl:text-3xl font-black leading-none">{site.rating.toFixed(1)}</span>
+                <span className="text-2xl xl:text-3xl font-black leading-none">{site.score.toFixed(1)}</span>
                 <span className="text-[8px] font-semibold uppercase text-emerald-200">score</span>
               </div>
               <div className="flex gap-0.5 justify-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-3.5 h-3.5 xl:w-4 xl:h-4 ${
-                      i < Math.floor(site.rating) ? "fill-amber-400 text-amber-400" : "text-slate-300"
-                    }`}
-                  />
-                ))}
+                {[...Array(5)].map((_, i) => {
+                  const fill = getStarFill(i)
+                  return (
+                    <span key={i} className="relative inline-block w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0 text-amber-500">
+                      <Star className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starOutlineClass}`} />
+                      <Star
+                        className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starFillClass}`}
+                        style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+                      />
+                    </span>
+                  )
+                })}
               </div>
-              <span className="text-[9px] text-slate-500 font-medium">{formatVotes(site.votes)} votes</span>
+              <span className="text-[9px] text-slate-500 font-medium">{formatVotes(site.reviews)} votes</span>
             </div>
 
             <div className="flex-[0_0_14%] flex flex-col items-center justify-center gap-2 min-w-[7rem]">
@@ -188,27 +200,29 @@ export function Card({ site, rank }: SiteCardProps) {
               <div className="rounded-xl bg-slate-50 border border-slate-200 px-2 py-1.5 text-center">
                 <p className="text-[9px] uppercase text-slate-600 font-bold tracking-wide">Bonus</p>
                 <p className="text-sm font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-                <p className="text-sm font-extrabold text-slate-800">{site.welcomeOffer}</p>
+                <p className="text-sm font-extrabold text-slate-800">{welcomeOffer}</p>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <div className="w-11 h-11 rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center shrink-0">
-                    <span className="text-sm font-black leading-none">{site.rating.toFixed(1)}</span>
+                    <span className="text-sm font-black leading-none">{site.score.toFixed(1)}</span>
                   </div>
                   <div className="flex flex-col">
                     <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-3 h-3 ${
-                            i < filledStars || (i === filledStars && hasHalfStar)
-                              ? "fill-amber-400 text-amber-400"
-                              : "text-slate-300"
-                          }`}
-                        />
-                      ))}
+                      {[...Array(5)].map((_, i) => {
+                        const fill = getStarFill(i)
+                        return (
+                          <span key={i} className="relative inline-block w-3 h-3 shrink-0 text-amber-500">
+                            <Star className={`absolute inset-0 w-3 h-3 ${starOutlineClass}`} />
+                            <Star
+                              className={`absolute inset-0 w-3 h-3 ${starFillClass}`}
+                              style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+                            />
+                          </span>
+                        )
+                      })}
                     </div>
-                    <span className="text-[9px] text-slate-500">{formatVotes(site.votes)}</span>
+                    <span className="text-[9px] text-slate-500">{formatVotes(site.reviews)}</span>
                   </div>
                 </div>
                 <span className="rounded-lg shrink-0 px-5 py-3 text-xs font-bold bg-emerald-700 text-white group-hover/tab:bg-emerald-800 transition-colors">
@@ -262,27 +276,29 @@ export function Card({ site, rank }: SiteCardProps) {
               <div className="grid grid-cols-2 gap-1 w-full shrink-0">
                 <div className="flex flex-col items-center justify-center">
                   <div className="flex gap-0.5 mb-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < filledStars || (i === filledStars && hasHalfStar)
-                            ? "fill-yellow-400 text-yellow-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
+                    {[...Array(5)].map((_, i) => {
+                      const fill = getStarFill(i)
+                      return (
+                        <span key={i} className="relative inline-block w-4 h-4 shrink-0 text-amber-500">
+                          <Star className={`absolute inset-0 w-4 h-4 ${starOutlineClass}`} />
+                          <Star
+                            className={`absolute inset-0 w-4 h-4 ${starFillClass}`}
+                            style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+                          />
+                        </span>
+                      )
+                    })}
                   </div>
                   <div className="text-[12px] text-black text-center leading-tight">
                     Rate it
-                    <br />({formatVotes(site.votes)})
+                    <br />({formatVotes(site.reviews)})
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <div
                     className="text-3xl font-bold leading-none text-slate-800"
                   >
-                    {site.rating.toFixed(1)}
+                    {site.score.toFixed(1)}
                   </div>
                   <div className="text-[10px] text-black font-bold mt-1">Our Score</div>
                 </div>
@@ -293,7 +309,7 @@ export function Card({ site, rank }: SiteCardProps) {
               <div className="text-center flex-1 flex flex-col justify-center min-h-0">
                 <div className="text-[10px] text-black uppercase font-normal mb-1">WELCOME BONUS</div>
                 <div className="text-lg font-bold text-gray-900 leading-tight mb-1 break-words">{site.bonus}</div>
-                <div className="text-lg font-bold text-gray-900 leading-tight break-words">{site.welcomeOffer}</div>
+                <div className="text-lg font-bold text-gray-900 leading-tight break-words">{welcomeOffer}</div>
               </div>
               <div className="flex justify-center mt-2 shrink-0">
                 <Button className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-md text-sm transition-colors w-full">

@@ -25,26 +25,25 @@ function ModalSiteCard({
 
   return (
     <div
-      className={`relative shrink-0 ${w} transition-transform duration-300 ${isCenter ? "z-20 scale-[1.02] xl:scale-105" : "z-10 opacity-95 hover:opacity-100"}`}
+      className={`relative flex flex-col shrink-0 ${w} min-h-0 transition-transform duration-300 ${isCenter ? "z-20 scale-[1.02] xl:scale-105" : "z-10 opacity-95 hover:opacity-100"}`}
     >
       <div
         className={`absolute -inset-0.5 rounded-[2rem] opacity-40 ${isCenter ? "bg-emerald-900/30" : "bg-slate-600/20"}`}
         aria-hidden
       />
 
-      <div
-        className={`relative flex flex-col overflow-hidden rounded-[1.35rem] xl:rounded-[1.75rem] border-2 bg-slate-950 shadow-xl ${
-          isCenter
-            ? "border-emerald-700 ring-1 ring-emerald-800/50"
-            : "border-slate-600/80 ring-1 ring-white/5"
-        }`}
+        <div
+          className={`relative flex flex-col flex-1 min-h-0 overflow-hidden rounded-[1.35rem] xl:rounded-[1.75rem] border-2 bg-slate-950 shadow-xl ${
+            isCenter
+              ? "border-emerald-700 ring-1 ring-emerald-800/50"
+              : "border-slate-600/80 ring-1 ring-white/5"
+          }`}
       >
         <div
           className={`absolute -top-px left-1/2 -translate-x-1/2 flex items-center justify-center gap-1 px-3 py-1 rounded-b-xl font-black text-[10px] xl:text-xs shadow-md whitespace-nowrap ${
             isCenter ? "bg-emerald-700 text-white" : "bg-slate-700 text-white"
           }`}
         >
-          {isCenter && <Sparkles className="w-3 h-3 text-emerald-100 shrink-0" />}
           {rankLabel}
         </div>
         <div className="h-6 xl:h-7" aria-hidden />
@@ -62,9 +61,9 @@ function ModalSiteCard({
         </div>
 
         <div
-          className={`flex flex-col flex-1 text-center px-3 ${compact ? "pb-2 pt-1" : "pb-3 pt-2"} bg-gradient-to-b from-slate-900 via-slate-950 to-emerald-950/50`}
+          className={`flex flex-col flex-1 min-h-0 text-center px-3 ${compact ? "pb-2 pt-1" : "pb-3 pt-2"} bg-gradient-to-b from-slate-900 via-slate-950 to-emerald-950/50`}
         >
-          <div className={`flex justify-center gap-0.5 ${compact ? "mb-1.5" : "mb-2"}`}>
+          <div className={`flex justify-center gap-0.5 shrink-0 ${compact ? "mb-1.5" : "mb-2"}`}>
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
@@ -73,12 +72,12 @@ function ModalSiteCard({
             ))}
           </div>
 
-          <div className={`space-y-0.5 ${compact ? "mb-2" : "mb-3"}`}>
+          <div className={`flex-1 min-h-0 flex flex-col justify-center space-y-0.5 ${compact ? "mb-2" : "mb-3"}`}>
             <p className={`font-extrabold text-white leading-tight ${compact ? "text-sm" : "text-base xl:text-lg"}`}>
               {site?.bonus}
             </p>
             <p className={`font-bold text-emerald-200/95 ${compact ? "text-xs" : "text-sm xl:text-base"}`}>
-              {site?.welcomeOffer}
+              {site?.welcomeOffer ?? site?.bonus}
             </p>
           </div>
 
@@ -96,7 +95,7 @@ function ModalSiteCard({
           <p
             className={`mt-2 text-slate-400 leading-snug line-clamp-4 ${compact ? "text-[9px]" : "text-[10px] xl:text-xs"}`}
           >
-            {site?.terms}
+            {site?.terms ?? ""}
           </p>
         </div>
 
@@ -142,7 +141,7 @@ export function Modal({ bettingSites, casinoSites: _casinoSites }: Top3ModalProp
           </h2>
         </div>
 
-        <div className="hidden lg:flex items-end justify-center gap-2 xl:gap-4 px-2">
+        <div className="hidden lg:flex items-stretch justify-center gap-2 xl:gap-4 px-2">
           {reorderedSites.map((site, index) => (
             <ModalSiteCard
               key={site?.id ?? index}
@@ -154,7 +153,7 @@ export function Modal({ bettingSites, casinoSites: _casinoSites }: Top3ModalProp
           ))}
         </div>
 
-        <div className="hidden md:flex lg:hidden items-end justify-center gap-1.5 sm:gap-2 px-1">
+        <div className="hidden md:flex lg:hidden items-stretch justify-center gap-1.5 sm:gap-2 px-1">
           {reorderedSites.map((site, index) => (
             <ModalSiteCard
               key={site?.id ?? index}

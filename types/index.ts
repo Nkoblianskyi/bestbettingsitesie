@@ -1,17 +1,17 @@
 export interface BettingSite {
-  id: number
+  id: string
   name: string
   logo: string
-  rating: number
+  score: number
   bonus: string
-  description: string
   features: string[]
-  welcomeOffer: string
-  terms: string
-  userRating: number
-  votes: number
+  paymentMethods: string[]
   link: string
-  backgroundImage?: string
+  reviews: number
+  /** Short offer line for card (e.g. "Get €50"); defaults to bonus if omitted */
+  welcomeOffer?: string
+  /** T&C snippet for card footer */
+  terms?: string
 }
 
 export interface Banner {
