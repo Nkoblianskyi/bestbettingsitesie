@@ -44,8 +44,11 @@ export function Footer() {
             <Link href="https://gamblersanonymous.org/" className="inline-block">
               <img src="/anonymos.avif" alt="Gamblers Anonymous" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://egba.org/" className="inline-block">
-              <img src="/egba.png" alt="EGBA" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://gamblingcare.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-white px-2 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-100">
+              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 rounded bg-white px-2 py-1" />
+            </Link>
+            <Link href="https://problemgambling.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-white px-2 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-100">
+              <img src="/ProblemGambling-w.png" alt="ProblemGambling" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
           </div>
         </div>

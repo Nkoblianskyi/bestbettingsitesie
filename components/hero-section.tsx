@@ -2,20 +2,22 @@
 
 import Image from "next/image"
 import { Clock, ShieldCheck } from "lucide-react"
-import { RATINGS_LAST_REVISED_ISO } from "@/data/hero-constants"
 
 interface HeroSectionProps {
   onAdvertiserModalOpen: () => void
   onTermsModalOpen: () => void
 }
 
-function formatRevisedDate(iso: string) {
-  const d = new Date(iso + "T12:00:00")
-  return d.toLocaleDateString("en-IE", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
+function getRatingsRevisedDate() {
+  const d = new Date()
+  return {
+    iso: d.toISOString().slice(0, 10),
+    label: d.toLocaleDateString("en-IE", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }),
+  }
 }
 
 function HeroLegalPill({ className = "" }: { className?: string }) {
@@ -63,7 +65,7 @@ function HeroSecurityPill({ compact }: { compact?: boolean }) {
 }
 
 export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSectionProps) {
-  const revisedLabel = formatRevisedDate(RATINGS_LAST_REVISED_ISO)
+  const { iso: ratingsRevisedIso, label: revisedLabel } = getRatingsRevisedDate()
 
   const ModalTriggers = ({ compact, mobileCalm }: { compact?: boolean; mobileCalm?: boolean }) => (
     <div
@@ -112,7 +114,7 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
                 <span className="text-white">ranked for you</span>
               </h1>
               <p className="mt-3 text-xs text-white/55 font-medium">
-                Ratings last revised: <time dateTime={RATINGS_LAST_REVISED_ISO}>{revisedLabel}</time>
+                Ratings last revised: <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
               </p>
             </div>
             <ModalTriggers />
@@ -151,7 +153,7 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
             Irish bookmakers, <span className="text-white">ranked</span>
           </h1>
           <p className="text-[11px] text-white/50 mt-1.5 mb-3">
-            Ratings revised <time dateTime={RATINGS_LAST_REVISED_ISO}>{revisedLabel}</time>
+            Ratings revised <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
           </p>
           <p className="text-xs text-white/80 max-w-xl mx-auto leading-snug mb-3">
             Side-by-side picks for IE players. Check each brand’s live rules before you bet.
@@ -186,7 +188,7 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
             </h1>
             <p className="text-[10px] font-medium text-white/90 leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]">
               Revised{" "}
-              <time dateTime={RATINGS_LAST_REVISED_ISO}>{revisedLabel}</time>
+              <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
             </p>
           </div>
           <div className="flex justify-center gap-1.5 flex-wrap">
