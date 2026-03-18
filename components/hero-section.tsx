@@ -169,50 +169,47 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
         </div>
       </div>
 
-      {/* Mobile — напівпрозорий чорний шар над фото для читабельності */}
+      {/* Mobile — 50% чорний оверлей; блок без зайвої висоти між рядами */}
       <div
-        className="md:hidden relative overflow-hidden text-white rounded-xl mb-2 w-full min-h-[176px] border border-white/10 shadow-md"
+        className="md:hidden relative overflow-hidden text-white rounded-xl mb-2 w-full border border-white/10 shadow-md"
         style={{
           backgroundImage: "url(/bg-7.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 rounded-xl bg-black/55" aria-hidden />
         <div className="absolute inset-0 rounded-xl bg-black/50" aria-hidden />
-        <div
-          className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/40 via-black/65 to-black/80"
-          aria-hidden
-        />
-        <div className="relative z-10 px-3.5 py-3 flex flex-col gap-2.5 min-h-[176px]">
-          <div className="text-center space-y-1 pt-0.5">
-            <h1 className="font-hero-display text-lg font-extrabold leading-snug text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85)]">
+        <div className="relative z-10 px-3 py-2.5 flex flex-col gap-2">
+          <div className="text-center space-y-0.5">
+            <h1 className="font-hero-display text-lg font-extrabold leading-snug text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.9),0_0_12px_rgba(0,0,0,0.5)]">
               Irish bookies, ranked
             </h1>
-            <p className="text-[10px] font-medium text-white/82 leading-tight">
+            <p className="text-[10px] font-medium text-white/90 leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]">
               Revised{" "}
-              <time dateTime={RATINGS_LAST_REVISED_ISO} className="text-white/95">
-                {revisedLabel}
-              </time>
+              <time dateTime={RATINGS_LAST_REVISED_ISO}>{revisedLabel}</time>
             </p>
           </div>
           <div className="flex justify-center gap-1.5 flex-wrap">
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/45 backdrop-blur-[2px] border border-white/25 px-2 py-1">
-              <Image src="/flag-ireland.svg" alt="" width={16} height={11} className="rounded-sm opacity-95" />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white">IE legal</span>
+            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
+              <Image src="/flag-ireland.svg" alt="" width={16} height={11} className="rounded-sm" />
+              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
+                IE legal
+              </span>
             </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/45 backdrop-blur-[2px] border border-white/25 px-2 py-1">
-              <ShieldCheck className="w-3 h-3 text-white/90 shrink-0" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white">Safe picks</span>
+            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
+              <ShieldCheck className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
+              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
+                Safe picks
+              </span>
             </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/45 backdrop-blur-[2px] border border-white/25 px-2 py-1">
-              <Clock className="w-3 h-3 text-white/90 shrink-0" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white">Fast cash-out</span>
+            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
+              <Clock className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
+              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
+                Fast cash-out
+              </span>
             </div>
           </div>
-          <div className="mt-auto pt-0.5">
-            <ModalTriggers compact mobileCalm />
-          </div>
+          <ModalTriggers compact mobileCalm />
         </div>
       </div>
     </>

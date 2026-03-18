@@ -65,14 +65,14 @@ export function Card({ site, rank }: SiteCardProps) {
 
   const TermsBlock = ({ className = "", mobile = false }: { className?: string; mobile?: boolean }) => (
     <div
-      className={`border-t border-slate-200 bg-slate-100 px-3 py-3 sm:px-4 ${className}`}
+      className={`border-t border-slate-200 bg-slate-100/95 px-2 py-1.5 sm:px-2.5 sm:py-2 ${className}`}
       ref={termsContainerRef}
     >
       <div className="text-center max-w-4xl mx-auto">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Offer terms</p>
+        <p className="text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Terms</p>
         <div
-          className={`text-slate-700 leading-relaxed ${mobile ? "text-[11px] sm:text-xs" : "text-xs sm:text-sm"} ${
-            !isTermsExpanded ? "line-clamp-3 sm:line-clamp-2" : ""
+          className={`text-slate-600 leading-tight ${mobile ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-xs"} ${
+            !isTermsExpanded ? "line-clamp-2" : ""
           }`}
         >
           {site.terms}
@@ -81,9 +81,9 @@ export function Card({ site, rank }: SiteCardProps) {
           <button
             type="button"
             onClick={handleTermsClick}
-            className="text-emerald-800 hover:text-emerald-950 underline mt-2 text-xs font-semibold"
+            className="text-emerald-800 hover:text-emerald-950 underline mt-0.5 text-[10px] sm:text-xs font-semibold"
           >
-            {isTermsExpanded ? "Show less" : "Read full terms"}
+            {isTermsExpanded ? "Less" : "Full terms"}
           </button>
         )}
       </div>
