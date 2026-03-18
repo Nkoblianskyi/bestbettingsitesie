@@ -33,7 +33,7 @@ export function Card({ site, rank }: SiteCardProps) {
   }, [])
 
   useEffect(() => {
-    const limit = isMobile ? 215 : 350
+    const limit = isMobile ? 72 : 350
     setShowReadMore(site.terms.length > limit)
   }, [site.terms, site.name, isMobile])
 
@@ -65,14 +65,14 @@ export function Card({ site, rank }: SiteCardProps) {
 
   const TermsBlock = ({ className = "", mobile = false }: { className?: string; mobile?: boolean }) => (
     <div
-      className={`border-t border-slate-200 bg-slate-100/95 px-2 py-1.5 sm:px-2.5 sm:py-2 ${className}`}
+      className={`border-t border-slate-200 bg-slate-100/95 ${mobile ? "px-2 py-1" : "px-2 py-1.5 sm:px-2.5 sm:py-2"} ${className}`}
       ref={termsContainerRef}
     >
       <div className="text-center max-w-4xl mx-auto">
         <p className="text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Terms</p>
         <div
           className={`text-slate-600 leading-tight ${mobile ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-xs"} ${
-            !isTermsExpanded ? "line-clamp-2" : ""
+            !isTermsExpanded ? (mobile ? "line-clamp-1" : "line-clamp-2") : ""
           }`}
         >
           {site.terms}
@@ -221,22 +221,36 @@ export function Card({ site, rank }: SiteCardProps) {
         <TermsBlock />
       </div>
 
-      {/* ——— Mobile (оригінальний двоколонковий макет) ——— */}
+      {/* ——— Mobile ——— */}
       <div
-        className={`md:hidden ${cardBgColor} rounded-md border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] relative overflow-hidden cursor-pointer`}
+        className={`md:hidden rounded-lg border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] ${cardBgColor} ${
+          shouldShowSpecialBadge ? "mt-5" : "mt-2"
+        }`}
       >
-        <Link href={site.link} target="_blank" rel="noopener noreferrer" className="block">
-          <div className="absolute top-0 left-0 bg-emerald-800 text-white px-2 py-0.5 rounded-tl-md rounded-bl-md text-[10px] font-bold z-20">
-            #{rank}
+        {shouldShowSpecialBadge && (
+          <div className="flex justify-center -mt-3 mb-1 relative z-30 px-2">
+            <span className="max-w-[min(100%,15rem)] truncate rounded-full bg-blue-700 px-3 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow-md ring-2 ring-white">
+              {getSpecialBadgeText()}
+            </span>
+          </div>
+        )}
+
+        <Link
+          href={site.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block relative overflow-hidden rounded-t-lg"
+        >
+          <div
+            className={`absolute left-2.5 z-20 flex size-8 items-center justify-center rounded-full border-2 border-emerald-800 bg-white text-[13px] font-black tabular-nums leading-none text-emerald-900 shadow-sm ring-1 ring-slate-200/80 ${
+              shouldShowSpecialBadge ? "top-2" : "top-2.5"
+            }`}
+            aria-label={`Rank ${rank}`}
+          >
+            {rank}
           </div>
 
-          {shouldShowSpecialBadge && (
-            <div className="absolute top-0 left-8 sm:left-10 bg-blue-600 text-white px-2 py-0.5 rounded-tr-md rounded-br-md text-[10px] font-bold z-20 max-w-[calc(100%-4rem)] truncate">
-              {getSpecialBadgeText()}
-            </div>
-          )}
-
-          <div className="grid grid-cols-[1fr_1fr] h-[175px]">
+          <div className={`grid grid-cols-[1fr_1fr] h-[175px] ${shouldShowSpecialBadge ? "pt-0.5" : ""}`}>
             <div className="bg-[rgb(242,242,242)] flex flex-col justify-between items-center py-2 px-2">
               <div className="flex-1 flex items-center justify-center min-h-0">
                 <img
@@ -290,7 +304,7 @@ export function Card({ site, rank }: SiteCardProps) {
           </div>
         </Link>
 
-        <TermsBlock mobile />
+        <TermsBlock mobile className="rounded-b-lg" />
       </div>
     </div>
   )
