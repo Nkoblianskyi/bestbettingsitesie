@@ -83,7 +83,11 @@ export default function CookiePolicyPage() {
           <section>
             <h2 className="text-xl font-bold text-slate-900">7. Contact</h2>
             <p>
-              Questions about this notice belong alongside our general privacy channel—see the{" "}
+              For questions about this notice, contact us at{" "}
+              <a href="mailto:info@bestbettingsitesie.com" className="text-emerald-600 font-medium hover:underline">
+                info@bestbettingsitesie.com
+              </a>
+              . See also the{" "}
               <Link href="/privacy-policy" className="text-emerald-600 font-medium hover:underline">
                 Privacy Policy
               </Link>

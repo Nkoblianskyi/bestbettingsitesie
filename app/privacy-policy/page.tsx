@@ -106,6 +106,17 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
+            <h2 className="text-xl font-bold text-slate-900">Contact</h2>
+            <p>
+              For data-related queries contact the publisher at{" "}
+              <a href="mailto:info@bestbettingsitesie.com" className="text-emerald-600 font-medium hover:underline">
+                info@bestbettingsitesie.com
+              </a>
+              .
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-xl font-bold text-slate-900">Cookies</h2>
             <p>
               Detailed breakdown:{" "}
