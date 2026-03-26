@@ -55,8 +55,8 @@ export function Footer() {
 
         <div className="mx-auto max-w-xl text-center">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Publisher</p>
-          <p className="font-semibold text-white">Sigmastart04 GmbH</p>
-          <p className="text-sm text-slate-400">Zehmeplatz 14, 15230 Frankfurt, Deutschland</p>
+          <p className="font-semibold text-white">K.C. NTOMATA LIMITED</p>
+          <p className="text-sm text-slate-400">Stylianou Lena, 24 Christiana Court, Flat/Office 202, Strovolos, Nicosia 2019, Cyprus</p>
           <p className="mt-2 text-xs text-slate-500">Editorial comparisons. Gambling by licensed operators only.</p>
         </div>
 

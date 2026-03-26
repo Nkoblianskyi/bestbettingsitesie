@@ -22,13 +22,14 @@ export default function AboutPage() {
           <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-cyan-50 p-6">
             <h2 className="text-xl font-bold text-emerald-900 mb-3">Impressum — publisher</h2>
             <address className="not-italic text-slate-700 space-y-1 text-sm">
-              <p className="font-semibold text-slate-900 text-base">Sigmastart04 GmbH</p>
-              <p>Zehmeplatz 14</p>
-              <p>15230 Frankfurt</p>
-              <p>Deutschland</p>
+              <p className="font-semibold text-slate-900 text-base">K.C. NTOMATA LIMITED</p>
+              <p>Stylianou Lena, 24 Christiana Court, Flat/Office 202</p>
+              <p>Strovolos</p>
+              <p>Nicosia 2019</p>
+              <p>Cyprus</p>
             </address>
             <p className="text-sm text-slate-600 mt-4 leading-relaxed">
-              This website is operated by Sigmastart04 GmbH. We publish informational and comparative content about
+              This website is operated by K.C. NTOMATA LIMITED. We publish informational and comparative content about
               online bookmakers; we do not accept bets or hold player funds.
             </p>
           </section>
