@@ -9,6 +9,7 @@ import { bettingSites } from "../data/mock-data"
 import { HeroSection } from "./hero-section"
 import { MainLayout } from "./main-layout"
 import { SitesList } from "./sites-list"
+import { InfoSections } from "./info-sections"
 
 export default function IrishPage() {
   const [isAdvertiserModalOpen, setIsAdvertiserModalOpen] = useState(false)
@@ -23,6 +24,7 @@ export default function IrishPage() {
             onTermsModalOpen={() => setIsTermsModalOpen(true)}
           />
           <SitesList />
+          <InfoSections />
         </div>
       </MainLayout>
 
