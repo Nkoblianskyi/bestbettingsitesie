@@ -300,51 +300,72 @@ export function Card({ site, rank }: SiteCardProps) {
           rel="noopener noreferrer"
           className="block"
         >
-          <div className="grid grid-cols-[1fr_1fr]">
-            {/* Left: logo + score */}
+          {/* Logo row — white background only */}
+          <div
+            className="flex items-center justify-between px-4 py-3 border-b"
+            style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.2)" }}
+          >
+            <img
+              src={site.logo || "/placeholder.svg"}
+              alt={site.name}
+              className="h-14 w-auto max-w-[55%] object-contain"
+            />
             <div
-              className="flex flex-col justify-between items-center py-3 px-2 border-r"
-              style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.2)" }}
+              className="w-12 h-12 border-2 flex flex-col items-center justify-center shrink-0"
+              style={{ borderColor: GOLD, backgroundColor: NAVY }}
             >
-              <div className="flex items-center justify-center w-full mb-2">
-                <img src={site.logo || "/placeholder.svg"} alt={site.name} className="h-24 w-auto max-w-full object-contain" />
-              </div>
-              <div className="flex flex-col items-center gap-0.5 w-full">
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => {
-                    const fill = getStarFill(i)
-                    return (
-                      <span key={i} className="relative inline-block w-3.5 h-3.5 shrink-0">
-                        <Star className="absolute inset-0 w-3.5 h-3.5" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
-                        <Star className="absolute inset-0 w-3.5 h-3.5" style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }} />
-                      </span>
-                    )
-                  })}
-                </div>
-                <span className="text-[10px] font-sans" style={{ color: "#555" }}>({formatVotes(site.reviews)})</span>
-              </div>
+              <span className="font-serif font-bold text-lg leading-none" style={{ color: GOLD }}>
+                {site.score.toFixed(1)}
+              </span>
+              <span className="text-[7px] font-sans uppercase tracking-wide" style={{ color: "rgba(201,168,76,0.7)" }}>
+                Score
+              </span>
             </div>
+          </div>
 
-            {/* Right: rank + bonus + CTA */}
-            <div className="flex flex-col items-center justify-between py-3 px-3">
-              <div>
-                <p className="text-[9px] font-sans uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.5)" }}>
-                  Welcome Offer
-                </p>
-                <p className="font-serif font-bold text-base leading-tight" style={{ color: IVORY }}>
-                  {site.bonus}
-                </p>
-                <p className="font-sans text-[13px] mt-0.5" style={{ color: "rgba(245,240,232,0.5)" }}>
-                  {welcomeOffer}
-                </p>
-              </div>
-              <div
-                className="text-center py-2.5 mt-2 font-sans font-bold text-sm"
-                style={{ backgroundColor: GOLD, color: NAVY }}
-              >
-                CLAIM OFFER
-              </div>
+          {/* Stars + reviews — on navy background */}
+          <div className="flex items-center justify-center gap-1.5 py-2" style={{ backgroundColor: NAVY_CARD }}>
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, i) => {
+                const fill = getStarFill(i)
+                return (
+                  <span key={i} className="relative inline-block w-3.5 h-3.5 shrink-0">
+                    <Star className="absolute inset-0 w-3.5 h-3.5" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
+                    <Star
+                      className="absolute inset-0 w-3.5 h-3.5"
+                      style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+                    />
+                  </span>
+                )
+              })}
             </div>
+            <span className="text-[10px] font-sans" style={{ color: "rgba(245,240,232,0.45)" }}>
+              ({formatVotes(site.reviews)} votes)
+            </span>
+          </div>
+
+          {/* Bonus + CTA — on navy background */}
+          <div
+            className="flex items-center justify-between gap-3 px-4 py-3 border-t"
+            style={{ borderColor: "rgba(201,168,76,0.12)" }}
+          >
+            <div className="min-w-0">
+              <p className="text-[9px] font-sans uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.55)" }}>
+                Welcome Offer
+              </p>
+              <p className="font-serif font-bold text-base leading-tight text-pretty" style={{ color: IVORY }}>
+                {site.bonus}
+              </p>
+              <p className="font-sans text-[11px] mt-0.5 leading-tight" style={{ color: "rgba(245,240,232,0.45)" }}>
+                {welcomeOffer}
+              </p>
+            </div>
+            <span
+              className="shrink-0 px-4 py-2.5 font-sans font-bold text-xs text-center"
+              style={{ backgroundColor: GOLD, color: NAVY }}
+            >
+              CLAIM
+            </span>
           </div>
         </Link>
         <TermsBlock mobile />
