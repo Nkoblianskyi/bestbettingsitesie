@@ -85,23 +85,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Gold divider */}
-        <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.1)" }} />
-
-        {/* Publisher */}
-        <div className="text-center mb-6">
-          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] mb-2" style={{ color: "rgba(201,168,76,0.45)" }}>
-            Publisher
-          </p>
-          <p className="font-sans font-semibold text-sm" style={{ color: IVORY }}>K.C. NTOMATA LIMITED</p>
-          <p className="font-sans text-xs mt-1" style={{ color: "rgba(245,240,232,0.45)" }}>
-            Stylianou Lena, 24 Christiana Court, Flat/Office 202, Strovolos, Nicosia 2019, Cyprus
-          </p>
-          <p className="font-sans text-xs mt-2" style={{ color: "rgba(245,240,232,0.3)" }}>
-            Editorial comparisons only. Gambling by licensed operators only.
-          </p>
-        </div>
-
         {/* Copyright */}
         <div
           className="border-t pt-5 text-center"

@@ -67,25 +67,6 @@ export default function AboutPage() {
       subtitle="Elite Betting Sites UK is an independent editorial platform dedicated to helping British punters make informed decisions about licensed bookmakers."
     >
       <div className="space-y-0">
-        {/* Publisher box */}
-        <div
-          className="border px-5 py-5 mb-8"
-          style={{ borderColor: "rgba(201,168,76,0.3)", backgroundColor: "rgba(201,168,76,0.05)" }}
-        >
-          <h2 className="font-serif font-bold text-lg mb-3" style={{ color: GOLD }}>
-            Publisher — Impressum
-          </h2>
-          <address className="not-italic font-sans text-sm space-y-0.5" style={{ color: "rgba(245,240,232,0.75)" }}>
-            <p className="font-semibold text-base" style={{ color: IVORY }}>K.C. NTOMATA LIMITED</p>
-            <p>Stylianou Lena, 24 Christiana Court, Flat/Office 202</p>
-            <p>Strovolos, Nicosia 2019, Cyprus</p>
-          </address>
-          <p className="font-sans text-xs mt-3 leading-relaxed" style={{ color: "rgba(245,240,232,0.5)" }}>
-            This website is operated by K.C. NTOMATA LIMITED. We publish informational and comparative content about
-            UK-licensed online bookmakers. We do not accept bets, hold player funds, or operate any gambling services.
-          </p>
-        </div>
-
         <Section title="Why We Exist">
           <p>
             The UK sports betting market is crowded, fast-moving, and — for a newcomer — often opaque. Every operator
