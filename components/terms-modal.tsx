@@ -2,6 +2,11 @@
 
 import { X, ShieldAlert } from "lucide-react"
 
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
+
 interface TermsModalProps {
   isOpen: boolean
   onClose: () => void
@@ -12,69 +17,92 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/75 backdrop-blur-md"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4"
+      style={{ backgroundColor: "rgba(13,27,42,0.88)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="terms-modal-title"
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-amber-950/15 overflow-hidden"
+        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col overflow-hidden border"
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.35)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0">
-          <div className="w-1.5 bg-gradient-to-b from-amber-400 to-orange-600" aria-hidden />
-          <div className="flex-1 bg-gradient-to-br from-amber-50/90 to-orange-50/30 px-4 pt-5 pb-4 sm:px-6 relative">
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white border border-amber-200/80 text-slate-700 hover:bg-amber-50 transition-colors shadow-sm"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-start gap-3 pr-12">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-lg shadow-amber-500/35">
-                <ShieldAlert className="w-6 h-6" strokeWidth={2} />
-              </div>
-              <div>
-                <h2 id="terms-modal-title" className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Site rules &amp; 18+
-                </h2>
-                <p className="text-xs text-amber-800 font-semibold mt-0.5 uppercase tracking-wider">Terms of use</p>
-              </div>
+        {/* Gold top rule */}
+        <div className="h-[2px] shrink-0" style={{ background: GOLD }} />
+
+        {/* Header */}
+        <div className="shrink-0 flex items-start justify-between gap-3 px-5 py-5 sm:px-7 border-b" style={{ borderColor: "rgba(201,168,76,0.15)" }}>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center border" style={{ borderColor: "rgba(201,168,76,0.4)", backgroundColor: "rgba(201,168,76,0.08)" }}>
+              <ShieldAlert className="w-5 h-5" style={{ color: GOLD }} strokeWidth={2} />
+            </div>
+            <div>
+              <h2 id="terms-modal-title" className="font-serif font-bold text-xl" style={{ color: IVORY }}>
+                Site Rules &amp; 18+
+              </h2>
+              <p className="text-[9px] font-sans uppercase tracking-[0.25em] mt-0.5" style={{ color: "rgba(201,168,76,0.6)" }}>
+                Terms of Use
+              </p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-9 w-9 shrink-0 items-center justify-center border transition-opacity hover:opacity-70"
+            style={{ borderColor: "rgba(201,168,76,0.3)", color: "rgba(245,240,232,0.6)" }}
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 space-y-4 text-slate-700 text-sm leading-relaxed">
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-7 space-y-4 font-sans text-sm leading-relaxed" style={{ color: "rgba(245,240,232,0.72)" }}>
           <p>
-            Using <strong>bestbettingsitesie.com</strong> means you accept these rules. They apply on phone, tablet,
-            and desktop.
+            Using <strong style={{ color: IVORY }}>elitebettingsiteslistuk.com</strong> means you accept these rules.
+            They apply across all devices.
           </p>
-          <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4">
-            <p className="font-bold text-slate-900 mb-1">Age</p>
-            <p>You must be 18 or older. This site discusses gambling; minors should leave.</p>
+
+          <div className="border px-4 py-3" style={{ borderColor: "rgba(201,168,76,0.25)", backgroundColor: "rgba(201,168,76,0.05)" }}>
+            <p className="font-semibold mb-1" style={{ color: GOLD }}>Age Restriction</p>
+            <p>You must be 18 years of age or older. This site discusses gambling; persons under 18 must leave immediately.</p>
           </div>
+
           <div>
-            <p className="font-bold text-slate-900 mb-1">Responsible play</p>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Set time and money limits before you bet</li>
-              <li>Never chase losses</li>
-              <li>Ask for help early — GambleAware, GamCare, GA</li>
+            <p className="font-semibold mb-2" style={{ color: IVORY }}>Responsible Gambling</p>
+            <ul className="space-y-1.5 list-none">
+              {[
+                "Set clear time and financial limits before placing any bet.",
+                "Never chase losses — accept that losing is part of gambling.",
+                "Seek help early: GambleAware, GamCare, and Gamblers Anonymous are available.",
+              ].map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span style={{ color: GOLD }}>·</span>
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
+
           <p>
-            We can’t guarantee offers stay accurate; operators change terms anytime. External sites have their own
-            policies—we’re not responsible for them.
+            We cannot guarantee that offers remain accurate at all times; operators revise terms without notice.
+            Third-party sites linked from this page have their own terms — we bear no responsibility for their content.
           </p>
-          <p className="text-xs text-slate-500">
-            No warranty; don’t rely on this site as legal advice. See our full terms page for more.
+          <p className="text-xs" style={{ color: "rgba(245,240,232,0.4)" }}>
+            This site provides no legal or financial advice. Refer to our full Terms page for comprehensive rules.
           </p>
         </div>
 
-        <div className="shrink-0 border-t border-amber-100 bg-gradient-to-r from-amber-600 to-orange-600 text-white px-4 py-3 sm:px-6 sm:rounded-b-3xl">
-          <p className="text-center text-xs sm:text-sm font-bold">18+ · Wagering &amp; T&amp;Cs apply · Play responsibly</p>
+        {/* Footer */}
+        <div
+          className="shrink-0 border-t px-5 py-3 sm:px-7 text-center"
+          style={{ borderColor: "rgba(201,168,76,0.2)", backgroundColor: NAVY }}
+        >
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider" style={{ color: "rgba(201,168,76,0.7)" }}>
+            18+ · Wagering &amp; T&amp;Cs apply · Play responsibly
+          </p>
         </div>
       </div>
     </div>

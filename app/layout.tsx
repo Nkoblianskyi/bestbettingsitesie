@@ -1,25 +1,30 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Lato, Outfit } from "next/font/google"
+import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import { Footer } from "../components/footer"
 import { Header } from "../components/header"
 
-const mulish = Lato({ subsets: ["latin"], weight: ["400", "700"] })
-const outfit = Outfit({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
-  variable: "--font-hero-display",
+  weight: ["400", "600", "700", "800", "900"],
+  variable: "--font-playfair",
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bestbettingsitesie.com"),
-  title: "bestbettingsitesie — Irish bookmaker picks & offers",
+  metadataBase: new URL("https://elitebettingsiteslistuk.com"),
+  title: "Elite Betting Sites UK — Premier Bookmaker Rankings 2025",
   description:
-    "bestbettingsitesie.com compares licensed Irish-facing bookmakers: welcome deals, odds quality, and platform notes in one place.",
+    "elitebettingsiteslistuk.com compares the finest UK-licensed bookmakers: exclusive welcome offers, odds quality, and expert ratings curated for discerning punters.",
   openGraph: {
-    siteName: "bestbettingsitesie",
-    url: "https://bestbettingsitesie.com",
+    siteName: "elitebettingsiteslistuk",
+    url: "https://elitebettingsiteslistuk.com",
   },
 }
 
@@ -29,28 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={outfit.variable}>
-      <body className={mulish.className}>
-        <div
-          className="min-h-screen relative"
-          style={{
-            backgroundImage: "url(/bg-8.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div
-            className="absolute inset-0 z-0 pointer-events-none bg-black/55"
-            aria-hidden
-          />
-          <div className="relative z-10">
-            {/* Header in layout - will show on all pages */}
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </div>
-        </div>
+    <html lang="en" className={`${playfair.variable} ${inter.variable} bg-[#0D1B2A]`}>
+      <body className="font-sans bg-[#0D1B2A] text-[#F5F0E8] antialiased">
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

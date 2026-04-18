@@ -2,6 +2,11 @@
 
 import { X, Megaphone } from "lucide-react"
 
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
+
 interface AdvertiserDisclosureModalProps {
   isOpen: boolean
   onClose: () => void
@@ -12,76 +17,92 @@ export function AdvertiserDisclosureModal({ isOpen, onClose }: AdvertiserDisclos
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/75 backdrop-blur-md"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4"
+      style={{ backgroundColor: "rgba(13,27,42,0.88)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="adv-disclosure-title"
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-cyan-950/20 overflow-hidden sm:mb-0"
+        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col overflow-hidden border"
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.35)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0">
-          <div className="w-1.5 bg-emerald-800" aria-hidden />
-          <div className="flex-1 bg-gradient-to-br from-slate-50 to-slate-100 px-4 pt-5 pb-4 sm:px-6 relative">
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors shadow-sm"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-start gap-3 pr-12">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-800 text-white shadow-md">
-                <Megaphone className="w-6 h-6" strokeWidth={2} />
-              </div>
-              <div>
-                <h2 id="adv-disclosure-title" className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Advertiser disclosure
-                </h2>
-                <p className="text-xs text-emerald-700 font-semibold mt-0.5 uppercase tracking-wider">How we’re funded</p>
-              </div>
+        {/* Gold top rule */}
+        <div className="h-[2px] shrink-0" style={{ background: GOLD }} />
+
+        {/* Header */}
+        <div className="shrink-0 flex items-start justify-between gap-3 px-5 py-5 sm:px-7 border-b" style={{ borderColor: "rgba(201,168,76,0.15)" }}>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center border" style={{ borderColor: "rgba(201,168,76,0.4)", backgroundColor: "rgba(201,168,76,0.08)" }}>
+              <Megaphone className="w-5 h-5" style={{ color: GOLD }} strokeWidth={2} />
+            </div>
+            <div>
+              <h2 id="adv-disclosure-title" className="font-serif font-bold text-xl" style={{ color: IVORY }}>
+                Advertiser Disclosure
+              </h2>
+              <p className="text-[9px] font-sans uppercase tracking-[0.25em] mt-0.5" style={{ color: "rgba(201,168,76,0.6)" }}>
+                How We Are Funded
+              </p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-9 w-9 shrink-0 items-center justify-center border transition-opacity hover:opacity-70"
+            style={{ borderColor: "rgba(201,168,76,0.3)", color: "rgba(245,240,232,0.6)" }}
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 space-y-5 text-slate-700">
-          <section className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Commercial links</h3>
-            <p className="text-sm leading-relaxed">
-              bestbettingsitesie may receive payment when you use outbound links to bookmakers. That income supports
-              hosting and editorial work.
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-7 space-y-5 font-sans text-sm leading-relaxed" style={{ color: "rgba(245,240,232,0.72)" }}>
+          <div className="border px-4 py-4" style={{ borderColor: "rgba(201,168,76,0.2)", backgroundColor: "rgba(201,168,76,0.04)" }}>
+            <h3 className="font-semibold mb-2" style={{ color: IVORY }}>Commercial Links</h3>
+            <p>
+              elitebettingsiteslistuk.com may receive remuneration when you navigate to a bookmaker via our links. That
+              revenue supports our hosting, editorial research, and operational costs.
             </p>
-          </section>
-          <section>
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Editorial independence</h3>
-            <p className="text-sm leading-relaxed mb-2">Fees do not buy placement. We order and score brands by:</p>
-            <ul className="text-sm space-y-1.5 list-none">
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2" style={{ color: IVORY }}>Editorial Independence</h3>
+            <p className="mb-3">Affiliate fees do not influence the order of merit. Rankings are determined by:</p>
+            <ul className="space-y-1.5 list-none">
               {[
-                "Licence fit for Irish customers",
-                "Odds & market depth",
-                "Promo clarity and payout speed",
-                "App stability and support",
+                "Appropriately licensed for UK customers",
+                "Odds competitiveness and market depth",
+                "Promotional transparency and payout speed",
+                "Platform stability and support quality",
               ].map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="text-emerald-700 font-bold">·</span>
+                  <span style={{ color: GOLD }}>·</span>
                   {item}
                 </li>
               ))}
             </ul>
-          </section>
-          <section className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Your check</h3>
-            <p className="text-sm leading-relaxed">
-              Confirm every offer on the operator’s site. Stake only what you can lose.
+          </div>
+
+          <div className="border px-4 py-4" style={{ borderColor: "rgba(201,168,76,0.2)", backgroundColor: "rgba(201,168,76,0.04)" }}>
+            <h3 className="font-semibold mb-2" style={{ color: IVORY }}>Your Responsibility</h3>
+            <p>
+              Always verify the current offer directly on the operator&apos;s own website before depositing. Stake only
+              what you can comfortably afford to lose.
             </p>
-          </section>
+          </div>
         </div>
 
-        <div className="shrink-0 border-t border-emerald-900/50 bg-slate-950 text-white px-4 py-3 sm:px-6 sm:rounded-b-3xl">
-          <p className="text-center text-xs sm:text-sm font-semibold text-emerald-200">18+ · IE audience · Play in control</p>
+        {/* Footer */}
+        <div
+          className="shrink-0 border-t px-5 py-3 sm:px-7 text-center"
+          style={{ borderColor: "rgba(201,168,76,0.2)", backgroundColor: NAVY }}
+        >
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider" style={{ color: "rgba(201,168,76,0.7)" }}>
+            18+ · United Kingdom Audience · Responsible Gambling
+          </p>
         </div>
       </div>
     </div>

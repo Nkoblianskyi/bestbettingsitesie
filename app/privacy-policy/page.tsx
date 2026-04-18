@@ -1,131 +1,176 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import type React from "react"
+
+const GOLD = "#C9A84C"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mb-7">
+      <h2 className="font-serif font-bold text-lg sm:text-xl mb-3" style={{ color: IVORY }}>
+        {title}
+      </h2>
+      <div className="font-sans text-sm leading-relaxed space-y-3" style={{ color: "rgba(245,240,232,0.68)" }}>
+        {children}
+      </div>
+    </section>
+  )
+}
 
 export default function PrivacyPolicyPage() {
+  const reviewed = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <Link href="/">
-        <Button variant="ghost" className="text-white hover:bg-white/20 mb-4">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Home
-        </Button>
+    <div className="mx-auto max-w-4xl px-4 py-10">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-wider mb-8 transition-opacity hover:opacity-75"
+        style={{ color: "rgba(201,168,76,0.7)" }}
+      >
+        <ArrowLeft className="w-3.5 h-3.5" />
+        Return to Rankings
       </Link>
 
-      <div className="bg-white/95 backdrop-blur-sm rounded-xl p-8 shadow-xl max-w-4xl mx-auto border border-gray-100">
-        <h1 className="text-3xl font-bold mb-2 text-slate-900">Privacy Policy — bestbettingsitesie</h1>
-        <p className="text-gray-500 mb-8 text-sm">
-          Last reviewed: {new Date().toLocaleDateString("en-IE", { day: "numeric", month: "long", year: "numeric" })}
-        </p>
+      <div className="border" style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.25)" }}>
+        <div className="h-[2px]" style={{ background: GOLD }} />
 
-        <div className="prose prose-slate max-w-none text-gray-700 space-y-6">
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Who we are</h2>
-            <p>
-              bestbettingsitesie.com publishes editorial comparisons of online bookmakers aimed at users in Ireland.
-              This policy explains what personal data might touch our systems and what we do with it.
+        <div className="px-6 py-8 sm:px-10 sm:py-10">
+          {/* Heading */}
+          <div className="text-center mb-8 pb-6 border-b" style={{ borderColor: "rgba(201,168,76,0.15)" }}>
+            <p className="text-[9px] font-sans font-bold uppercase tracking-[0.35em] mb-2" style={{ color: "rgba(201,168,76,0.55)" }}>
+              elitebettingsiteslistuk.com
             </p>
-          </section>
+            <h1 className="font-serif font-bold text-3xl lg:text-4xl" style={{ color: IVORY }}>
+              Privacy Policy
+            </h1>
+            <p className="font-sans text-xs mt-3" style={{ color: "rgba(245,240,232,0.4)" }}>
+              Last reviewed: {reviewed}
+            </p>
+          </div>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Data we may process</h2>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Technical logs: IP address, browser type, rough location, timestamps.</li>
-              <li>Usage signals: pages opened, scroll depth approximations if analytics is on.</li>
-              <li>Communications: only if you email us—then we keep the thread as long as needed to reply.</li>
+          <Section title="Who We Are">
+            <p>
+              elitebettingsiteslistuk.com publishes independent editorial comparisons of UK-licensed online bookmakers.
+              This policy explains what personal data may come into contact with our systems and how we handle it.
+            </p>
+          </Section>
+
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Data We May Process">
+            <ul className="space-y-1.5 list-disc pl-4">
+              <li>Technical logs: IP address, browser type, approximate location, and access timestamps.</li>
+              <li>Usage signals: pages visited, scroll-depth approximations — only if analytics is enabled.</li>
+              <li>Communications: if you contact us by email, we retain the correspondence as long as necessary to resolve your query.</li>
             </ul>
-            <p className="text-sm text-gray-600 mt-2">
-              We do not run a sportsbook; we do not hold your betting history or bank details.
+            <p className="text-xs mt-2" style={{ color: "rgba(245,240,232,0.45)" }}>
+              We operate no sportsbook; we hold no betting history, payment card data, or account credentials.
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Legal bases (GDPR-style)</h2>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Legal Bases (UK GDPR)">
             <p>
-              Where EU/UK law applies, we rely on legitimate interest to operate and secure the site, and on consent
-              where we ask for it (e.g. non-essential cookies). You may withdraw consent at any time via browser settings
-              or our cookie controls.
+              Where UK law applies, we rely on <strong style={{ color: IVORY }}>legitimate interest</strong> to operate
+              and secure the site, and on <strong style={{ color: IVORY }}>consent</strong> where we request it (e.g.
+              non-essential cookies). You may withdraw consent at any time via your browser settings or our cookie banner.
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Sharing</h2>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Sharing Your Data">
             <p>
               Hosting providers, analytics vendors, and affiliate networks may process data on our behalf under
-              contracts. We do not sell personal data as a product. Lawful requests from authorities will be answered when
-              legally required.
+              contractual safeguards. We do not sell personal data as a product. Lawful requests from public authorities
+              will be honoured when legally required.
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Retention</h2>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Retention">
             <p>
-              Server logs rotate on a short cycle. Analytics aggregates are kept in anonymised form. Email
-              correspondence is deleted once the conversation is resolved unless law requires otherwise.
+              Server logs are rotated on a short cycle. Analytics aggregates are retained in anonymised form. Email
+              correspondence is deleted once the matter is resolved, unless retention is required by law.
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Security</h2>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Security">
             <p>
-              We use HTTPS, access controls on dashboards, and vendors with SOC-style practices. No online system is
-              perfect; report suspected issues promptly.
+              We enforce HTTPS, apply access controls to administrative interfaces, and partner with vendors that
+              maintain SOC-equivalent security practices. No online system is entirely immune to breach — please report
+              any suspected vulnerabilities promptly.
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Your rights</h2>
-            <p>You may request access, correction, deletion, restriction, or portability where applicable.</p>
-            <p className="text-sm">
-              Supervisory authority: Irish residents may contact the Data Protection Commission (www.dataprotection.ie).
-            </p>
-          </section>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Children</h2>
+          <Section title="Your Rights">
             <p>
-              Services are for adults 18+. We do not knowingly collect data from minors. If you believe a child
-              interacted with us, ask for removal.
+              You may request access, rectification, erasure, restriction, or portability of your personal data where
+              applicable under UK GDPR.
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">International transfers</h2>
             <p>
-              Some subprocessors sit outside the EEA. Where that happens, we rely on approved transfer tools (e.g. EU
-              Standard Contractual Clauses) as updated under GDPR.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Changes</h2>
-            <p>
-              Updates will be posted here with a new review date. Continued use after changes means you accept the
-              revised policy unless we need fresh consent.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Contact</h2>
-            <p>
-              For data-related queries contact the publisher at{" "}
-              <a href="mailto:info@bestbettingsitesie.com" className="text-emerald-600 font-medium hover:underline">
-                info@bestbettingsitesie.com
+              UK residents may lodge complaints with the{" "}
+              <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="underline font-medium" style={{ color: GOLD }}>
+                Information Commissioner&apos;s Office (ICO)
               </a>
               .
             </p>
-          </section>
+          </Section>
 
-          <section>
-            <h2 className="text-xl font-bold text-slate-900">Cookies</h2>
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Children">
             <p>
-              Detailed breakdown:{" "}
-              <Link href="/cookie-policy" className="text-emerald-600 font-medium hover:underline">
+              Our services are directed exclusively at adults aged 18 and over. We do not knowingly collect data from
+              minors. If you believe a child has interacted with this site, please contact us and we will arrange
+              removal.
+            </p>
+          </Section>
+
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="International Transfers">
+            <p>
+              Certain subprocessors operate outside the UK/EEA. Where this applies, we rely on appropriate transfer
+              mechanisms such as UK Standard Contractual Clauses as updated under UK GDPR.
+            </p>
+          </Section>
+
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Changes to This Policy">
+            <p>
+              Updates will be published here with a revised review date. Continued use of the site following material
+              changes constitutes acceptance of the revised policy unless fresh consent is required.
+            </p>
+          </Section>
+
+          <div className="h-px my-5" style={{ background: "rgba(201,168,76,0.08)" }} />
+
+          <Section title="Contact">
+            <p>
+              For data-related enquiries, please contact the publisher at{" "}
+              <a href="mailto:info@elitebettingsiteslistuk.com" className="underline font-medium" style={{ color: GOLD }}>
+                info@elitebettingsiteslistuk.com
+              </a>
+              .
+            </p>
+            <p>
+              For cookie-specific information, see our{" "}
+              <Link href="/cookie-policy" className="underline font-medium" style={{ color: GOLD }}>
                 Cookie Policy
               </Link>
               .
             </p>
-          </section>
+          </Section>
         </div>
       </div>
     </div>

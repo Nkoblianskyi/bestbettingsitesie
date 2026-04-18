@@ -1,10 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
 import { Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import type { BettingSite } from "../types"
 import Link from "next/link"
 
@@ -13,23 +11,28 @@ interface SiteCardProps {
   rank: number
 }
 
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const NAVY_LIGHT = "#1C2B3A"
+const IVORY = "#F5F0E8"
+
+const BADGE_LABELS: Record<number, string> = {
+  1: "EDITORS' CHOICE",
+  2: "EXCLUSIVE OFFER",
+  3: "HIGHLY RATED",
+}
+
 export function Card({ site, rank }: SiteCardProps) {
   const [isTermsExpanded, setIsTermsExpanded] = useState(false)
   const [showReadMore, setShowReadMore] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const termsContainerRef = useRef<HTMLDivElement>(null)
-
-  const isEvenRank = rank % 2 === 0
-  const cardBgColor = isEvenRank ? "bg-gray-50" : "bg-white"
-  const cardTint = isEvenRank
-    ? "from-slate-50 via-white to-slate-100/80"
-    : "from-white via-slate-50 to-slate-100/60"
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
   }, [])
 
   const termsText = site.terms ?? ""
@@ -37,17 +40,11 @@ export function Card({ site, rank }: SiteCardProps) {
   useEffect(() => {
     const limit = isMobile ? 72 : 350
     setShowReadMore(termsText.length > limit)
-  }, [termsText, site.name, isMobile])
+  }, [termsText, isMobile])
 
-  const formatVotes = (votes: number) => votes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  // score 0–10 → зірки 0–5; заповнення з кроком 0.2
+  const formatVotes = (v: number) => v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   const starRating = site.score / 2
-  const getStarFill = (index: number) => {
-    const raw = Math.max(0, Math.min(1, starRating - index))
-    return Math.round(raw * 5) / 5
-  }
-  const starOutlineClass = "fill-none stroke-amber-500 stroke-[1.5]"
-  const starFillClass = "fill-amber-500 stroke-amber-500 stroke-0"
+  const getStarFill = (i: number) => Math.round(Math.max(0, Math.min(1, starRating - i)) * 5) / 5
 
   const handleTermsClick = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -55,33 +52,20 @@ export function Card({ site, rank }: SiteCardProps) {
     setIsTermsExpanded(!isTermsExpanded)
   }
 
-  const shouldShowSpecialBadge = rank === 1 || rank === 2 || rank === 4 || rank === 7
-  const getSpecialBadgeText = () => {
-    if (rank === 1) return "TOP BRAND"
-    if (rank === 2) return "EXCLUSIVE OFFER"
-    if (rank === 4) return "TRENDING"
-    if (rank === 7) return "TOP GROWTH"
-    return ""
-  }
-  const getSpecialBadgeTextShort = () => {
-    if (rank === 1) return "TOP BRAND"
-    if (rank === 2) return "EXCLUSIVE"
-    if (rank === 4) return "TRENDING"
-    if (rank === 7) return "GROWTH"
-    return ""
-  }
+  const hasBadge = rank in BADGE_LABELS
 
-  const TermsBlock = ({ className = "", mobile = false }: { className?: string; mobile?: boolean }) => (
+  const TermsBlock = ({ mobile = false }: { mobile?: boolean }) => (
     <div
-      className={`border-t border-slate-200 bg-slate-100/95 ${mobile ? "px-2 py-1" : "px-2 py-1.5 sm:px-2.5 sm:py-2"} ${className}`}
-      ref={termsContainerRef}
+      className="border-t px-3 py-2"
+      style={{ borderColor: "rgba(201,168,76,0.15)", backgroundColor: "rgba(13,27,42,0.6)" }}
     >
       <div className="text-center max-w-4xl mx-auto">
-        <p className="text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Terms</p>
+        <p className="text-[7px] font-sans font-bold uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.5)" }}>
+          Terms &amp; Conditions
+        </p>
         <div
-          className={`text-slate-600 leading-tight ${mobile ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-xs"} ${
-            !isTermsExpanded ? (mobile ? "line-clamp-1" : "line-clamp-2") : ""
-          }`}
+          className={`font-sans leading-tight ${mobile ? "text-[9px]" : "text-[10px]"} ${!isTermsExpanded ? "line-clamp-2" : ""}`}
+          style={{ color: "rgba(245,240,232,0.45)" }}
         >
           {termsText}
         </div>
@@ -89,7 +73,8 @@ export function Card({ site, rank }: SiteCardProps) {
           <button
             type="button"
             onClick={handleTermsClick}
-            className="text-emerald-800 hover:text-emerald-950 underline mt-0.5 text-[10px] sm:text-xs font-semibold"
+            className="underline mt-0.5 text-[9px] font-sans font-semibold"
+            style={{ color: GOLD }}
           >
             {isTermsExpanded ? "Less" : "Full terms"}
           </button>
@@ -101,14 +86,34 @@ export function Card({ site, rank }: SiteCardProps) {
   return (
     <div className="block">
       {/* ——— Desktop ——— */}
-      <div className="hidden lg:block rounded-2xl overflow-hidden shadow-md border border-slate-200 hover:shadow-lg transition-shadow duration-300">
-        <div className={`flex bg-gradient-to-br ${cardTint}`}>
-          <div className="w-[4.5rem] xl:w-[5.25rem] shrink-0 bg-emerald-900 flex flex-col items-center justify-center text-white relative py-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">Rank</span>
-            <span className="text-3xl xl:text-4xl font-black leading-none mt-0.5">{rank}</span>
-            {shouldShowSpecialBadge && (
-              <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[7px] font-bold uppercase tracking-tighter bg-white/20 px-1.5 py-0.5 rounded-md whitespace-nowrap max-w-[4rem] text-center leading-tight">
-                {getSpecialBadgeTextShort()}
+      <div
+        className="hidden lg:block border overflow-hidden transition-all duration-200 hover:border-[#C9A84C]/50"
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.2)" }}
+      >
+        <div className="flex items-stretch">
+          {/* Rank column */}
+          <div
+            className="w-[5rem] xl:w-[5.5rem] shrink-0 flex flex-col items-center justify-center py-4 gap-1 border-r"
+            style={{ backgroundColor: NAVY, borderColor: "rgba(201,168,76,0.2)" }}
+          >
+            <span
+              className="text-[8px] font-sans font-bold uppercase tracking-[0.25em]"
+              style={{ color: "rgba(201,168,76,0.5)" }}
+            >
+              Rank
+            </span>
+            <span
+              className="font-serif font-bold text-3xl xl:text-4xl leading-none"
+              style={{ color: GOLD }}
+            >
+              {rank}
+            </span>
+            {hasBadge && (
+              <span
+                className="text-[7px] font-sans font-bold uppercase tracking-tight text-center leading-tight px-1.5 py-0.5 border mt-1"
+                style={{ borderColor: "rgba(201,168,76,0.4)", color: GOLD }}
+              >
+                {BADGE_LABELS[rank]}
               </span>
             )}
           </div>
@@ -117,52 +122,91 @@ export function Card({ site, rank }: SiteCardProps) {
             href={site.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 min-w-0 flex items-stretch py-3 pl-4 pr-5 gap-4 xl:gap-5 group/cell"
+            className="flex-1 flex items-stretch gap-0 group/card"
           >
-            <div className="flex-[0_0_26%] xl:flex-[0_0_28%] flex items-center justify-center rounded-2xl bg-white border border-slate-200 shadow-inner px-3 py-2 group-hover/cell:border-slate-300 transition-colors">
+            {/* Logo */}
+            <div
+              className="flex-[0_0_22%] xl:flex-[0_0_20%] flex items-center justify-center px-4 py-3 border-r"
+              style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.2)" }}
+            >
               <img
                 src={site.logo || "/placeholder.svg"}
                 alt={site.name}
-                className="max-h-[5.5rem] xl:max-h-[6rem] w-full object-contain"
+                className="max-h-[5rem] xl:max-h-[5.5rem] w-full object-contain"
               />
             </div>
 
-            <div className="flex-1 min-w-0 flex flex-col justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-2.5 text-center group-hover/cell:border-slate-400 transition-colors">
-              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-600 mb-1">Offer</p>
-              <p className="text-base xl:text-lg font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-              <p className="text-base xl:text-lg font-extrabold text-slate-800 leading-tight">{welcomeOffer}</p>
+            {/* Bonus */}
+            <div
+              className="flex-1 flex flex-col justify-center px-5 py-3 border-r text-center"
+              style={{ borderColor: "rgba(201,168,76,0.12)" }}
+            >
+              <p className="text-[9px] font-sans font-bold uppercase tracking-[0.2em] mb-1.5" style={{ color: "rgba(201,168,76,0.6)" }}>
+                Welcome Offer
+              </p>
+              <p className="font-serif font-bold text-xl xl:text-2xl leading-tight" style={{ color: IVORY }}>
+                {site.bonus}
+              </p>
+              <p className="font-sans text-xs mt-1" style={{ color: "rgba(245,240,232,0.55)" }}>
+                {welcomeOffer}
+              </p>
             </div>
 
-            <div className="flex-[0_0_18%] flex flex-col items-center justify-center gap-1">
+            {/* Score */}
+            <div
+              className="flex-[0_0_16%] flex flex-col items-center justify-center gap-1.5 px-4 border-r"
+              style={{ borderColor: "rgba(201,168,76,0.12)" }}
+            >
               <div
-                className="w-[4.25rem] h-[4.25rem] xl:w-[4.75rem] xl:h-[4.75rem] rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center ring-2 ring-slate-200"
-                aria-hidden
+                className="w-16 h-16 xl:w-[4.5rem] xl:h-[4.5rem] border-2 flex flex-col items-center justify-center"
+                style={{ borderColor: GOLD, backgroundColor: "rgba(201,168,76,0.08)" }}
               >
-                <span className="text-2xl xl:text-3xl font-black leading-none">{site.score.toFixed(1)}</span>
-                <span className="text-[8px] font-semibold uppercase text-emerald-200">score</span>
+                <span className="font-serif font-bold text-2xl xl:text-3xl leading-none" style={{ color: GOLD }}>
+                  {site.score.toFixed(1)}
+                </span>
+                <span className="text-[7px] font-sans uppercase tracking-wider mt-0.5" style={{ color: "rgba(201,168,76,0.6)" }}>
+                  Score
+                </span>
               </div>
-              <div className="flex gap-0.5 justify-center">
+              <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => {
                   const fill = getStarFill(i)
                   return (
-                    <span key={i} className="relative inline-block w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0 text-amber-500">
-                      <Star className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starOutlineClass}`} />
+                    <span key={i} className="relative inline-block w-3 h-3 shrink-0">
+                      <Star className="absolute inset-0 w-3 h-3" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
                       <Star
-                        className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starFillClass}`}
-                        style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
+                        className="absolute inset-0 w-3 h-3"
+                        style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
                       />
                     </span>
                   )
                 })}
               </div>
-              <span className="text-[9px] text-slate-500 font-medium">{formatVotes(site.reviews)} votes</span>
+              <span className="text-[8px] font-sans" style={{ color: "rgba(245,240,232,0.4)" }}>
+                {formatVotes(site.reviews)} votes
+              </span>
             </div>
 
-            <div className="flex-[0_0_14%] flex flex-col items-center justify-center gap-2 min-w-[7rem]">
-              <span className="w-full rounded-lg bg-emerald-700 group-hover/cell:bg-emerald-800 text-white font-bold text-xs xl:text-sm py-3.5 xl:py-4 text-center transition-colors">
-                GET BONUS
-              </span>
-              <span className="text-[10px] text-slate-600 font-medium group-hover/cell:underline">{site.name} →</span>
+            {/* CTA */}
+            <div className="flex-[0_0_13%] flex items-center justify-center px-4">
+              <div className="flex flex-col items-center gap-1.5 w-full">
+                <span
+                  className="w-full text-center font-sans font-bold text-xs xl:text-sm py-3.5 transition-all border"
+                  style={{
+                    backgroundColor: GOLD,
+                    color: NAVY,
+                    borderColor: GOLD,
+                  }}
+                >
+                  CLAIM OFFER
+                </span>
+                <span
+                  className="text-[9px] font-sans group-hover/card:underline"
+                  style={{ color: "rgba(201,168,76,0.7)" }}
+                >
+                  {site.name} →
+                </span>
+              </div>
             </div>
           </Link>
         </div>
@@ -171,12 +215,15 @@ export function Card({ site, rank }: SiteCardProps) {
 
       {/* ——— Tablet ——— */}
       <div
-        className={`hidden md:block lg:hidden rounded-2xl overflow-hidden shadow-md border border-slate-200/90 bg-gradient-to-br ${cardTint} hover:shadow-lg transition-shadow`}
+        className="hidden md:block lg:hidden border overflow-hidden transition-all duration-200"
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.2)" }}
       >
-        <div className="flex items-stretch min-h-[148px]">
-          <div className="w-14 shrink-0 bg-emerald-900 flex flex-col items-center justify-center text-white py-2">
-            <span className="text-[8px] opacity-80 uppercase">#</span>
-            <span className="text-2xl font-black">{rank}</span>
+        <div className="flex items-stretch min-h-[140px]">
+          <div
+            className="w-14 shrink-0 flex flex-col items-center justify-center border-r"
+            style={{ backgroundColor: NAVY, borderColor: "rgba(201,168,76,0.2)" }}
+          >
+            <span className="font-serif font-bold text-2xl" style={{ color: GOLD }}>{rank}</span>
           </div>
           <Link
             href={site.link}
@@ -184,49 +231,48 @@ export function Card({ site, rank }: SiteCardProps) {
             rel="noopener noreferrer"
             className="flex-1 flex items-stretch min-w-0 group/tab"
           >
-            <div className="flex-[0_0_32%] flex items-center justify-center p-3 border-r border-slate-200/60 bg-white/50">
-              <img
-                src={site.logo || "/placeholder.svg"}
-                alt={site.name}
-                className="max-h-[4.5rem] w-full object-contain"
-              />
+            <div
+              className="flex-[0_0_30%] flex items-center justify-center p-3 border-r"
+              style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.15)" }}
+            >
+              <img src={site.logo || "/placeholder.svg"} alt={site.name} className="max-h-[4rem] w-full object-contain" />
             </div>
-            <div className="flex-1 min-w-0 flex flex-col justify-center px-3 py-2 gap-2">
-              {shouldShowSpecialBadge && (
-                <span className="self-start text-[9px] font-bold uppercase bg-slate-700 text-white px-2 py-0.5 rounded-full">
-                  {getSpecialBadgeTextShort()}
+            <div className="flex-1 flex flex-col justify-center px-3 py-2 gap-2">
+              {hasBadge && (
+                <span className="self-start text-[8px] font-sans font-bold uppercase border px-2 py-0.5" style={{ borderColor: "rgba(201,168,76,0.4)", color: GOLD }}>
+                  {BADGE_LABELS[rank]}
                 </span>
               )}
-              <div className="rounded-xl bg-slate-50 border border-slate-200 px-2 py-1.5 text-center">
-                <p className="text-[9px] uppercase text-slate-600 font-bold tracking-wide">Bonus</p>
-                <p className="text-sm font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-                <p className="text-sm font-extrabold text-slate-800">{welcomeOffer}</p>
+              <div className="border px-2 py-1.5 text-center" style={{ borderColor: "rgba(201,168,76,0.2)" }}>
+                <p className="text-[8px] font-sans uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.6)" }}>Offer</p>
+                <p className="font-serif font-bold text-base leading-tight" style={{ color: IVORY }}>{site.bonus}</p>
+                <p className="font-sans text-xs" style={{ color: "rgba(245,240,232,0.5)" }}>{welcomeOffer}</p>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-11 h-11 rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center shrink-0">
-                    <span className="text-sm font-black leading-none">{site.score.toFixed(1)}</span>
+                  <div
+                    className="w-10 h-10 border flex flex-col items-center justify-center shrink-0"
+                    style={{ borderColor: GOLD, backgroundColor: "rgba(201,168,76,0.05)" }}
+                  >
+                    <span className="font-serif font-bold text-sm leading-none" style={{ color: GOLD }}>{site.score.toFixed(1)}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => {
-                        const fill = getStarFill(i)
-                        return (
-                          <span key={i} className="relative inline-block w-3 h-3 shrink-0 text-amber-500">
-                            <Star className={`absolute inset-0 w-3 h-3 ${starOutlineClass}`} />
-                            <Star
-                              className={`absolute inset-0 w-3 h-3 ${starFillClass}`}
-                              style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
-                            />
-                          </span>
-                        )
-                      })}
-                    </div>
-                    <span className="text-[9px] text-slate-500">{formatVotes(site.reviews)}</span>
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => {
+                      const fill = getStarFill(i)
+                      return (
+                        <span key={i} className="relative inline-block w-2.5 h-2.5 shrink-0">
+                          <Star className="absolute inset-0 w-2.5 h-2.5" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
+                          <Star className="absolute inset-0 w-2.5 h-2.5" style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }} />
+                        </span>
+                      )
+                    })}
                   </div>
                 </div>
-                <span className="rounded-lg shrink-0 px-5 py-3 text-xs font-bold bg-emerald-700 text-white group-hover/tab:bg-emerald-800 transition-colors">
-                  BONUS
+                <span
+                  className="px-5 py-2.5 text-[10px] font-sans font-bold border transition-colors"
+                  style={{ backgroundColor: GOLD, color: NAVY, borderColor: GOLD }}
+                >
+                  CLAIM
                 </span>
               </div>
             </div>
@@ -237,90 +283,85 @@ export function Card({ site, rank }: SiteCardProps) {
 
       {/* ——— Mobile ——— */}
       <div
-        className={`md:hidden rounded-lg border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] ${cardBgColor} ${
-          shouldShowSpecialBadge ? "mt-5" : "mt-2"
-        }`}
+        className={`md:hidden border overflow-hidden transition-all duration-200 ${hasBadge ? "mt-5" : "mt-2"}`}
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.2)" }}
       >
-        {shouldShowSpecialBadge && (
-          <div className="flex justify-center -mt-3 mb-1 relative z-30 px-2">
-            <span className="max-w-[min(100%,15rem)] truncate rounded-full bg-blue-700 px-3 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow-md ring-2 ring-white">
-              {getSpecialBadgeText()}
-            </span>
+        {hasBadge && (
+          <div
+            className="text-center py-1 text-[8px] font-sans font-bold uppercase tracking-[0.2em] border-b"
+            style={{ backgroundColor: "rgba(201,168,76,0.12)", borderColor: "rgba(201,168,76,0.3)", color: GOLD }}
+          >
+            {BADGE_LABELS[rank]}
           </div>
         )}
-
         <Link
           href={site.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="block relative overflow-hidden rounded-t-lg"
+          className="block"
         >
-          <div
-            className={`absolute left-2.5 z-20 flex size-8 items-center justify-center rounded-full border-2 border-emerald-800 bg-white text-[13px] font-black tabular-nums leading-none text-emerald-900 shadow-sm ring-1 ring-slate-200/80 ${
-              shouldShowSpecialBadge ? "top-2" : "top-2.5"
-            }`}
-            aria-label={`Rank ${rank}`}
-          >
-            {rank}
-          </div>
-
-          <div className={`grid grid-cols-[1fr_1fr] h-[175px] ${shouldShowSpecialBadge ? "pt-0.5" : ""}`}>
-            <div className="bg-[rgb(242,242,242)] flex flex-col justify-between items-center py-2 px-2">
-              <div className="flex-1 flex items-center justify-center min-h-0">
-                <img
-                  src={site.logo || "/placeholder.svg"}
-                  alt={site.name}
-                  className="h-16 w-auto max-w-full object-contain"
-                />
+          <div className="grid grid-cols-[1fr_1fr]">
+            {/* Left: logo + score */}
+            <div
+              className="flex flex-col justify-between items-center py-3 px-2 border-r"
+              style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.2)" }}
+            >
+              <div className="flex items-center justify-center w-full mb-2">
+                <img src={site.logo || "/placeholder.svg"} alt={site.name} className="h-14 w-auto max-w-full object-contain" />
               </div>
-              <div className="grid grid-cols-2 gap-1 w-full shrink-0">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex gap-0.5 mb-1">
-                    {[...Array(5)].map((_, i) => {
-                      const fill = getStarFill(i)
-                      return (
-                        <span key={i} className="relative inline-block w-4 h-4 shrink-0 text-amber-500">
-                          <Star className={`absolute inset-0 w-4 h-4 ${starOutlineClass}`} />
-                          <Star
-                            className={`absolute inset-0 w-4 h-4 ${starFillClass}`}
-                            style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
-                          />
-                        </span>
-                      )
-                    })}
-                  </div>
-                  <div className="text-[12px] text-black text-center leading-tight">
-                    Rate it
-                    <br />({formatVotes(site.reviews)})
-                  </div>
+              <div className="flex flex-col items-center gap-0.5 w-full">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => {
+                    const fill = getStarFill(i)
+                    return (
+                      <span key={i} className="relative inline-block w-3.5 h-3.5 shrink-0">
+                        <Star className="absolute inset-0 w-3.5 h-3.5" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
+                        <Star className="absolute inset-0 w-3.5 h-3.5" style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }} />
+                      </span>
+                    )
+                  })}
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    className="text-3xl font-bold leading-none text-slate-800"
-                  >
-                    {site.score.toFixed(1)}
-                  </div>
-                  <div className="text-[10px] text-black font-bold mt-1">Our Score</div>
-                </div>
+                <span className="text-[10px] font-sans" style={{ color: "#555" }}>({formatVotes(site.reviews)})</span>
               </div>
             </div>
 
-            <div className="flex flex-col justify-between py-2 px-2 min-w-0">
-              <div className="text-center flex-1 flex flex-col justify-center min-h-0">
-                <div className="text-[10px] text-black uppercase font-normal mb-1">WELCOME BONUS</div>
-                <div className="text-lg font-bold text-gray-900 leading-tight mb-1 break-words">{site.bonus}</div>
-                <div className="text-lg font-bold text-gray-900 leading-tight break-words">{welcomeOffer}</div>
+            {/* Right: rank + bonus + CTA */}
+            <div className="flex flex-col justify-between py-3 px-3">
+              <div>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span
+                    className="font-serif font-bold text-lg leading-none"
+                    style={{ color: GOLD }}
+                  >
+                    #{rank}
+                  </span>
+                  <span
+                    className="text-[8px] font-sans uppercase tracking-wider"
+                    style={{ color: "rgba(201,168,76,0.6)" }}
+                  >
+                    Rank
+                  </span>
+                </div>
+                <p className="text-[9px] font-sans uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.5)" }}>
+                  Welcome Offer
+                </p>
+                <p className="font-serif font-bold text-base leading-tight" style={{ color: IVORY }}>
+                  {site.bonus}
+                </p>
+                <p className="font-sans text-[11px] mt-0.5" style={{ color: "rgba(245,240,232,0.5)" }}>
+                  {welcomeOffer}
+                </p>
               </div>
-              <div className="flex justify-center mt-2 shrink-0">
-                <Button className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-md text-sm transition-colors w-full">
-                  GET BONUS
-                </Button>
+              <div
+                className="text-center py-2.5 mt-2 font-sans font-bold text-sm"
+                style={{ backgroundColor: GOLD, color: NAVY }}
+              >
+                CLAIM OFFER
               </div>
             </div>
           </div>
         </Link>
-
-        <TermsBlock mobile className="rounded-b-lg" />
+        <TermsBlock mobile />
       </div>
     </div>
   )

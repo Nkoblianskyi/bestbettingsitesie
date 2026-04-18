@@ -1,10 +1,14 @@
 import Link from "next/link"
-import Image from "next/image"
 import { SiteWordmark } from "@/components/site-wordmark"
+
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
 
 const nav = [
   { href: "/about", label: "About" },
-  { href: "/responsible-gaming", label: "Safer play" },
+  { href: "/responsible-gaming", label: "Responsible Gambling" },
   { href: "/terms", label: "Terms" },
   { href: "/cookie-policy", label: "Cookies" },
   { href: "/privacy-policy", label: "Privacy" },
@@ -12,56 +16,100 @@ const nav = [
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-slate-700/60 bg-slate-900/90 text-white">
-      <div className="container mx-auto max-w-5xl px-4 py-8 xl:max-w-6xl">
-        <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-800 ring-1 ring-slate-600/80">
-            <Image src="/favicon.ico" alt="" width={36} height={36} className="h-9 w-9 object-contain" />
-          </div>
+    <footer
+      className="mt-16 border-t"
+      style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.2)" }}
+    >
+      {/* Top gold rule */}
+      <div className="h-[2px]" style={{ background: GOLD }} />
+
+      <div className="mx-auto max-w-5xl px-4 py-10 xl:max-w-6xl">
+
+        {/* Brand */}
+        <div className="flex flex-col items-center gap-2 mb-8">
+          {/* Crown icon */}
+          <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18 3L23 13L31 7L28.5 21H7.5L5 7L13 13L18 3Z" stroke="#C9A84C" strokeWidth="1.4" fill="none" strokeLinejoin="round"/>
+            <rect x="7" y="22" width="22" height="4" rx="0.5" fill="#C9A84C" opacity="0.6"/>
+          </svg>
           <SiteWordmark variant="footer" />
+          <p className="text-[9px] font-sans uppercase tracking-[0.3em]" style={{ color: "rgba(201,168,76,0.5)" }}>
+            elitebettingsiteslistuk.com
+          </p>
         </div>
 
-        <nav className="mb-8 flex flex-wrap justify-center gap-4 text-sm text-slate-400">
+        {/* Gold divider */}
+        <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.15)" }} />
+
+        {/* Nav */}
+        <nav className="mb-8 flex flex-wrap justify-center gap-6 text-xs font-sans uppercase tracking-widest" aria-label="Footer navigation">
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:text-white transition-colors">
+            <Link
+              key={item.href}
+              href={item.href}
+              className="transition-opacity hover:opacity-100"
+              style={{ color: "rgba(245,240,232,0.5)" }}
+            >
               {item.label}
             </Link>
           ))}
         </nav>
 
+        {/* Gold divider */}
+        <div className="h-px mb-8" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        {/* Responsible Gambling logos */}
         <div className="mb-8 text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">Support</p>
+          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] mb-4" style={{ color: "rgba(201,168,76,0.5)" }}>
+            Responsible Gambling
+          </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <Link href="https://gambleaware.org/" className="inline-block">
+            <Link href="https://gambleaware.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
               <img src="/gamble.webp" alt="GambleAware" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamcare.org/" className="inline-block">
+            <Link href="https://gamcare.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
               <img src="/gamecare.svg" alt="GamCare" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblingtherapy.org/" className="inline-block">
+            <Link href="https://gamblingtherapy.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
               <img src="/gordon.png" alt="Gordon Moody" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblersanonymous.org/" className="inline-block">
+            <Link href="https://gamblersanonymous.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
               <img src="/anonymos.avif" alt="Gamblers Anonymous" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblingcare.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-black px-2 py-1.5 text-xs font-semibold text-slate-800">
-              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 rounded  px-2 py-1" />
+            <Link href="https://gamblingcare.ie/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 bg-black rounded px-2 py-1" />
             </Link>
-            <Link href="https://problemgambling.ie/" target="_blank" rel="noopener noreferrer" className="inline-block rounded bg-white px-2 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-100">
+            <Link href="https://problemgambling.ie/" target="_blank" rel="noopener noreferrer" className="inline-block">
               <img src="/ProblemGambling-w.png" alt="ProblemGambling" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
           </div>
         </div>
 
-        <div className="mx-auto max-w-xl text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Publisher</p>
-          <p className="font-semibold text-white">K.C. NTOMATA LIMITED</p>
-          <p className="text-sm text-slate-400">Stylianou Lena, 24 Christiana Court, Flat/Office 202, Strovolos, Nicosia 2019, Cyprus</p>
-          <p className="mt-2 text-xs text-slate-500">Editorial comparisons. Gambling by licensed operators only.</p>
+        {/* Gold divider */}
+        <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        {/* Publisher */}
+        <div className="text-center mb-6">
+          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] mb-2" style={{ color: "rgba(201,168,76,0.45)" }}>
+            Publisher
+          </p>
+          <p className="font-sans font-semibold text-sm" style={{ color: IVORY }}>K.C. NTOMATA LIMITED</p>
+          <p className="font-sans text-xs mt-1" style={{ color: "rgba(245,240,232,0.45)" }}>
+            Stylianou Lena, 24 Christiana Court, Flat/Office 202, Strovolos, Nicosia 2019, Cyprus
+          </p>
+          <p className="font-sans text-xs mt-2" style={{ color: "rgba(245,240,232,0.3)" }}>
+            Editorial comparisons only. Gambling by licensed operators only.
+          </p>
         </div>
 
-        <div className="mt-8 border-t border-slate-700/80 pt-6 text-center text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} bestbettingsitesie.com · 18+ · Ireland</p>
+        {/* Copyright */}
+        <div
+          className="border-t pt-5 text-center"
+          style={{ borderColor: "rgba(201,168,76,0.12)" }}
+        >
+          <p className="text-[10px] font-sans uppercase tracking-wider" style={{ color: "rgba(201,168,76,0.35)" }}>
+            &copy; {new Date().getFullYear()} elitebettingsiteslistuk.com &nbsp;&middot;&nbsp; 18+ &nbsp;&middot;&nbsp; United Kingdom
+          </p>
         </div>
       </div>
     </footer>

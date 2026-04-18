@@ -1,7 +1,6 @@
 "use client"
 
-import Image from "next/image"
-import { Clock, ShieldCheck } from "lucide-react"
+import { ShieldCheck, Award, Clock } from "lucide-react"
 
 interface HeroSectionProps {
   onAdvertiserModalOpen: () => void
@@ -12,7 +11,7 @@ function getRatingsRevisedDate() {
   const d = new Date()
   return {
     iso: d.toISOString().slice(0, 10),
-    label: d.toLocaleDateString("en-IE", {
+    label: d.toLocaleDateString("en-GB", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -20,200 +19,210 @@ function getRatingsRevisedDate() {
   }
 }
 
-function HeroLegalPill({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`inline-flex items-center gap-2 rounded-full bg-white/12 border border-white/20 px-3 py-1.5 backdrop-blur-sm ${className}`}
-    >
-      <Image src="/flag-ireland.svg" alt="" width={22} height={15} className="rounded-sm shadow-sm shrink-0" />
-      <span className="font-semibold text-white/95 tracking-wide">Licensed for Ireland</span>
-    </div>
-  )
-}
-
-function HeroSecurityPill({ compact }: { compact?: boolean }) {
-  return (
-    <div
-      className={`inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1.5 ${
-        compact ? "py-1 px-2.5" : ""
-      }`}
-    >
-      <div
-        className={`flex shrink-0 items-center justify-center rounded-lg bg-emerald-900/50 border border-emerald-700/50 ${
-          compact ? "h-6 w-6" : "h-7 w-7"
-        }`}
-      >
-        <ShieldCheck
-          className={`text-emerald-200 ${compact ? "h-3.5 w-3.5" : "h-4 w-4"}`}
-          strokeWidth={2.5}
-          aria-hidden
-        />
-      </div>
-      <span className={`font-semibold text-white/95 ${compact ? "text-[10px] leading-tight" : "text-xs"}`}>
-        {compact ? (
-          <>
-            Secure
-            <br />
-            listings
-          </>
-        ) : (
-          "Secure & vetted listings"
-        )}
-      </span>
-    </div>
-  )
-}
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
 
 export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSectionProps) {
-  const { iso: ratingsRevisedIso, label: revisedLabel } = getRatingsRevisedDate()
+  const { iso, label } = getRatingsRevisedDate()
 
-  const ModalTriggers = ({ compact, mobileCalm }: { compact?: boolean; mobileCalm?: boolean }) => (
-    <div
-      className={`flex flex-wrap items-center justify-center gap-2 ${compact ? "mt-1" : "mt-2 md:mt-3"}`}
-    >
-      <button
-        type="button"
-        onClick={onAdvertiserModalOpen}
-        className={
-          mobileCalm
-            ? "inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/35 backdrop-blur-sm px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white shadow-sm"
-            : "inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wide text-white/90 hover:bg-white/15 transition-colors"
-        }
-      >
-        <span className="hidden sm:inline">ℹ</span>
-        Advertiser disclosure
-      </button>
-      <button
-        type="button"
-        onClick={onTermsModalOpen}
-        className={
-          mobileCalm
-            ? "inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/35 backdrop-blur-sm px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white shadow-sm"
-            : "inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wide text-white/90 hover:bg-white/12 transition-colors"
-        }
-      >
-        18+ site rules
-      </button>
-    </div>
-  )
+  const pillClass =
+    "inline-flex items-center gap-1.5 border px-3 py-1 text-[10px] font-sans font-semibold uppercase tracking-[0.18em] cursor-pointer transition-colors"
 
   return (
-    <>
-      {/* Desktop */}
-      <div
-        className="hidden lg:block relative overflow-hidden text-white mb-3 w-full min-h-[280px] lg:min-h-[300px] rounded-2xl border border-white/10"
-        style={{ background: "rgba(0, 0, 0, 0.70)" }}
-      >
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-6 xl:gap-10 px-6 xl:px-10 py-6 xl:py-8 items-center">
-          <div className="text-left space-y-4">
-            <div>
-              <p className="text-emerald-200/80 text-xs font-bold uppercase tracking-[0.25em] mb-2">bestbettingsitesie</p>
-              <h1 className="font-hero-display text-3xl xl:text-[2.35rem] 2xl:text-[2.6rem] font-extrabold leading-[1.1] tracking-tight">
-                Irish bookmakers,
-                <br />
-                <span className="text-white">ranked for you</span>
-              </h1>
-              <p className="mt-3 text-xs text-white/55 font-medium">
-                Ratings last revised: <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
-              </p>
+    <div
+      className="w-full mb-4 border"
+      style={{
+        backgroundColor: NAVY_CARD,
+        borderColor: "rgba(201,168,76,0.3)",
+      }}
+    >
+      {/* Gold top rule */}
+      <div className="h-[2px]" style={{ background: GOLD }} />
+
+      <div className="px-5 py-6 md:px-8 md:py-8 lg:px-12 lg:py-10">
+        {/* Desktop layout */}
+        <div className="hidden lg:grid lg:grid-cols-[1fr_1px_1fr] gap-0 items-center">
+          {/* Left col */}
+          <div className="pr-10 space-y-4">
+            <p
+              className="text-[10px] font-sans font-bold uppercase tracking-[0.35em]"
+              style={{ color: GOLD }}
+            >
+              elitebettingsiteslistuk.com
+            </p>
+
+            <h1
+              className="font-serif font-bold leading-[1.08] tracking-tight text-[2.1rem] xl:text-[2.5rem]"
+              style={{ color: IVORY }}
+            >
+              Britain&apos;s Finest
+              <br />
+              <span style={{ color: GOLD }}>Betting Sites</span>
+              <br />
+              Ranked &amp; Rated
+            </h1>
+
+            <p className="text-[11px] font-sans" style={{ color: "rgba(245,240,232,0.5)" }}>
+              Last revised:{" "}
+              <time dateTime={iso} style={{ color: "rgba(245,240,232,0.7)" }}>
+                {label}
+              </time>
+            </p>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              <button
+                type="button"
+                onClick={onAdvertiserModalOpen}
+                className={pillClass}
+                style={{
+                  borderColor: "rgba(201,168,76,0.4)",
+                  color: "rgba(245,240,232,0.7)",
+                }}
+              >
+                Advertiser Disclosure
+              </button>
+              <button
+                type="button"
+                onClick={onTermsModalOpen}
+                className={pillClass}
+                style={{
+                  borderColor: "rgba(201,168,76,0.4)",
+                  color: "rgba(245,240,232,0.7)",
+                }}
+              >
+                18+ Rules
+              </button>
             </div>
-            <ModalTriggers />
           </div>
 
-          <div className="space-y-4 text-left border-l border-white/10 pl-6 xl:pl-8">
-            <p className="text-sm xl:text-[0.95rem] text-white/88 leading-relaxed">
-              We line up Ireland-facing operators so you can judge welcome value, app quality, and cash-out speed in one
-              glance—without wading through ten homepages.
+          {/* Vertical gold divider */}
+          <div className="self-stretch" style={{ width: "1px", background: "rgba(201,168,76,0.25)" }} />
+
+          {/* Right col */}
+          <div className="pl-10 space-y-5">
+            <p
+              className="font-sans text-sm leading-relaxed"
+              style={{ color: "rgba(245,240,232,0.8)" }}
+            >
+              We compare the United Kingdom&apos;s premier licensed bookmakers so you can evaluate welcome value,
+              platform quality, and withdrawal speed — all on a single page, without the noise.
             </p>
-            <p className="text-xs xl:text-sm text-white/65 leading-relaxed">
-              Bonuses shift weekly; figures here are a snapshot. Always read the bookmaker’s own T&amp;Cs before you
-              deposit. 18+ only.
+            <p
+              className="font-sans text-xs leading-relaxed"
+              style={{ color: "rgba(245,240,232,0.5)" }}
+            >
+              Bonus figures are a current snapshot. Always consult the operator&apos;s own terms before depositing.
+              18+ only. Gamble responsibly.
             </p>
+
+            {/* Trust badges */}
             <div className="flex flex-wrap gap-3 pt-1">
-              <HeroLegalPill />
-              <HeroSecurityPill />
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1.5">
-                <Clock className="w-4 h-4 text-emerald-200/90 shrink-0" />
-                <span className="text-xs font-semibold text-white/90">Fast withdrawals</span>
+              <div
+                className="inline-flex items-center gap-2 border px-3 py-2"
+                style={{ borderColor: "rgba(201,168,76,0.35)", backgroundColor: "rgba(201,168,76,0.05)" }}
+              >
+                <img src="/flag-uk.svg" alt="" width={22} height={14} className="shrink-0" aria-hidden />
+                <span className="text-[10px] font-sans font-semibold uppercase tracking-wider" style={{ color: GOLD }}>
+                  UK Licensed
+                </span>
+              </div>
+              <div
+                className="inline-flex items-center gap-2 border px-3 py-2"
+                style={{ borderColor: "rgba(201,168,76,0.35)", backgroundColor: "rgba(201,168,76,0.05)" }}
+              >
+                <ShieldCheck className="w-3.5 h-3.5 shrink-0" style={{ color: GOLD }} />
+                <span className="text-[10px] font-sans font-semibold uppercase tracking-wider" style={{ color: GOLD }}>
+                  Vetted Operators
+                </span>
+              </div>
+              <div
+                className="inline-flex items-center gap-2 border px-3 py-2"
+                style={{ borderColor: "rgba(201,168,76,0.35)", backgroundColor: "rgba(201,168,76,0.05)" }}
+              >
+                <Clock className="w-3.5 h-3.5 shrink-0" style={{ color: GOLD }} />
+                <span className="text-[10px] font-sans font-semibold uppercase tracking-wider" style={{ color: GOLD }}>
+                  Fast Withdrawals
+                </span>
               </div>
             </div>
-            <p className="text-[11px] text-white/45 pt-1">Play responsibly. Wagering and operator T&amp;Cs apply.</p>
-          </div>
-        </div>
-      </div>
 
-      {/* Tablet */}
-      <div
-        className="hidden md:block lg:hidden relative overflow-hidden text-white mb-2 w-full rounded-xl border border-white/10"
-        style={{ background: "rgba(0, 0, 0, 0.70)" }}
-      >
-        <div className="px-5 py-4 text-center">
-          <p className="text-emerald-200/80 text-[10px] font-bold uppercase tracking-widest mb-1">bestbettingsitesie</p>
-          <h1 className="font-hero-display text-2xl md:text-3xl font-extrabold leading-tight">
-            Irish bookmakers, <span className="text-white">ranked</span>
-          </h1>
-          <p className="text-[11px] text-white/50 mt-1.5 mb-3">
-            Ratings revised <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
-          </p>
-          <p className="text-xs text-white/80 max-w-xl mx-auto leading-snug mb-3">
-            Side-by-side picks for IE players. Check each brand’s live rules before you bet.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2 mb-3 items-center">
-            <HeroLegalPill className="py-1" />
-            <HeroSecurityPill compact />
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 border border-white/15">
-              <Clock className="w-3.5 h-3.5 text-emerald-200/90" />
-              <span className="text-[11px] font-semibold">Quick payouts</span>
-            </div>
-          </div>
-          <ModalTriggers />
-          <p className="text-[10px] text-white/40 mt-2">18+ · Responsible play</p>
-        </div>
-      </div>
-
-      {/* Mobile — 50% чорний оверлей; блок без зайвої висоти між рядами */}
-      <div
-        className="md:hidden relative overflow-hidden text-white rounded-xl mb-2 w-full border border-white/10 shadow-md"
-        style={{
-          backgroundImage: "url(/bg-7.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 rounded-xl bg-black/50" aria-hidden />
-        <div className="relative z-10 px-3 py-2.5 flex flex-col gap-2">
-          <div className="text-center space-y-0.5">
-            <h1 className="font-hero-display text-lg font-extrabold leading-snug text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.9),0_0_12px_rgba(0,0,0,0.5)]">
-              Irish bookies, ranked
-            </h1>
-            <p className="text-[10px] font-medium text-white/90 leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]">
-              Revised{" "}
-              <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
+            <p className="text-[10px] font-sans" style={{ color: "rgba(245,240,232,0.3)" }}>
+              Wagering and T&amp;Cs apply on all listed operators.
             </p>
           </div>
-          <div className="flex justify-center gap-1.5 flex-wrap">
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <Image src="/flag-ireland.svg" alt="" width={16} height={11} className="rounded-sm" />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                IE legal
-              </span>
-            </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <ShieldCheck className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                Safe picks
-              </span>
-            </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <Clock className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                Fast cash-out
-              </span>
-            </div>
+        </div>
+
+        {/* Tablet */}
+        <div className="hidden md:block lg:hidden text-center space-y-4">
+          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.35em]" style={{ color: GOLD }}>
+            elitebettingsiteslistuk.com
+          </p>
+          <h1 className="font-serif font-bold text-2xl md:text-3xl leading-tight" style={{ color: IVORY }}>
+            Britain&apos;s Finest Betting Sites{" "}
+            <span style={{ color: GOLD }}>Ranked</span>
+          </h1>
+          <p className="text-xs font-sans max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(245,240,232,0.7)" }}>
+            Premier UK bookmakers compared side by side. Verify terms on each operator before you bet.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <button
+              type="button"
+              onClick={onAdvertiserModalOpen}
+              className={pillClass}
+              style={{ borderColor: "rgba(201,168,76,0.4)", color: "rgba(245,240,232,0.7)" }}
+            >
+              Advertiser Disclosure
+            </button>
+            <button
+              type="button"
+              onClick={onTermsModalOpen}
+              className={pillClass}
+              style={{ borderColor: "rgba(201,168,76,0.4)", color: "rgba(245,240,232,0.7)" }}
+            >
+              18+ Rules
+            </button>
           </div>
-          <ModalTriggers compact mobileCalm />
+          <p className="text-[10px] font-sans" style={{ color: "rgba(245,240,232,0.35)" }}>
+            18+ · Responsible Gambling
+          </p>
+        </div>
+
+        {/* Mobile */}
+        <div className="md:hidden text-center space-y-3">
+          <p className="text-[8px] font-sans font-bold uppercase tracking-[0.3em]" style={{ color: GOLD }}>
+            elitebettingsiteslistuk.com
+          </p>
+          <h1 className="font-serif font-bold text-xl leading-tight" style={{ color: IVORY }}>
+            Britain&apos;s Finest Betting Sites
+          </h1>
+          <p className="text-[11px] font-sans leading-snug" style={{ color: "rgba(245,240,232,0.65)" }}>
+            Premier UK operators ranked by our editorial team.
+          </p>
+          <div className="flex justify-center gap-1.5 flex-wrap">
+            <button
+              type="button"
+              onClick={onAdvertiserModalOpen}
+              className="border px-2.5 py-1 text-[8px] font-sans font-semibold uppercase tracking-wider"
+              style={{ borderColor: "rgba(201,168,76,0.4)", color: "rgba(245,240,232,0.6)" }}
+            >
+              Disclosure
+            </button>
+            <button
+              type="button"
+              onClick={onTermsModalOpen}
+              className="border px-2.5 py-1 text-[8px] font-sans font-semibold uppercase tracking-wider"
+              style={{ borderColor: "rgba(201,168,76,0.4)", color: "rgba(245,240,232,0.6)" }}
+            >
+              18+ Rules
+            </button>
+          </div>
         </div>
       </div>
-    </>
+
+      {/* Gold bottom rule */}
+      <div className="h-px" style={{ background: "rgba(201,168,76,0.3)" }} />
+    </div>
   )
 }

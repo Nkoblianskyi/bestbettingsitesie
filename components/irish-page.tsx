@@ -18,15 +18,14 @@ export default function IrishPage() {
   return (
     <>
       <MainLayout>
-        <HeroSection
-          onAdvertiserModalOpen={() => setIsAdvertiserModalOpen(true)}
-          onTermsModalOpen={() => setIsTermsModalOpen(true)}
-        />
-
-        {/* Sites List */}
-        <SitesList />
-
-        <InfoSections />
+        <div className="py-4 sm:py-6">
+          <HeroSection
+            onAdvertiserModalOpen={() => setIsAdvertiserModalOpen(true)}
+            onTermsModalOpen={() => setIsTermsModalOpen(true)}
+          />
+          <SitesList />
+          <InfoSections />
+        </div>
       </MainLayout>
 
       <Modal bettingSites={bettingSites} casinoSites={[]} />

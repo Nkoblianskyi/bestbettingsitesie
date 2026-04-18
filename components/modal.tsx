@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, Star, Sparkles } from "lucide-react"
+import { X, Star } from "lucide-react"
 import Link from "next/link"
 import type { BettingSite } from "../types"
 
@@ -9,6 +9,11 @@ interface Top3ModalProps {
   bettingSites: BettingSite[]
   casinoSites: BettingSite[]
 }
+
+const GOLD = "#C9A84C"
+const NAVY = "#0D1B2A"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
 
 function ModalSiteCard({
   site,
@@ -21,88 +26,90 @@ function ModalSiteCard({
   compact: boolean
   rankLabel: string
 }) {
-  const w = compact ? (isCenter ? "w-[200px]" : "w-[168px]") : isCenter ? "w-[300px] xl:w-[340px]" : "w-[220px] xl:w-[252px]"
+  const wClass = compact
+    ? isCenter ? "w-[190px]" : "w-[162px]"
+    : isCenter ? "w-[280px] xl:w-[320px]" : "w-[210px] xl:w-[245px]"
 
   return (
     <div
-      className={`relative flex flex-col shrink-0 ${w} min-h-0 transition-transform duration-300 ${isCenter ? "z-20 scale-[1.02] xl:scale-105" : "z-10 opacity-95 hover:opacity-100"}`}
+      className={`relative flex flex-col shrink-0 ${wClass} transition-transform duration-200 ${
+        isCenter ? "z-20 scale-[1.03]" : "z-10 opacity-90 hover:opacity-100"
+      }`}
     >
+      {/* Rank label */}
       <div
-        className={`absolute -inset-0.5 rounded-[2rem] opacity-40 ${isCenter ? "bg-emerald-900/30" : "bg-slate-600/20"}`}
-        aria-hidden
-      />
-
-        <div
-          className={`relative flex flex-col flex-1 min-h-0 overflow-hidden rounded-[1.35rem] xl:rounded-[1.75rem] border-2 bg-slate-950 shadow-xl ${
-            isCenter
-              ? "border-emerald-700 ring-1 ring-emerald-800/50"
-              : "border-slate-600/80 ring-1 ring-white/5"
-          }`}
+        className="h-7 flex items-center justify-center text-[10px] font-sans font-bold uppercase tracking-[0.2em] border-t border-l border-r"
+        style={{
+          backgroundColor: isCenter ? GOLD : "rgba(201,168,76,0.1)",
+          color: isCenter ? NAVY : GOLD,
+          borderColor: isCenter ? GOLD : "rgba(201,168,76,0.3)",
+        }}
       >
+        {rankLabel}
+      </div>
+
+      {/* Card body */}
+      <div
+        className="flex flex-col flex-1 border"
+        style={{
+          backgroundColor: NAVY_CARD,
+          borderColor: isCenter ? GOLD : "rgba(201,168,76,0.3)",
+        }}
+      >
+        {/* Logo */}
         <div
-          className={`absolute -top-px left-1/2 -translate-x-1/2 flex items-center justify-center gap-1 px-3 py-1 rounded-b-xl font-black text-[10px] xl:text-xs shadow-md whitespace-nowrap ${
-            isCenter ? "bg-emerald-700 text-white" : "bg-slate-700 text-white"
-          }`}
+          className={`flex items-center justify-center bg-white ${compact ? "h-16 mx-3 mt-3" : "h-20 xl:h-24 mx-3 mt-4"}`}
         >
-          {rankLabel}
-        </div>
-        <div className="h-6 xl:h-7" aria-hidden />
-
-        <div className={`mx-3 mt-1 flex justify-center ${compact ? "mb-2" : "mb-3"}`}>
-          <div
-            className={`flex items-center justify-center rounded-2xl bg-white shadow-inner border border-slate-200/90 ${compact ? "h-14 w-[90%] px-2" : "h-[4.5rem] xl:h-[5.25rem] w-[88%] px-3"}`}
-          >
-            <img
-              src={site?.logo || "/placeholder.svg"}
-              alt={site?.name || "Site"}
-              className={`max-h-full w-auto object-contain ${compact ? "max-h-10" : "max-h-14 xl:max-h-16"}`}
-            />
-          </div>
+          <img
+            src={site?.logo || "/placeholder.svg"}
+            alt={site?.name || ""}
+            className={`object-contain ${compact ? "max-h-11" : "max-h-14 xl:max-h-16"}`}
+          />
         </div>
 
-        <div
-          className={`flex flex-col flex-1 min-h-0 text-center px-3 ${compact ? "pb-2 pt-1" : "pb-3 pt-2"} bg-gradient-to-b from-slate-900 via-slate-950 to-emerald-950/50`}
-        >
-          <div className={`flex justify-center gap-0.5 shrink-0 ${compact ? "mb-1.5" : "mb-2"}`}>
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`${compact ? "w-2.5 h-2.5" : "w-3.5 h-3.5 xl:w-4 xl:h-4"} fill-amber-400 text-amber-400`}
-              />
-            ))}
-          </div>
+        {/* Stars */}
+        <div className={`flex justify-center gap-0.5 ${compact ? "mt-2.5" : "mt-3"}`}>
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className={compact ? "w-2.5 h-2.5" : "w-3.5 h-3.5 xl:w-4 xl:h-4"} style={{ fill: GOLD, color: GOLD }} />
+          ))}
+        </div>
 
-          <div className={`flex-1 min-h-0 flex flex-col justify-center space-y-0.5 ${compact ? "mb-2" : "mb-3"}`}>
-            <p className={`font-extrabold text-white leading-tight ${compact ? "text-sm" : "text-base xl:text-lg"}`}>
-              {site?.bonus}
-            </p>
-            <p className={`font-bold text-emerald-200/95 ${compact ? "text-xs" : "text-sm xl:text-base"}`}>
-              {site?.welcomeOffer ?? site?.bonus}
-            </p>
-          </div>
-
-          <Link
-            href={site?.link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`block w-full font-bold text-center transition-colors hover:bg-emerald-600 active:scale-[0.98] bg-emerald-700 hover:shadow-md text-white ${
-              compact ? "rounded-lg py-2 text-[10px]" : "rounded-xl py-2.5 xl:py-3 text-xs xl:text-sm"
-            }`}
-          >
-            GET BONUS
-          </Link>
-
+        {/* Bonus */}
+        <div className={`flex flex-col flex-1 text-center ${compact ? "px-3 py-2" : "px-4 py-3"}`}>
           <p
-            className={`mt-2 text-slate-400 leading-snug line-clamp-4 ${compact ? "text-[9px]" : "text-[10px] xl:text-xs"}`}
+            className={`font-serif font-bold leading-tight ${compact ? "text-sm" : "text-base xl:text-lg"}`}
+            style={{ color: IVORY }}
           >
-            {site?.terms ?? ""}
+            {site?.bonus}
+          </p>
+          <p
+            className={`font-sans ${compact ? "text-[10px] mt-0.5" : "text-xs mt-1"}`}
+            style={{ color: "rgba(201,168,76,0.7)" }}
+          >
+            {site?.welcomeOffer ?? site?.bonus}
           </p>
         </div>
 
-        <div
-          className={`h-1 w-full ${isCenter ? "bg-emerald-800" : "bg-slate-700"}`}
-          aria-hidden
-        />
+        {/* CTA */}
+        <Link
+          href={site?.link || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`block w-full font-sans font-bold text-center transition-opacity hover:opacity-85 ${
+            compact ? "py-2 text-[10px] mx-3 mb-3 w-[calc(100%-1.5rem)]" : "py-3 text-xs xl:text-sm mx-3 mb-4 w-[calc(100%-1.5rem)]"
+          }`}
+          style={{ backgroundColor: GOLD, color: NAVY }}
+        >
+          CLAIM OFFER
+        </Link>
+
+        {/* Terms */}
+        <p
+          className={`px-3 pb-3 text-center leading-snug line-clamp-3 ${compact ? "text-[8px]" : "text-[9px] xl:text-[10px]"}`}
+          style={{ color: "rgba(245,240,232,0.35)" }}
+        >
+          {site?.terms ?? ""}
+        </p>
       </div>
     </div>
   )
@@ -118,59 +125,75 @@ export function Modal({ bettingSites, casinoSites: _casinoSites }: Top3ModalProp
 
   if (!isOpen) return null
 
-  const top3Sites = bettingSites.slice(0, 3)
-  const reorderedSites = [top3Sites[1], top3Sites[0], top3Sites[2]]
-  const labels = ["#2", "#1", "#3"]
+  const top3 = bettingSites.slice(0, 3)
+  const reordered = [top3[1], top3[0], top3[2]]
+  const labels = ["#2 Pick", "#1 Pick", "#3 Pick"]
 
   return (
-    <div className="hidden md:flex fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-3 sm:p-4">
+    <div
+      className="hidden md:flex fixed inset-0 z-50 items-center justify-center p-4"
+      style={{ backgroundColor: "rgba(13,27,42,0.92)", backdropFilter: "blur(6px)" }}
+    >
+      {/* Close */}
       <button
         type="button"
         onClick={() => setIsOpen(false)}
-        className="absolute top-3 right-3 sm:top-5 sm:right-5 z-[60] flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-800 shadow-lg hover:bg-slate-100 transition-colors border border-slate-200"
+        className="absolute top-5 right-5 z-[60] flex h-10 w-10 items-center justify-center border transition-colors hover:opacity-80"
+        style={{ borderColor: "rgba(201,168,76,0.4)", backgroundColor: NAVY_CARD, color: GOLD }}
         aria-label="Close"
       >
-        <X className="w-6 h-6" />
+        <X className="w-5 h-5" />
       </button>
 
-      <div className="w-full max-w-6xl pt-8">
-        <div className="text-center mb-4 lg:mb-6 px-2">
-          <p className="text-emerald-200/85 text-xs font-bold uppercase tracking-[0.2em] mb-1">bestbettingsitesie</p>
-          <h2 className="text-lg sm:text-xl lg:text-3xl xl:text-4xl font-extrabold text-white tracking-tight">
-            Today&apos;s standout offers
+      <div className="w-full max-w-5xl">
+        {/* Heading */}
+        <div className="text-center mb-6 px-2">
+          <div className="flex items-center gap-4 justify-center mb-3">
+            <div className="h-px w-16 opacity-40" style={{ background: GOLD }} />
+            <p className="text-[9px] font-sans font-bold uppercase tracking-[0.35em]" style={{ color: "rgba(201,168,76,0.7)" }}>
+              elitebettingsiteslistuk.com
+            </p>
+            <div className="h-px w-16 opacity-40" style={{ background: GOLD }} />
+          </div>
+          <h2 className="font-serif font-bold text-2xl lg:text-3xl xl:text-4xl" style={{ color: IVORY }}>
+            Today&apos;s Premier Offers
           </h2>
+          <p className="font-sans text-xs mt-1.5" style={{ color: "rgba(245,240,232,0.45)" }}>
+            Curated for discerning UK punters
+          </p>
         </div>
 
-        <div className="hidden lg:flex items-stretch justify-center gap-2 xl:gap-4 px-2">
-          {reorderedSites.map((site, index) => (
-            <ModalSiteCard
-              key={site?.id ?? index}
-              site={site}
-              isCenter={index === 1}
-              compact={false}
-              rankLabel={index === 1 ? "#1 Pick" : labels[index]}
-            />
+        {/* Cards — desktop */}
+        <div className="hidden lg:flex items-end justify-center gap-3 xl:gap-5 px-2">
+          {reordered.map((site, i) => (
+            <ModalSiteCard key={site?.id ?? i} site={site} isCenter={i === 1} compact={false} rankLabel={labels[i]} />
           ))}
         </div>
 
-        <div className="hidden md:flex lg:hidden items-stretch justify-center gap-1.5 sm:gap-2 px-1">
-          {reorderedSites.map((site, index) => (
-            <ModalSiteCard
-              key={site?.id ?? index}
-              site={site}
-              isCenter={index === 1}
-              compact
-              rankLabel={index === 1 ? "#1" : labels[index]}
-            />
+        {/* Cards — tablet */}
+        <div className="hidden md:flex lg:hidden items-end justify-center gap-2 px-1">
+          {reordered.map((site, i) => (
+            <ModalSiteCard key={site?.id ?? i} site={site} isCenter={i === 1} compact rankLabel={labels[i]} />
           ))}
         </div>
 
-        <p className="text-center mt-6 text-slate-400 text-xs sm:text-sm px-4">
-          18+ · Operator T&amp;Cs apply ·{" "}
-          <a href="https://www.gambleaware.org" className="text-emerald-300 hover:text-emerald-200 underline" target="_blank" rel="noreferrer">
-            BeGambleAware.org
-          </a>
-        </p>
+        {/* Footer */}
+        <div className="flex items-center gap-4 justify-center mt-6">
+          <div className="h-px w-12 opacity-20" style={{ background: GOLD }} />
+          <p className="text-center font-sans text-xs" style={{ color: "rgba(245,240,232,0.4)" }}>
+            18+ · Operator T&amp;Cs apply ·{" "}
+            <a
+              href="https://www.gambleaware.org"
+              className="underline"
+              style={{ color: "rgba(201,168,76,0.6)" }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              BeGambleAware.org
+            </a>
+          </p>
+          <div className="h-px w-12 opacity-20" style={{ background: GOLD }} />
+        </div>
       </div>
     </div>
   )

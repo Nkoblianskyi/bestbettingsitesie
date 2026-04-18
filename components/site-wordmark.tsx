@@ -2,26 +2,20 @@ import { cn } from "@/lib/utils"
 
 type WordmarkVariant = "header-compact" | "header-hero" | "footer"
 
-/** Назва з нормальною капиталізацією */
 export function SiteWordmark({ variant, className }: { variant: WordmarkVariant; className?: string }) {
-  const name = (
-    <>
-      <span className="text-white">Best Betting Sites</span>
-      <span className="text-emerald-400 font-semibold"> IE</span>
-    </>
-  )
-
   return (
     <span
       className={cn(
-        "font-hero-display font-bold tracking-tight text-white",
-        variant === "header-compact" && "text-base sm:text-lg",
-        variant === "header-hero" && "text-xl sm:text-2xl",
-        variant === "footer" && "text-xl sm:text-2xl",
+        "font-serif tracking-tight",
+        variant === "header-compact" && "text-lg sm:text-xl",
+        variant === "header-hero" && "text-2xl sm:text-3xl",
+        variant === "footer" && "text-2xl sm:text-3xl",
         className,
       )}
     >
-      {name}
+      <span className="text-[#F5F0E8] font-bold">Elite Betting</span>
+      <span className="text-[#C9A84C] font-semibold"> Sites</span>
+      <span className="text-[#F5F0E8]/60 font-light text-[0.8em]"> UK</span>
     </span>
   )
 }

@@ -1,111 +1,174 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
-export default function AboutPage() {
+const GOLD = "#C9A84C"
+const NAVY_CARD = "#131E2B"
+const IVORY = "#F5F0E8"
+
+function PageShell({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <Link href="/">
-        <Button variant="ghost" className="text-white hover:bg-white/20 mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Home
-        </Button>
+    <div className="mx-auto max-w-4xl px-4 py-10">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-wider mb-8 transition-opacity hover:opacity-75"
+        style={{ color: "rgba(201,168,76,0.7)" }}
+      >
+        <ArrowLeft className="w-3.5 h-3.5" />
+        Return to Rankings
       </Link>
 
-      <div className="bg-white/95 backdrop-blur-sm rounded-xl p-8 lg:p-12 shadow-xl max-w-4xl mx-auto border border-gray-100">
-        <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 text-center">About bestbettingsitesie</h1>
-        <p className="text-lg text-slate-600 mb-10 text-center max-w-2xl mx-auto">
-          Independent listings for Irish punters who want clarity before they open a wallet with a new bookmaker.
-        </p>
+      <div
+        className="border"
+        style={{ backgroundColor: NAVY_CARD, borderColor: "rgba(201,168,76,0.25)" }}
+      >
+        {/* Gold top bar */}
+        <div className="h-[2px]" style={{ background: GOLD }} />
 
-        <div className="space-y-8 text-gray-700">
-          <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-cyan-50 p-6">
-            <h2 className="text-xl font-bold text-emerald-900 mb-3">Impressum — publisher</h2>
-            <address className="not-italic text-slate-700 space-y-1 text-sm">
-              <p className="font-semibold text-slate-900 text-base">K.C. NTOMATA LIMITED</p>
-              <p>Stylianou Lena, 24 Christiana Court, Flat/Office 202</p>
-              <p>Strovolos</p>
-              <p>Nicosia 2019</p>
-              <p>Cyprus</p>
-            </address>
-            <p className="text-sm text-slate-600 mt-4 leading-relaxed">
-              This website is operated by K.C. NTOMATA LIMITED. We publish informational and comparative content about
-              online bookmakers; we do not accept bets or hold player funds.
+        <div className="px-6 py-8 sm:px-10 sm:py-10">
+          {/* Page heading */}
+          <div className="text-center mb-8 pb-6 border-b" style={{ borderColor: "rgba(201,168,76,0.15)" }}>
+            <p className="text-[9px] font-sans font-bold uppercase tracking-[0.35em] mb-2" style={{ color: "rgba(201,168,76,0.55)" }}>
+              elitebettingsiteslistuk.com
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Why we exist</h2>
-            <p className="leading-relaxed">
-              The market is crowded and every brand shouts the biggest free bet. bestbettingsitesie exists to slow that
-              down: one table, consistent scoring, and plain-language notes so you can compare apples to apples before
-              you click through.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Editorial rules</h2>
-            <p className="leading-relaxed mb-4">
-              Rankings blend odds competitiveness, product breadth, payout experience, and how fairly promos are
-              presented. Commercial partnerships help fund the site but do not let a brand “buy” the #1 slot—if
-              payouts slip or terms turn punitive, the score moves.
-            </p>
-            <div className="bg-slate-50 rounded-lg p-6 border border-slate-100">
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <strong className="text-slate-900">Licensing:</strong> only operators appropriate for IE customers.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Safety:</strong> deposit tools, reality checks, self-exclusion
-                  visibility.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Product:</strong> live betting, builders, streaming where relevant.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Payments:</strong> common Irish rails, speed of cash-out.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Support:</strong> reachable help when something breaks.
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">How we work day to day</h2>
-            <p className="leading-relaxed">
-              Editors open real accounts where possible, walk through KYC, and time withdrawals. We also monitor
-              forums and regulator bulletins. When a book changes a headline offer overnight, we aim to reflect that
-              within the same week.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Money &amp; transparency</h2>
-            <p className="leading-relaxed">
-              Outbound links may carry affiliate tags. That does not change our order of merit. Full commercial
-              disclosure lives in the “Advertiser Disclosure” link on the homepage hero.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Responsible gambling</h2>
-            <p className="leading-relaxed mb-4">
-              Betting should be entertainment with a fixed ceiling. If you are staking to escape stress or chasing
-              losses, step away and use the organisations linked in our site footer—they are free and confidential.
-            </p>
-          </section>
-
-          <div className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-6 text-amber-950">
-            <p className="font-semibold mb-2">18+ only</p>
-            <p className="text-sm">
-              bestbettingsitesie does not accept wagers. All play happens on licensed third-party sites under their
-              terms.
-            </p>
+            <h1 className="font-serif font-bold text-3xl lg:text-4xl" style={{ color: IVORY }}>
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="font-sans text-sm mt-3 max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(245,240,232,0.6)" }}>
+                {subtitle}
+              </p>
+            )}
           </div>
+
+          {children}
         </div>
       </div>
     </div>
+  )
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mb-7">
+      <h2 className="font-serif font-bold text-xl mb-3" style={{ color: IVORY }}>
+        {title}
+      </h2>
+      <div className="font-sans text-sm leading-relaxed space-y-3" style={{ color: "rgba(245,240,232,0.7)" }}>
+        {children}
+      </div>
+    </section>
+  )
+}
+
+export default function AboutPage() {
+  return (
+    <PageShell
+      title="About Us"
+      subtitle="Elite Betting Sites UK is an independent editorial platform dedicated to helping British punters make informed decisions about licensed bookmakers."
+    >
+      <div className="space-y-0">
+        {/* Publisher box */}
+        <div
+          className="border px-5 py-5 mb-8"
+          style={{ borderColor: "rgba(201,168,76,0.3)", backgroundColor: "rgba(201,168,76,0.05)" }}
+        >
+          <h2 className="font-serif font-bold text-lg mb-3" style={{ color: GOLD }}>
+            Publisher — Impressum
+          </h2>
+          <address className="not-italic font-sans text-sm space-y-0.5" style={{ color: "rgba(245,240,232,0.75)" }}>
+            <p className="font-semibold text-base" style={{ color: IVORY }}>K.C. NTOMATA LIMITED</p>
+            <p>Stylianou Lena, 24 Christiana Court, Flat/Office 202</p>
+            <p>Strovolos, Nicosia 2019, Cyprus</p>
+          </address>
+          <p className="font-sans text-xs mt-3 leading-relaxed" style={{ color: "rgba(245,240,232,0.5)" }}>
+            This website is operated by K.C. NTOMATA LIMITED. We publish informational and comparative content about
+            UK-licensed online bookmakers. We do not accept bets, hold player funds, or operate any gambling services.
+          </p>
+        </div>
+
+        <Section title="Why We Exist">
+          <p>
+            The UK sports betting market is crowded, fast-moving, and — for a newcomer — often opaque. Every operator
+            promotes its headline free bet while the fine print shifts week to week. elitebettingsiteslistuk.com exists
+            to cut through that noise: one authoritative table, consistent scoring criteria, and plain-English editorial
+            notes so you can compare operators on equal terms before you open a single account.
+          </p>
+        </Section>
+
+        <div className="h-px my-6" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        <Section title="Our Editorial Standards">
+          <p>
+            Rankings are built on six independent pillars: odds competitiveness on mainstream markets, live coverage
+            depth, platform stability across devices, KYC and withdrawal smoothness, promotional transparency, and
+            customer support quality. Commercial affiliate relationships help fund this publication but do not influence
+            the order of merit — if a brand&apos;s performance declines, the score moves accordingly.
+          </p>
+          <div
+            className="border mt-4 px-5 py-4"
+            style={{ borderColor: "rgba(201,168,76,0.2)", backgroundColor: "rgba(13,27,42,0.5)" }}
+          >
+            <ul className="space-y-2 text-xs" style={{ color: "rgba(245,240,232,0.65)" }}>
+              {[
+                ["Licensing", "Only operators with appropriate UK authorisation are considered."],
+                ["Player Safety", "Deposit limits, reality checks, and self-exclusion must be readily accessible."],
+                ["Product Breadth", "Live betting, bet builders, and streaming are assessed where offered."],
+                ["Payment Rails", "Common UK banking methods and cash-out speed are evaluated."],
+                ["Support Quality", "Availability and responsiveness of help channels are factored in."],
+              ].map(([term, def]) => (
+                <li key={term}>
+                  <strong className="font-semibold" style={{ color: IVORY }}>{term}: </strong>
+                  {def}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+
+        <div className="h-px my-6" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        <Section title="How We Work">
+          <p>
+            Where possible, our editors open real accounts, complete KYC procedures, and time withdrawal journeys
+            first-hand. We also monitor specialist forums, regulator bulletins, and consumer feedback. When an operator
+            alters a headline offer or changes payout terms materially, we aim to reflect that within the same week.
+          </p>
+        </Section>
+
+        <div className="h-px my-6" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        <Section title="Commercial Transparency">
+          <p>
+            Outbound links may carry affiliate identifiers. This arrangement does not alter our ranking methodology.
+            A full disclosure of commercial relationships is available via the Advertiser Disclosure link on the
+            homepage.
+          </p>
+        </Section>
+
+        <div className="h-px my-6" style={{ background: "rgba(201,168,76,0.1)" }} />
+
+        <Section title="Responsible Gambling">
+          <p>
+            Betting should be a leisure activity conducted within pre-set financial limits. If wagering becomes
+            compulsive, feels escapist, or you find yourself chasing losses, we urge you to step away immediately and
+            contact the free, confidential support organisations listed in our site footer.
+          </p>
+        </Section>
+
+        {/* 18+ notice */}
+        <div
+          className="mt-8 border-l-4 px-5 py-5"
+          style={{ borderLeftColor: GOLD, backgroundColor: "rgba(201,168,76,0.06)" }}
+        >
+          <p className="font-sans font-semibold text-sm mb-1.5" style={{ color: GOLD }}>
+            18+ Only
+          </p>
+          <p className="font-sans text-xs leading-relaxed" style={{ color: "rgba(245,240,232,0.6)" }}>
+            elitebettingsiteslistuk.com does not accept wagers. All betting activity takes place on licensed
+            third-party platforms under their own terms and conditions.
+          </p>
+        </div>
+      </div>
+    </PageShell>
   )
 }
