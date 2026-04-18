@@ -36,14 +36,10 @@ export function Header() {
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/20 group-hover:ring-[hsl(var(--gold))]/60 transition-all">
               <Image src="/favicon.ico" alt="" width={28} height={28} className="h-5 w-5 object-contain" />
             </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-display font-bold text-white text-base sm:text-lg leading-tight">
-                Best UK Betting Sites
-              </span>
-              <span className="text-[hsl(var(--gold))] font-display font-semibold text-xs sm:text-sm tracking-wide leading-tight">
-                List
-              </span>
-            </div>
+            <span className="font-display font-bold text-white text-base sm:text-xl leading-none whitespace-nowrap tracking-tight">
+              Best UK Betting{" "}
+              <span className="text-[hsl(var(--gold))]">Sites List</span>
+            </span>
           </Link>
 
           {/* Right side badges */}
