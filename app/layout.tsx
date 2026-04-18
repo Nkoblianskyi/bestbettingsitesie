@@ -13,13 +13,13 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bestbettingsitesie.com"),
-  title: "bestbettingsitesie — Irish bookmaker picks & offers",
+  metadataBase: new URL("https://bestukbettingsiteslist.com"),
+  title: "Best UK Betting Sites List — Expert Rankings & Top Offers 2025",
   description:
-    "bestbettingsitesie.com compares licensed Irish-facing bookmakers: welcome deals, odds quality, and platform notes in one place.",
+    "bestukbettingsiteslist.com compares the top UK-licensed bookmakers: welcome bonuses, odds quality, features and payment methods — all in one place.",
   openGraph: {
-    siteName: "bestbettingsitesie",
-    url: "https://bestbettingsitesie.com",
+    siteName: "bestukbettingsiteslist",
+    url: "https://bestukbettingsiteslist.com",
   },
 }
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={outfit.variable}>
+    <html lang="en-GB" className={`${outfit.variable} bg-slate-950`}>
       <body className={mulish.className}>
         <div
           className="min-h-screen relative"
@@ -41,11 +41,10 @@ export default function RootLayout({
           }}
         >
           <div
-            className="absolute inset-0 z-0 pointer-events-none bg-black/55"
+            className="absolute inset-0 z-0 pointer-events-none bg-black/60"
             aria-hidden
           />
           <div className="relative z-10">
-            {/* Header in layout - will show on all pages */}
             <Header />
             <main>{children}</main>
             <Footer />

@@ -2,12 +2,11 @@ import { cn } from "@/lib/utils"
 
 type WordmarkVariant = "header-compact" | "header-hero" | "footer"
 
-/** Назва з нормальною капиталізацією */
 export function SiteWordmark({ variant, className }: { variant: WordmarkVariant; className?: string }) {
   const name = (
     <>
-      <span className="text-white">Best Betting Sites</span>
-      <span className="text-emerald-400 font-semibold"> IE</span>
+      <span className="text-white">Best UK Betting Sites</span>
+      <span className="text-amber-400 font-semibold"> List</span>
     </>
   )
 

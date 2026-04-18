@@ -1,98 +1,58 @@
 "use client"
 
 import Image from "next/image"
-import { Clock, ShieldCheck } from "lucide-react"
+import { ShieldCheck, Clock, CheckCircle2 } from "lucide-react"
 
 interface HeroSectionProps {
   onAdvertiserModalOpen: () => void
   onTermsModalOpen: () => void
 }
 
-function getRatingsRevisedDate() {
+function getRevisedDate() {
   const d = new Date()
   return {
     iso: d.toISOString().slice(0, 10),
-    label: d.toLocaleDateString("en-IE", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }),
+    label: d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }),
   }
 }
 
-function HeroLegalPill({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`inline-flex items-center gap-2 rounded-full bg-white/12 border border-white/20 px-3 py-1.5 backdrop-blur-sm ${className}`}
-    >
-      <Image src="/flag-ireland.svg" alt="" width={22} height={15} className="rounded-sm shadow-sm shrink-0" />
-      <span className="font-semibold text-white/95 tracking-wide">Licensed for Ireland</span>
-    </div>
-  )
-}
-
-function HeroSecurityPill({ compact }: { compact?: boolean }) {
-  return (
-    <div
-      className={`inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1.5 ${
-        compact ? "py-1 px-2.5" : ""
-      }`}
-    >
-      <div
-        className={`flex shrink-0 items-center justify-center rounded-lg bg-emerald-900/50 border border-emerald-700/50 ${
-          compact ? "h-6 w-6" : "h-7 w-7"
-        }`}
-      >
-        <ShieldCheck
-          className={`text-emerald-200 ${compact ? "h-3.5 w-3.5" : "h-4 w-4"}`}
-          strokeWidth={2.5}
-          aria-hidden
-        />
-      </div>
-      <span className={`font-semibold text-white/95 ${compact ? "text-[10px] leading-tight" : "text-xs"}`}>
-        {compact ? (
-          <>
-            Secure
-            <br />
-            listings
-          </>
-        ) : (
-          "Secure & vetted listings"
-        )}
-      </span>
-    </div>
-  )
-}
-
 export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSectionProps) {
-  const { iso: ratingsRevisedIso, label: revisedLabel } = getRatingsRevisedDate()
+  const { iso, label } = getRevisedDate()
 
-  const ModalTriggers = ({ compact, mobileCalm }: { compact?: boolean; mobileCalm?: boolean }) => (
-    <div
-      className={`flex flex-wrap items-center justify-center gap-2 ${compact ? "mt-1" : "mt-2 md:mt-3"}`}
-    >
+  const pills = [
+    {
+      icon: <Image src="/flag.png" alt="" width={22} height={14} className="rounded-sm shrink-0" />,
+      text: "UK Licensed Only",
+    },
+    {
+      icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-300 shrink-0" strokeWidth={2.5} />,
+      text: "Verified & Vetted",
+    },
+    {
+      icon: <Clock className="w-3.5 h-3.5 text-amber-300 shrink-0" strokeWidth={2.5} />,
+      text: "Fast Withdrawals",
+    },
+    {
+      icon: <CheckCircle2 className="w-3.5 h-3.5 text-blue-300 shrink-0" strokeWidth={2.5} />,
+      text: "UKGC Regulated",
+    },
+  ]
+
+  const DisclosureButtons = () => (
+    <div className="flex flex-wrap items-center gap-2 mt-3">
       <button
         type="button"
         onClick={onAdvertiserModalOpen}
-        className={
-          mobileCalm
-            ? "inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/35 backdrop-blur-sm px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white shadow-sm"
-            : "inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wide text-white/90 hover:bg-white/15 transition-colors"
-        }
+        className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/85 hover:bg-white/15 transition-colors"
       >
-        <span className="hidden sm:inline">ℹ</span>
-        Advertiser disclosure
+        Advertiser Disclosure
       </button>
       <button
         type="button"
         onClick={onTermsModalOpen}
-        className={
-          mobileCalm
-            ? "inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/35 backdrop-blur-sm px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white shadow-sm"
-            : "inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wide text-white/90 hover:bg-white/12 transition-colors"
-        }
+        className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/85 hover:bg-white/12 transition-colors"
       >
-        18+ site rules
+        18+ Rules
       </button>
     </div>
   )
@@ -101,117 +61,132 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
     <>
       {/* Desktop */}
       <div
-        className="hidden lg:block relative overflow-hidden text-white mb-3 w-full min-h-[280px] lg:min-h-[300px] rounded-2xl border border-white/10"
-        style={{ background: "rgba(0, 0, 0, 0.70)" }}
+        className="hidden lg:block relative overflow-hidden text-white mb-4 w-full rounded-2xl border border-white/10 shadow-2xl"
+        style={{ background: "rgba(2, 8, 23, 0.82)" }}
       >
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-6 xl:gap-10 px-6 xl:px-10 py-6 xl:py-8 items-center">
-          <div className="text-left space-y-4">
-            <div>
-              <p className="text-emerald-200/80 text-xs font-bold uppercase tracking-[0.25em] mb-2">bestbettingsitesie</p>
-              <h1 className="font-hero-display text-3xl xl:text-[2.35rem] 2xl:text-[2.6rem] font-extrabold leading-[1.1] tracking-tight">
-                Irish bookmakers,
-                <br />
-                <span className="text-white">ranked for you</span>
-              </h1>
-              <p className="mt-3 text-xs text-white/55 font-medium">
-                Ratings last revised: <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
-              </p>
-            </div>
-            <ModalTriggers />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-transparent to-blue-950/30 pointer-events-none" />
+        <div className="relative z-10 grid lg:grid-cols-[1.1fr_1fr] gap-8 xl:gap-12 px-8 xl:px-12 py-8 xl:py-10 items-center">
+          <div className="space-y-4">
+            <p className="text-amber-400/90 text-xs font-bold uppercase tracking-[0.3em]">bestukbettingsiteslist.com</p>
+            <h1 className="font-hero-display text-3xl xl:text-4xl 2xl:text-[2.6rem] font-extrabold leading-[1.08] tracking-tight text-balance">
+              Top UK Betting Sites,
+              <br />
+              <span className="text-amber-400">Ranked by Experts</span>
+            </h1>
+            <p className="text-xs text-white/50 font-medium">
+              Last updated: <time dateTime={iso}>{label}</time>
+            </p>
+            <DisclosureButtons />
           </div>
 
-          <div className="space-y-4 text-left border-l border-white/10 pl-6 xl:pl-8">
-            <p className="text-sm xl:text-[0.95rem] text-white/88 leading-relaxed">
-              We line up Ireland-facing operators so you can judge welcome value, app quality, and cash-out speed in one
-              glance—without wading through ten homepages.
+          <div className="space-y-4 border-l border-white/10 pl-8 xl:pl-12">
+            <p className="text-sm xl:text-base text-white/85 leading-relaxed">
+              We independently review every major UK bookmaker so you can compare welcome bonuses, betting markets,
+              cash-out speed and app quality — all without visiting a dozen different sites.
             </p>
-            <p className="text-xs xl:text-sm text-white/65 leading-relaxed">
-              Bonuses shift weekly; figures here are a snapshot. Always read the bookmaker’s own T&amp;Cs before you
-              deposit. 18+ only.
+            <p className="text-xs text-white/55 leading-relaxed">
+              Bonuses and terms change frequently. Always read the operator&apos;s own T&Cs before depositing. All listed
+              operators hold valid UKGC licences. 18+ only.
             </p>
-            <div className="flex flex-wrap gap-3 pt-1">
-              <HeroLegalPill />
-              <HeroSecurityPill />
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1.5">
-                <Clock className="w-4 h-4 text-emerald-200/90 shrink-0" />
-                <span className="text-xs font-semibold text-white/90">Fast withdrawals</span>
-              </div>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {pills.map((p) => (
+                <div
+                  key={p.text}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/8 border border-white/15 px-3 py-1.5"
+                >
+                  {p.icon}
+                  <span className="text-xs font-semibold text-white/90">{p.text}</span>
+                </div>
+              ))}
             </div>
-            <p className="text-[11px] text-white/45 pt-1">Play responsibly. Wagering and operator T&amp;Cs apply.</p>
+            <p className="text-[11px] text-white/35 pt-1">Gambling involves risk. Play responsibly. BeGambleAware.org</p>
           </div>
         </div>
       </div>
 
       {/* Tablet */}
       <div
-        className="hidden md:block lg:hidden relative overflow-hidden text-white mb-2 w-full rounded-xl border border-white/10"
-        style={{ background: "rgba(0, 0, 0, 0.70)" }}
+        className="hidden md:block lg:hidden relative overflow-hidden text-white mb-3 w-full rounded-xl border border-white/10"
+        style={{ background: "rgba(2, 8, 23, 0.82)" }}
       >
-        <div className="px-5 py-4 text-center">
-          <p className="text-emerald-200/80 text-[10px] font-bold uppercase tracking-widest mb-1">bestbettingsitesie</p>
+        <div className="px-6 py-5 text-center">
+          <p className="text-amber-400/85 text-[10px] font-bold uppercase tracking-widest mb-1">bestukbettingsiteslist.com</p>
           <h1 className="font-hero-display text-2xl md:text-3xl font-extrabold leading-tight">
-            Irish bookmakers, <span className="text-white">ranked</span>
+            Top UK Betting Sites, <span className="text-amber-400">Ranked</span>
           </h1>
-          <p className="text-[11px] text-white/50 mt-1.5 mb-3">
-            Ratings revised <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
+          <p className="text-[11px] text-white/45 mt-1.5 mb-3">
+            Updated <time dateTime={iso}>{label}</time>
           </p>
-          <p className="text-xs text-white/80 max-w-xl mx-auto leading-snug mb-3">
-            Side-by-side picks for IE players. Check each brand’s live rules before you bet.
+          <p className="text-xs text-white/75 max-w-lg mx-auto leading-snug mb-4">
+            Expert-reviewed UK bookmakers. Check each operator&apos;s live T&Cs before you place a bet.
           </p>
-          <div className="flex flex-wrap justify-center gap-2 mb-3 items-center">
-            <HeroLegalPill className="py-1" />
-            <HeroSecurityPill compact />
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 border border-white/15">
-              <Clock className="w-3.5 h-3.5 text-emerald-200/90" />
-              <span className="text-[11px] font-semibold">Quick payouts</span>
-            </div>
+          <div className="flex flex-wrap justify-center gap-2 mb-3">
+            {pills.map((p) => (
+              <div key={p.text} className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-2.5 py-1">
+                {p.icon}
+                <span className="text-[11px] font-semibold text-white/90">{p.text}</span>
+              </div>
+            ))}
           </div>
-          <ModalTriggers />
-          <p className="text-[10px] text-white/40 mt-2">18+ · Responsible play</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <button
+              type="button"
+              onClick={onAdvertiserModalOpen}
+              className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/85 hover:bg-white/15 transition-colors"
+            >
+              Advertiser Disclosure
+            </button>
+            <button
+              type="button"
+              onClick={onTermsModalOpen}
+              className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white/85 transition-colors"
+            >
+              18+ Rules
+            </button>
+          </div>
+          <p className="text-[10px] text-white/35 mt-3">18+ · Responsible gambling</p>
         </div>
       </div>
 
-      {/* Mobile — 50% чорний оверлей; блок без зайвої висоти між рядами */}
+      {/* Mobile */}
       <div
-        className="md:hidden relative overflow-hidden text-white rounded-xl mb-2 w-full border border-white/10 shadow-md"
-        style={{
-          backgroundImage: "url(/bg-7.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="md:hidden relative overflow-hidden text-white rounded-xl mb-3 w-full border border-white/10 shadow-lg"
+        style={{ background: "rgba(2, 8, 23, 0.88)" }}
       >
-        <div className="absolute inset-0 rounded-xl bg-black/50" aria-hidden />
-        <div className="relative z-10 px-3 py-2.5 flex flex-col gap-2">
-          <div className="text-center space-y-0.5">
-            <h1 className="font-hero-display text-lg font-extrabold leading-snug text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.9),0_0_12px_rgba(0,0,0,0.5)]">
-              Irish bookies, ranked
+        <div className="relative z-10 px-4 py-4 flex flex-col gap-2.5">
+          <div className="text-center">
+            <p className="text-amber-400/80 text-[9px] font-bold uppercase tracking-[0.25em] mb-0.5">bestukbettingsiteslist.com</p>
+            <h1 className="font-hero-display text-xl font-extrabold leading-tight text-white">
+              Top UK Betting Sites, <span className="text-amber-400">Ranked</span>
             </h1>
-            <p className="text-[10px] font-medium text-white/90 leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]">
-              Revised{" "}
-              <time dateTime={ratingsRevisedIso}>{revisedLabel}</time>
+            <p className="text-[10px] text-white/50 mt-0.5">
+              Updated <time dateTime={iso}>{label}</time>
             </p>
           </div>
-          <div className="flex justify-center gap-1.5 flex-wrap">
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <Image src="/flag-ireland.svg" alt="" width={16} height={11} className="rounded-sm" />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                IE legal
-              </span>
-            </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <ShieldCheck className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                Safe picks
-              </span>
-            </div>
-            <div className="inline-flex items-center gap-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 px-2 py-0.5">
-              <Clock className="w-3 h-3 text-white shrink-0 drop-shadow-md" strokeWidth={2.25} aria-hidden />
-              <span className="text-[9px] font-semibold uppercase tracking-wide text-white [text-shadow:0_1px_2px_black]">
-                Fast cash-out
-              </span>
-            </div>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {pills.map((p) => (
+              <div key={p.text} className="inline-flex items-center gap-1 rounded-full bg-white/10 border border-white/20 px-2 py-1">
+                {p.icon}
+                <span className="text-[9px] font-semibold text-white/90">{p.text}</span>
+              </div>
+            ))}
           </div>
-          <ModalTriggers compact mobileCalm />
+          <div className="flex flex-wrap justify-center gap-1.5">
+            <button
+              type="button"
+              onClick={onAdvertiserModalOpen}
+              className="inline-flex items-center rounded-full border border-white/25 bg-black/30 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white"
+            >
+              Advertiser Disclosure
+            </button>
+            <button
+              type="button"
+              onClick={onTermsModalOpen}
+              className="inline-flex items-center rounded-full border border-white/25 bg-black/30 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-white"
+            >
+              18+ Rules
+            </button>
+          </div>
         </div>
       </div>
     </>

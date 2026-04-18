@@ -1,107 +1,103 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <Link href="/">
-        <Button variant="ghost" className="text-white hover:bg-white/20 mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Home
-        </Button>
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white mb-6 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to home
       </Link>
 
-      <div className="bg-white/95 backdrop-blur-sm rounded-xl p-8 lg:p-12 shadow-xl max-w-4xl mx-auto border border-gray-100">
-        <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 text-center">About bestbettingsitesie</h1>
-        <p className="text-lg text-slate-600 mb-10 text-center max-w-2xl mx-auto">
-          Independent listings for Irish punters who want clarity before they open a wallet with a new bookmaker.
+      <div className="bg-white/97 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-2xl max-w-4xl mx-auto border border-slate-100">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3 text-center">
+          About bestukbettingsiteslist.com
+        </h1>
+        <p className="text-slate-500 text-base mb-10 text-center max-w-xl mx-auto leading-relaxed">
+          Straightforward, independently compiled rankings of UK-licensed bookmakers — built for punters who want
+          clarity before opening a new account.
         </p>
 
-        <div className="space-y-8 text-gray-700">
-          <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-cyan-50 p-6">
-            <h2 className="text-xl font-bold text-emerald-900 mb-3">Impressum — publisher</h2>
-            <address className="not-italic text-slate-700 space-y-1 text-sm">
+        <div className="space-y-8 text-slate-700">
+          <section className="rounded-xl border border-amber-200 bg-amber-50 p-6">
+            <h2 className="text-lg font-bold text-amber-900 mb-3">Impressum — Publisher</h2>
+            <address className="not-italic text-slate-700 space-y-0.5 text-sm">
               <p className="font-semibold text-slate-900 text-base">K.C. NTOMATA LIMITED</p>
               <p>Stylianou Lena, 24 Christiana Court, Flat/Office 202</p>
-              <p>Strovolos</p>
-              <p>Nicosia 2019</p>
-              <p>Cyprus</p>
+              <p>Strovolos, Nicosia 2019, Cyprus</p>
             </address>
             <p className="text-sm text-slate-600 mt-4 leading-relaxed">
               This website is operated by K.C. NTOMATA LIMITED. We publish informational and comparative content about
-              online bookmakers; we do not accept bets or hold player funds.
+              UK bookmakers licensed by the UK Gambling Commission. We do not accept bets, hold player funds, or act as
+              a gambling operator in any capacity.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Why we exist</h2>
-            <p className="leading-relaxed">
-              The market is crowded and every brand shouts the biggest free bet. bestbettingsitesie exists to slow that
-              down: one table, consistent scoring, and plain-language notes so you can compare apples to apples before
-              you click through.
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Why this site exists</h2>
+            <p className="leading-relaxed text-sm">
+              The UK betting market is competitive and every brand leads with its biggest welcome offer. We built
+              bestukbettingsiteslist.com to slow that noise down: one ranked table, consistent scoring across
+              bookmakers, and plain-English notes so you can compare product quality — not just bonus headlines —
+              before you click through.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Editorial rules</h2>
-            <p className="leading-relaxed mb-4">
-              Rankings blend odds competitiveness, product breadth, payout experience, and how fairly promos are
-              presented. Commercial partnerships help fund the site but do not let a brand “buy” the #1 slot—if
-              payouts slip or terms turn punitive, the score moves.
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Editorial standards</h2>
+            <p className="leading-relaxed text-sm mb-4">
+              Rankings are built on a multi-factor scoring model that covers odds competitiveness, live-betting depth,
+              app quality, withdrawal speed, and promotional transparency. Affiliate revenue helps fund the editorial
+              work but does not purchase rank positions — if a bookmaker&apos;s product quality declines, its score
+              moves down.
             </p>
-            <div className="bg-slate-50 rounded-lg p-6 border border-slate-100">
+            <div className="rounded-xl bg-slate-50 border border-slate-100 p-5">
               <ul className="space-y-2 text-sm">
-                <li>
-                  <strong className="text-slate-900">Licensing:</strong> only operators appropriate for IE customers.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Safety:</strong> deposit tools, reality checks, self-exclusion
-                  visibility.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Product:</strong> live betting, builders, streaming where relevant.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Payments:</strong> common Irish rails, speed of cash-out.
-                </li>
-                <li>
-                  <strong className="text-slate-900">Support:</strong> reachable help when something breaks.
-                </li>
+                <li><strong className="text-slate-900">Licensing:</strong> Only UKGC-licensed operators are considered.</li>
+                <li><strong className="text-slate-900">Responsible gambling:</strong> Deposit tools, session limits, and self-exclusion must be clearly accessible.</li>
+                <li><strong className="text-slate-900">Product:</strong> Live betting, bet builders, streaming, and acca tools are evaluated.</li>
+                <li><strong className="text-slate-900">Payments:</strong> Commonly available UK payment rails and realistic cash-out timelines.</li>
+                <li><strong className="text-slate-900">Support:</strong> Responsive customer service when issues arise.</li>
               </ul>
             </div>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">How we work day to day</h2>
-            <p className="leading-relaxed">
-              Editors open real accounts where possible, walk through KYC, and time withdrawals. We also monitor
-              forums and regulator bulletins. When a book changes a headline offer overnight, we aim to reflect that
-              within the same week.
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Our review process</h2>
+            <p className="leading-relaxed text-sm">
+              Our editors open real accounts, complete full KYC, make deposits via common UK payment methods, and time
+              the withdrawal process. We also test bet builders, live-betting interfaces, and streaming access on both
+              desktop and mobile. Offers and features are cross-referenced against regulator bulletins and user forums
+              on a rolling basis.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Money &amp; transparency</h2>
-            <p className="leading-relaxed">
-              Outbound links may carry affiliate tags. That does not change our order of merit. Full commercial
-              disclosure lives in the “Advertiser Disclosure” link on the homepage hero.
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Commercial transparency</h2>
+            <p className="leading-relaxed text-sm">
+              Outbound links to bookmakers may include affiliate identifiers. This generates revenue that funds the
+              site. Full disclosure is available via the &quot;Advertiser Disclosure&quot; button on the homepage. Our
+              order of merit is determined by editorial scoring, not commercial arrangements.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">Responsible gambling</h2>
-            <p className="leading-relaxed mb-4">
-              Betting should be entertainment with a fixed ceiling. If you are staking to escape stress or chasing
-              losses, step away and use the organisations linked in our site footer—they are free and confidential.
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Responsible gambling commitment</h2>
+            <p className="leading-relaxed text-sm">
+              Gambling should be entertainment with a fixed, affordable ceiling. If you are chasing losses, gambling to
+              relieve stress, or losing track of time and money spent, please contact one of the support organisations
+              linked in our site footer. They are free, confidential, and available around the clock.
             </p>
           </section>
 
-          <div className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-6 text-amber-950">
-            <p className="font-semibold mb-2">18+ only</p>
-            <p className="text-sm">
-              bestbettingsitesie does not accept wagers. All play happens on licensed third-party sites under their
-              terms.
+          <div className="rounded-xl border-l-4 border-amber-500 bg-amber-50 p-5 text-amber-950">
+            <p className="font-semibold mb-1 text-sm">18+ only</p>
+            <p className="text-sm leading-relaxed">
+              bestukbettingsiteslist.com does not accept wagers. All gambling activity takes place on fully licensed
+              third-party platforms subject to their own terms and conditions.
             </p>
           </div>
         </div>

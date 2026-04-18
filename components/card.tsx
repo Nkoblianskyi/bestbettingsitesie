@@ -1,10 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
-import { Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Star, ChevronDown, ChevronUp, ExternalLink } from "lucide-react"
 import type { BettingSite } from "../types"
 import Link from "next/link"
 
@@ -13,85 +11,99 @@ interface SiteCardProps {
   rank: number
 }
 
+const BADGE: Record<number, { label: string; color: string }> = {
+  1: { label: "Editor's Choice", color: "bg-amber-500 text-white" },
+  2: { label: "Top Rated", color: "bg-blue-700 text-white" },
+  3: { label: "Best Value", color: "bg-emerald-700 text-white" },
+}
+
 export function Card({ site, rank }: SiteCardProps) {
   const [isTermsExpanded, setIsTermsExpanded] = useState(false)
-  const [showReadMore, setShowReadMore] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const termsContainerRef = useRef<HTMLDivElement>(null)
-
-  const isEvenRank = rank % 2 === 0
-  const cardBgColor = isEvenRank ? "bg-gray-50" : "bg-white"
-  const cardTint = isEvenRank
-    ? "from-slate-50 via-white to-slate-100/80"
-    : "from-white via-slate-50 to-slate-100/60"
+  const termsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
   }, [])
 
-  const termsText = site.terms ?? ""
   const welcomeOffer = site.welcomeOffer ?? site.bonus
-  useEffect(() => {
-    const limit = isMobile ? 72 : 350
-    setShowReadMore(termsText.length > limit)
-  }, [termsText, site.name, isMobile])
+  const termsText = site.terms ?? ""
 
-  const formatVotes = (votes: number) => votes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  // score 0–10 → зірки 0–5; заповнення з кроком 0.2
+  const formatVotes = (n: number) => n.toLocaleString("en-GB")
+
+  // score 0–10 → stars 0–5
   const starRating = site.score / 2
-  const getStarFill = (index: number) => {
-    const raw = Math.max(0, Math.min(1, starRating - index))
-    return Math.round(raw * 5) / 5
-  }
-  const starOutlineClass = "fill-none stroke-amber-500 stroke-[1.5]"
-  const starFillClass = "fill-amber-500 stroke-amber-500 stroke-0"
+  const getStarFill = (i: number) => Math.round(Math.max(0, Math.min(1, starRating - i)) * 5) / 5
 
-  const handleTermsClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsTermsExpanded(!isTermsExpanded)
-  }
+  const badge = BADGE[rank]
 
-  const shouldShowSpecialBadge = rank === 1 || rank === 2 || rank === 4 || rank === 7
-  const getSpecialBadgeText = () => {
-    if (rank === 1) return "TOP BRAND"
-    if (rank === 2) return "EXCLUSIVE OFFER"
-    if (rank === 4) return "TRENDING"
-    if (rank === 7) return "TOP GROWTH"
-    return ""
-  }
-  const getSpecialBadgeTextShort = () => {
-    if (rank === 1) return "TOP BRAND"
-    if (rank === 2) return "EXCLUSIVE"
-    if (rank === 4) return "TRENDING"
-    if (rank === 7) return "GROWTH"
-    return ""
-  }
-
-  const TermsBlock = ({ className = "", mobile = false }: { className?: string; mobile?: boolean }) => (
+  const ScoreCircle = ({ size = "lg" }: { size?: "sm" | "lg" }) => (
     <div
-      className={`border-t border-slate-200 bg-slate-100/95 ${mobile ? "px-2 py-1" : "px-2 py-1.5 sm:px-2.5 sm:py-2"} ${className}`}
-      ref={termsContainerRef}
+      className={`rounded-full bg-slate-900 border-2 border-amber-400 flex flex-col items-center justify-center shrink-0 ${
+        size === "lg" ? "w-16 h-16" : "w-12 h-12"
+      }`}
     >
-      <div className="text-center max-w-4xl mx-auto">
-        <p className="text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Terms</p>
-        <div
-          className={`text-slate-600 leading-tight ${mobile ? "text-[9px] sm:text-[10px]" : "text-[10px] sm:text-xs"} ${
-            !isTermsExpanded ? (mobile ? "line-clamp-1" : "line-clamp-2") : ""
+      <span className={`font-black text-white leading-none ${size === "lg" ? "text-2xl" : "text-lg"}`}>
+        {site.score.toFixed(1)}
+      </span>
+      <span className={`font-semibold text-amber-400 uppercase tracking-wider ${size === "lg" ? "text-[8px]" : "text-[7px]"}`}>
+        Rating
+      </span>
+    </div>
+  )
+
+  const Stars = ({ starSize = 14 }: { starSize?: number }) => (
+    <div className="flex gap-0.5">
+      {[...Array(5)].map((_, i) => {
+        const fill = getStarFill(i)
+        return (
+          <span
+            key={i}
+            className="relative inline-block shrink-0 text-amber-400"
+            style={{ width: starSize, height: starSize }}
+          >
+            <Star
+              className="absolute inset-0 fill-none stroke-amber-400"
+              style={{ width: starSize, height: starSize, strokeWidth: 1.5 }}
+            />
+            <Star
+              className="absolute inset-0 fill-amber-400 stroke-0"
+              style={{
+                width: starSize,
+                height: starSize,
+                clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)`,
+              }}
+            />
+          </span>
+        )
+      })}
+    </div>
+  )
+
+  const TermsRow = ({ mobile = false }: { mobile?: boolean }) => (
+    <div
+      ref={termsRef}
+      className={`border-t border-slate-200 bg-slate-50 ${mobile ? "px-3 py-2" : "px-4 py-2"}`}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <p
+          className={`text-slate-500 leading-snug flex-1 ${mobile ? "text-[9px]" : "text-[10px]"} ${
+            !isTermsExpanded ? "line-clamp-1" : ""
           }`}
         >
+          <span className="font-bold text-slate-600 uppercase tracking-wider mr-1">T&Cs:</span>
           {termsText}
-        </div>
-        {showReadMore && (
+        </p>
+        {termsText.length > 80 && (
           <button
             type="button"
-            onClick={handleTermsClick}
-            className="text-emerald-800 hover:text-emerald-950 underline mt-0.5 text-[10px] sm:text-xs font-semibold"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsTermsExpanded(!isTermsExpanded) }}
+            className="shrink-0 text-slate-400 hover:text-slate-600 transition-colors"
           >
-            {isTermsExpanded ? "Less" : "Full terms"}
+            {isTermsExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
         )}
       </div>
@@ -99,228 +111,169 @@ export function Card({ site, rank }: SiteCardProps) {
   )
 
   return (
-    <div className="block">
+    <div className="w-full">
       {/* ——— Desktop ——— */}
-      <div className="hidden lg:block rounded-2xl overflow-hidden shadow-md border border-slate-200 hover:shadow-lg transition-shadow duration-300">
-        <div className={`flex bg-gradient-to-br ${cardTint}`}>
-          <div className="w-[4.5rem] xl:w-[5.25rem] shrink-0 bg-emerald-900 flex flex-col items-center justify-center text-white relative py-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">Rank</span>
-            <span className="text-3xl xl:text-4xl font-black leading-none mt-0.5">{rank}</span>
-            {shouldShowSpecialBadge && (
-              <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[7px] font-bold uppercase tracking-tighter bg-white/20 px-1.5 py-0.5 rounded-md whitespace-nowrap max-w-[4rem] text-center leading-tight">
-                {getSpecialBadgeTextShort()}
+      <div className="hidden lg:flex flex-col rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white hover:shadow-xl transition-shadow duration-200">
+        <div className="flex items-stretch min-h-[100px]">
+          {/* Rank */}
+          <div className="w-16 shrink-0 bg-slate-900 flex flex-col items-center justify-center gap-1 py-4">
+            <span className="text-[9px] font-semibold uppercase tracking-widest text-slate-400">Rank</span>
+            <span className="text-4xl font-black text-white leading-none">{rank}</span>
+            {badge && (
+              <span className={`mt-1 text-[7px] font-bold uppercase px-1.5 py-0.5 rounded whitespace-nowrap ${badge.color}`}>
+                {badge.label}
               </span>
             )}
           </div>
 
-          <Link
-            href={site.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 min-w-0 flex items-stretch py-3 pl-4 pr-5 gap-4 xl:gap-5 group/cell"
-          >
-            <div className="flex-[0_0_26%] xl:flex-[0_0_28%] flex items-center justify-center rounded-2xl bg-white border border-slate-200 shadow-inner px-3 py-2 group-hover/cell:border-slate-300 transition-colors">
-              <img
-                src={site.logo || "/placeholder.svg"}
-                alt={site.name}
-                className="max-h-[5.5rem] xl:max-h-[6rem] w-full object-contain"
-              />
-            </div>
+          {/* Logo */}
+          <div className="w-[200px] shrink-0 flex items-center justify-center bg-slate-50 border-r border-slate-200 px-4 py-3">
+            <img
+              src={site.logo || "/placeholder.svg"}
+              alt={site.name}
+              className="max-h-[60px] max-w-full object-contain"
+            />
+          </div>
 
-            <div className="flex-1 min-w-0 flex flex-col justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-2.5 text-center group-hover/cell:border-slate-400 transition-colors">
-              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-600 mb-1">Offer</p>
-              <p className="text-base xl:text-lg font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-              <p className="text-base xl:text-lg font-extrabold text-slate-800 leading-tight">{welcomeOffer}</p>
-            </div>
+          {/* Offer */}
+          <div className="flex-1 flex flex-col items-center justify-center px-6 py-4 border-r border-slate-100">
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">Welcome Offer</p>
+            <p className="text-xl font-extrabold text-slate-900 text-center leading-tight">{site.bonus}</p>
+            <p className="text-sm font-semibold text-emerald-700 mt-0.5">{welcomeOffer}</p>
+          </div>
 
-            <div className="flex-[0_0_18%] flex flex-col items-center justify-center gap-1">
-              <div
-                className="w-[4.25rem] h-[4.25rem] xl:w-[4.75rem] xl:h-[4.75rem] rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center ring-2 ring-slate-200"
-                aria-hidden
-              >
-                <span className="text-2xl xl:text-3xl font-black leading-none">{site.score.toFixed(1)}</span>
-                <span className="text-[8px] font-semibold uppercase text-emerald-200">score</span>
-              </div>
-              <div className="flex gap-0.5 justify-center">
-                {[...Array(5)].map((_, i) => {
-                  const fill = getStarFill(i)
-                  return (
-                    <span key={i} className="relative inline-block w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0 text-amber-500">
-                      <Star className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starOutlineClass}`} />
-                      <Star
-                        className={`absolute inset-0 w-3.5 h-3.5 xl:w-4 xl:h-4 ${starFillClass}`}
-                        style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
-                      />
-                    </span>
-                  )
-                })}
-              </div>
-              <span className="text-[9px] text-slate-500 font-medium">{formatVotes(site.reviews)} votes</span>
-            </div>
-
-            <div className="flex-[0_0_14%] flex flex-col items-center justify-center gap-2 min-w-[7rem]">
-              <span className="w-full rounded-lg bg-emerald-700 group-hover/cell:bg-emerald-800 text-white font-bold text-xs xl:text-sm py-3.5 xl:py-4 text-center transition-colors">
-                GET BONUS
+          {/* Features */}
+          <div className="w-[200px] shrink-0 flex flex-col justify-center gap-1 px-4 py-4 border-r border-slate-100">
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-0.5">Features</p>
+            {site.features.slice(0, 3).map((f) => (
+              <span key={f} className="flex items-center gap-1.5 text-xs text-slate-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                {f}
               </span>
-              <span className="text-[10px] text-slate-600 font-medium group-hover/cell:underline">{site.name} →</span>
-            </div>
-          </Link>
+            ))}
+          </div>
+
+          {/* Score + CTA */}
+          <div className="w-[160px] shrink-0 flex flex-col items-center justify-center gap-2 px-4 py-4">
+            <ScoreCircle />
+            <Stars />
+            <span className="text-[9px] text-slate-400">{formatVotes(site.reviews)} reviews</span>
+            <Link
+              href={site.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full mt-1 flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm py-2.5 transition-colors"
+            >
+              Claim Offer
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
-        <TermsBlock />
+        <TermsRow />
       </div>
 
       {/* ——— Tablet ——— */}
-      <div
-        className={`hidden md:block lg:hidden rounded-2xl overflow-hidden shadow-md border border-slate-200/90 bg-gradient-to-br ${cardTint} hover:shadow-lg transition-shadow`}
-      >
-        <div className="flex items-stretch min-h-[148px]">
-          <div className="w-14 shrink-0 bg-emerald-900 flex flex-col items-center justify-center text-white py-2">
-            <span className="text-[8px] opacity-80 uppercase">#</span>
-            <span className="text-2xl font-black">{rank}</span>
+      <div className="hidden md:flex lg:hidden flex-col rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white hover:shadow-lg transition-shadow">
+        <div className="flex items-stretch min-h-[90px]">
+          {/* Rank */}
+          <div className="w-12 shrink-0 bg-slate-900 flex flex-col items-center justify-center py-3">
+            <span className="text-[8px] text-slate-400 uppercase">Rank</span>
+            <span className="text-2xl font-black text-white">{rank}</span>
           </div>
-          <Link
-            href={site.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-stretch min-w-0 group/tab"
-          >
-            <div className="flex-[0_0_32%] flex items-center justify-center p-3 border-r border-slate-200/60 bg-white/50">
-              <img
-                src={site.logo || "/placeholder.svg"}
-                alt={site.name}
-                className="max-h-[4.5rem] w-full object-contain"
-              />
-            </div>
-            <div className="flex-1 min-w-0 flex flex-col justify-center px-3 py-2 gap-2">
-              {shouldShowSpecialBadge && (
-                <span className="self-start text-[9px] font-bold uppercase bg-slate-700 text-white px-2 py-0.5 rounded-full">
-                  {getSpecialBadgeTextShort()}
-                </span>
-              )}
-              <div className="rounded-xl bg-slate-50 border border-slate-200 px-2 py-1.5 text-center">
-                <p className="text-[9px] uppercase text-slate-600 font-bold tracking-wide">Bonus</p>
-                <p className="text-sm font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
-                <p className="text-sm font-extrabold text-slate-800">{welcomeOffer}</p>
-              </div>
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-11 h-11 rounded-full bg-emerald-800 text-white flex flex-col items-center justify-center shrink-0">
-                    <span className="text-sm font-black leading-none">{site.score.toFixed(1)}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => {
-                        const fill = getStarFill(i)
-                        return (
-                          <span key={i} className="relative inline-block w-3 h-3 shrink-0 text-amber-500">
-                            <Star className={`absolute inset-0 w-3 h-3 ${starOutlineClass}`} />
-                            <Star
-                              className={`absolute inset-0 w-3 h-3 ${starFillClass}`}
-                              style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
-                            />
-                          </span>
-                        )
-                      })}
-                    </div>
-                    <span className="text-[9px] text-slate-500">{formatVotes(site.reviews)}</span>
-                  </div>
-                </div>
-                <span className="rounded-lg shrink-0 px-5 py-3 text-xs font-bold bg-emerald-700 text-white group-hover/tab:bg-emerald-800 transition-colors">
-                  BONUS
-                </span>
-              </div>
-            </div>
-          </Link>
+
+          {/* Logo */}
+          <div className="w-[150px] shrink-0 flex items-center justify-center bg-slate-50 border-r border-slate-200 px-3 py-3">
+            <img
+              src={site.logo || "/placeholder.svg"}
+              alt={site.name}
+              className="max-h-[50px] max-w-full object-contain"
+            />
+          </div>
+
+          {/* Offer */}
+          <div className="flex-1 flex flex-col justify-center px-4 py-3 border-r border-slate-100">
+            {badge && (
+              <span className={`self-start text-[8px] font-bold uppercase px-1.5 py-0.5 rounded mb-1 ${badge.color}`}>
+                {badge.label}
+              </span>
+            )}
+            <p className="text-sm font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
+            <p className="text-xs font-semibold text-emerald-700">{welcomeOffer}</p>
+          </div>
+
+          {/* Score + CTA */}
+          <div className="w-[130px] shrink-0 flex flex-col items-center justify-center gap-1.5 px-3 py-3">
+            <ScoreCircle size="sm" />
+            <Stars starSize={12} />
+            <Link
+              href={site.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-2 transition-colors"
+            >
+              Claim
+              <ExternalLink className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
-        <TermsBlock />
+        <TermsRow />
       </div>
 
       {/* ——— Mobile ——— */}
-      <div
-        className={`md:hidden rounded-lg border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] ${cardBgColor} ${
-          shouldShowSpecialBadge ? "mt-5" : "mt-2"
-        }`}
-      >
-        {shouldShowSpecialBadge && (
-          <div className="flex justify-center -mt-3 mb-1 relative z-30 px-2">
-            <span className="max-w-[min(100%,15rem)] truncate rounded-full bg-blue-700 px-3 py-1 text-[9px] font-bold uppercase tracking-wide text-white shadow-md ring-2 ring-white">
-              {getSpecialBadgeText()}
-            </span>
-          </div>
-        )}
-
-        <Link
-          href={site.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block relative overflow-hidden rounded-t-lg"
-        >
-          <div
-            className={`absolute left-2.5 z-20 flex size-8 items-center justify-center rounded-full border-2 border-emerald-800 bg-white text-[13px] font-black tabular-nums leading-none text-emerald-900 shadow-sm ring-1 ring-slate-200/80 ${
-              shouldShowSpecialBadge ? "top-2" : "top-2.5"
-            }`}
-            aria-label={`Rank ${rank}`}
-          >
-            {rank}
+      <div className="md:hidden rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white hover:shadow-lg transition-shadow">
+        <div className="flex items-stretch">
+          {/* Rank stripe */}
+          <div className="w-10 shrink-0 bg-slate-900 flex flex-col items-center justify-center py-4">
+            {badge && (
+              <span
+                className={`writing-mode-vertical text-[7px] font-bold uppercase mb-2 px-1 py-1 rounded ${badge.color}`}
+                style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)" }}
+              >
+                {badge.label}
+              </span>
+            )}
+            <span className="text-2xl font-black text-white leading-none">{rank}</span>
           </div>
 
-          <div className={`grid grid-cols-[1fr_1fr] h-[175px] ${shouldShowSpecialBadge ? "pt-0.5" : ""}`}>
-            <div className="bg-[rgb(242,242,242)] flex flex-col justify-between items-center py-2 px-2">
-              <div className="flex-1 flex items-center justify-center min-h-0">
+          <div className="flex-1 min-w-0 flex flex-col">
+            {/* Top row: logo + offer */}
+            <div className="flex items-center gap-3 px-3 pt-3 pb-2">
+              <div className="w-[90px] shrink-0 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-lg p-2 h-[50px]">
                 <img
                   src={site.logo || "/placeholder.svg"}
                   alt={site.name}
-                  className="h-16 w-auto max-w-full object-contain"
+                  className="max-h-[34px] max-w-full object-contain"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-1 w-full shrink-0">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex gap-0.5 mb-1">
-                    {[...Array(5)].map((_, i) => {
-                      const fill = getStarFill(i)
-                      return (
-                        <span key={i} className="relative inline-block w-4 h-4 shrink-0 text-amber-500">
-                          <Star className={`absolute inset-0 w-4 h-4 ${starOutlineClass}`} />
-                          <Star
-                            className={`absolute inset-0 w-4 h-4 ${starFillClass}`}
-                            style={{ clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}
-                          />
-                        </span>
-                      )
-                    })}
-                  </div>
-                  <div className="text-[12px] text-black text-center leading-tight">
-                    Rate it
-                    <br />({formatVotes(site.reviews)})
-                  </div>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div
-                    className="text-3xl font-bold leading-none text-slate-800"
-                  >
-                    {site.score.toFixed(1)}
-                  </div>
-                  <div className="text-[10px] text-black font-bold mt-1">Our Score</div>
-                </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-400">Welcome Offer</p>
+                <p className="text-base font-extrabold text-slate-900 leading-tight">{site.bonus}</p>
+                <p className="text-xs font-semibold text-emerald-700">{welcomeOffer}</p>
               </div>
             </div>
 
-            <div className="flex flex-col justify-between py-2 px-2 min-w-0">
-              <div className="text-center flex-1 flex flex-col justify-center min-h-0">
-                <div className="text-[10px] text-black uppercase font-normal mb-1">WELCOME BONUS</div>
-                <div className="text-lg font-bold text-gray-900 leading-tight mb-1 break-words">{site.bonus}</div>
-                <div className="text-lg font-bold text-gray-900 leading-tight break-words">{welcomeOffer}</div>
+            {/* Bottom row: score + stars + CTA */}
+            <div className="flex items-center justify-between gap-2 px-3 pb-3">
+              <div className="flex items-center gap-2">
+                <ScoreCircle size="sm" />
+                <div className="flex flex-col gap-0.5">
+                  <Stars starSize={13} />
+                  <span className="text-[9px] text-slate-400">{formatVotes(site.reviews)} reviews</span>
+                </div>
               </div>
-              <div className="flex justify-center mt-2 shrink-0">
-                <Button className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-md text-sm transition-colors w-full">
-                  GET BONUS
-                </Button>
-              </div>
+              <Link
+                href={site.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 flex items-center gap-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-4 py-2.5 transition-colors"
+              >
+                Claim
+                <ExternalLink className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
-        </Link>
-
-        <TermsBlock mobile className="rounded-b-lg" />
+        </div>
+        <TermsRow mobile />
       </div>
     </div>
   )

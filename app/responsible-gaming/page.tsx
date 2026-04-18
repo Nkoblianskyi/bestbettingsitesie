@@ -1,236 +1,172 @@
 import Link from "next/link"
-import { ArrowLeft, Shield, Clock, AlertTriangle, Phone, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ArrowLeft, ShieldCheck, AlertTriangle, Phone, Globe, Clock, Ban } from "lucide-react"
 
 export default function ResponsibleGamingPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Link href="/">
-        <Button variant="ghost" className="text-white hover:bg-white/20 mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Button>
+    <div className="container mx-auto px-4 py-8 max-w-5xl">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white mb-6 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to home
       </Link>
 
-      <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 lg:p-12 shadow-lg max-w-4xl mx-auto">
-        <div className="prose prose-lg max-w-none">
-          <div className="text-center mb-8">
-            <Shield className="w-16 h-16 text-emerald-600 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Safer betting</h1>
-            <p className="text-xl text-gray-700 font-medium">bestbettingsitesie backs play that stays inside your limits</p>
+      <div className="bg-white/97 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-2xl max-w-4xl mx-auto border border-slate-100">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 mb-4">
+            <ShieldCheck className="w-8 h-8 text-emerald-700" />
           </div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3">
+            Safer Gambling
+          </h1>
+          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+            bestukbettingsiteslist.com is committed to promoting responsible gambling for all UK users.
+          </p>
+        </div>
 
-          <div className="bg-red-50 border-l-4 border-red-400 p-6 mb-8">
-            <div className="flex items-center mb-3">
-              <AlertTriangle className="w-6 h-6 text-red-600 mr-3" />
-              <h2 className="text-red-800 font-bold text-xl mb-0">Important Notice</h2>
-            </div>
-            <p className="text-red-700 mb-2">
-              Gambling should always remain fun and entertaining. If betting stops being enjoyable or begins to cause
-              problems in your life, it's time to seek help.
+        {/* Emergency strip */}
+        <div className="rounded-xl bg-red-50 border border-red-200 p-5 mb-8 flex gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div>
+            <p className="font-bold text-red-800 mb-1 text-sm">If gambling is causing you harm right now</p>
+            <p className="text-red-700 text-sm leading-relaxed">
+              Call the <strong>National Gambling Helpline: 0808 8020 133</strong> — free, confidential, and open 24
+              hours a day, 7 days a week. You are never alone.
             </p>
-            <p className="text-red-700 font-semibold">Remember: You are never alone, and help is always available.</p>
           </div>
+        </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Gambling Responsibly</h2>
-          <p className="text-gray-700 leading-relaxed mb-6">
-            Responsible gambling means enjoying betting as a form of entertainment while maintaining control over your
-            time and money. It involves understanding the risks, setting limits, and knowing when to stop.
-          </p>
+        <div className="space-y-8 text-slate-700">
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-3">What responsible gambling means</h2>
+            <p className="text-sm leading-relaxed">
+              Responsible gambling means treating betting as a paid form of entertainment — like a cinema trip or a
+              round of golf — with a fixed budget and a clear limit. It means understanding that the house edge ensures
+              losses over the long run, and that short-term wins do not change that mathematical reality.
+            </p>
+          </section>
 
-          <h3 className="text-xl font-semibold text-gray-900 mb-3">Key Principles of Responsible Gambling</h3>
-          <div className="grid md:grid-cols-2 gap-4 mb-8">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Set Time Limits</h4>
-              <p className="text-blue-800 text-sm">
-                Decide how much time you'll spend gambling before you start, and stick to it.
-              </p>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Core principles</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: <Clock className="w-4 h-4 text-blue-600" />, title: "Set time limits", body: "Decide how long you will spend before you open a site. Use session timers on the bookmaker's settings page." },
+                { icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />, title: "Set deposit limits", body: "Use daily, weekly, and monthly deposit caps available on every UKGC-licensed site — they take effect immediately." },
+                { icon: <Ban className="w-4 h-4 text-red-500" />, title: "Never chase losses", body: "Accept that a losing session is the cost of entertainment. Increasing stakes to recover losses leads to larger losses." },
+                { icon: <Globe className="w-4 h-4 text-amber-600" />, title: "Gamble only with spare funds", body: "Never use money earmarked for rent, bills, food, or other essentials. Never borrow to bet." },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl bg-slate-50 border border-slate-100 p-4">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    {item.icon}
+                    <h3 className="font-semibold text-slate-900 text-sm">{item.title}</h3>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">{item.body}</p>
+                </div>
+              ))}
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Set Money Limits</h4>
-              <p className="text-blue-800 text-sm">
-                Only gamble with money you can afford to lose. Never borrow money to gamble.
-              </p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Take Regular Breaks</h4>
-              <p className="text-blue-800 text-sm">
-                Step away from gambling regularly to maintain perspective and control.
-              </p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Don't Chase Losses</h4>
-              <p className="text-blue-800 text-sm">
-                Accept losses as part of the entertainment cost. Never try to win back what you've lost.
-              </p>
-            </div>
-          </div>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Warning Signs</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            It's important to recognize when gambling might be becoming a problem. Watch out for these warning signs:
-          </p>
-          <ul className="text-gray-700 space-y-2 mb-6">
-            <li>• Spending more time or money gambling than you intended</li>
-            <li>• Feeling anxious, depressed, or guilty about your gambling</li>
-            <li>• Lying to family or friends about your gambling activities</li>
-            <li>• Borrowing money or selling possessions to fund gambling</li>
-            <li>• Neglecting work, family, or other responsibilities</li>
-            <li>• Thinking about gambling constantly</li>
-            <li>• Feeling the need to bet more money to get the same excitement</li>
-            <li>• Being unable to stop or reduce your gambling</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Self-Help Tools</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Most reputable gambling sites offer tools to help you maintain control:
-          </p>
-          <div className="bg-green-50 p-6 rounded-lg mb-6">
-            <ul className="text-green-800 space-y-2">
-              <li>
-                <strong>Deposit Limits:</strong> Set daily, weekly, or monthly limits on how much you can deposit
-              </li>
-              <li>
-                <strong>Loss Limits:</strong> Set limits on how much you can lose in a specific time period
-              </li>
-              <li>
-                <strong>Session Time Limits:</strong> Set limits on how long you can play in one session
-              </li>
-              <li>
-                <strong>Reality Checks:</strong> Receive regular reminders about how long you've been playing
-              </li>
-              <li>
-                <strong>Self-Exclusion:</strong> Temporarily or permanently block yourself from gambling sites
-              </li>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Warning signs</h2>
+            <p className="text-sm leading-relaxed mb-3">
+              It is worth periodically asking yourself whether any of the following apply:
+            </p>
+            <ul className="space-y-1.5 text-sm pl-4 list-disc">
+              {[
+                "You are spending more time or money on gambling than you intended",
+                "You feel anxious, irritable, or depressed when not gambling",
+                "You hide your gambling activity from family or friends",
+                "You have borrowed money or sold possessions to fund gambling",
+                "Gambling is affecting your work, relationships, or daily responsibilities",
+                "You find it difficult or impossible to stop when you decide to",
+                "You are gambling to escape problems, stress, or negative emotions",
+                "You need to bet larger amounts to feel the same excitement",
+              ].map((sign) => (
+                <li key={sign}>{sign}</li>
+              ))}
             </ul>
-          </div>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Getting Help</h2>
-          <p className="text-gray-700 leading-relaxed mb-6">
-            If you're concerned about your gambling or that of someone you know, help is available. These organizations
-            provide free, confidential support:
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <Globe className="w-6 h-6 text-blue-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">GambleAware</h3>
-              </div>
-              <p className="text-gray-700 text-sm mb-3">
-                Leading charity providing information, advice, and support for anyone affected by gambling problems.
-              </p>
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <strong>Website:</strong> www.gambleaware.org
-                </p>
-                <p className="text-sm">
-                  <strong>Helpline:</strong> 0808 8020 133
-                </p>
-              </div>
-            </div>
-
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <Phone className="w-6 h-6 text-green-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">GamCare</h3>
-              </div>
-              <p className="text-gray-700 text-sm mb-3">
-                Provides support, information, and advice to anyone suffering from a gambling problem.
-              </p>
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <strong>Website:</strong> www.gamcare.org.uk
-                </p>
-                <p className="text-sm">
-                  <strong>Helpline:</strong> 0808 8020 133
-                </p>
-              </div>
-            </div>
-
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <Shield className="w-6 h-6 text-purple-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">Gamblers Anonymous</h3>
-              </div>
-              <p className="text-gray-700 text-sm mb-3">
-                Fellowship of men and women who share their experience to help solve their gambling problem.
-              </p>
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <strong>Website:</strong> www.gamblersanonymous.org.uk
-                </p>
-                <p className="text-sm">
-                  <strong>Meetings:</strong> Local support groups available
-                </p>
-              </div>
-            </div>
-
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <Clock className="w-6 h-6 text-orange-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">Gordon Moody Association</h3>
-              </div>
-              <p className="text-gray-700 text-sm mb-3">
-                Provides residential treatment and ongoing support for people with gambling addictions.
-              </p>
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <strong>Website:</strong> www.gordonmoody.org.uk
-                </p>
-                <p className="text-sm">
-                  <strong>Helpline:</strong> 01384 241292
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">For Family and Friends</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Gambling problems don't just affect the gambler - they impact families and friends too. If someone you care
-            about has a gambling problem:
-          </p>
-          <ul className="text-gray-700 space-y-2 mb-6">
-            <li>• Don't ignore the problem or hope it will go away</li>
-            <li>• Encourage them to seek professional help</li>
-            <li>• Don't lend them money or pay their gambling debts</li>
-            <li>• Look after your own wellbeing</li>
-            <li>• Consider seeking support for yourself</li>
-          </ul>
-
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8">
-            <h3 className="text-yellow-800 font-bold mb-3">Remember</h3>
-            <p className="text-yellow-700 mb-2">
-              Gambling addiction is a recognized medical condition, not a moral failing or lack of willpower.
+            <p className="text-sm text-slate-500 mt-3">
+              If you recognise two or more of these patterns, please speak to a professional as soon as possible.
             </p>
-            <p className="text-yellow-700">
-              Recovery is possible with the right support and treatment. The first step is acknowledging there's a
-              problem and asking for help.
-            </p>
-          </div>
+          </section>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">What bestbettingsitesie expects from brands</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            We highlight firms that make harm reduction obvious—not buried in PDFs. That usually means:
-          </p>
-          <ul className="text-gray-700 space-y-2 mb-6">
-            <li>• Provide comprehensive responsible gambling tools</li>
-            <li>• Have clear policies for identifying problem gambling</li>
-            <li>• Offer easy access to support resources</li>
-            <li>• Implement strict age verification procedures</li>
-            <li>• Provide transparent terms and conditions</li>
-            <li>• Support responsible gambling organizations</li>
-          </ul>
-
-          <div className="text-center mt-8 p-6 bg-gray-50 rounded-lg">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Need Help Right Now?</h3>
-            <p className="text-gray-700 mb-4">
-              If you or someone you know needs immediate support, don't wait. Help is available 24/7.
-            </p>
-            <div className="space-y-2">
-              <p className="text-lg font-semibold text-green-600">National Gambling Helpline: 0808 8020 133</p>
-              <p className="text-sm text-gray-600">Free, confidential, and available 24 hours a day</p>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Tools available on licensed UK sites</h2>
+            <div className="rounded-xl bg-emerald-50 border border-emerald-100 p-5">
+              <ul className="space-y-2 text-sm text-emerald-900">
+                <li><strong>Deposit limits</strong> — daily, weekly, or monthly caps you set yourself</li>
+                <li><strong>Loss limits</strong> — caps on how much you can lose in a given period</li>
+                <li><strong>Session time reminders</strong> — pop-ups after a set amount of time logged in</li>
+                <li><strong>Reality checks</strong> — periodic summaries of net win/loss during a session</li>
+                <li><strong>Self-exclusion</strong> — temporary or permanent blocks on your account</li>
+                <li><strong>GamStop</strong> — a national self-exclusion scheme covering all UKGC-licensed operators simultaneously</li>
+              </ul>
             </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Support organisations</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                {
+                  icon: <Globe className="w-5 h-5 text-blue-600" />,
+                  name: "GambleAware",
+                  desc: "The leading UK safer-gambling charity — information, advice, and referrals to specialist treatment.",
+                  web: "www.gambleaware.org",
+                  phone: "0808 8020 133",
+                },
+                {
+                  icon: <Phone className="w-5 h-5 text-green-600" />,
+                  name: "GamCare",
+                  desc: "Free support, advice, and counselling for anyone affected by gambling harm.",
+                  web: "www.gamcare.org.uk",
+                  phone: "0808 8020 133",
+                },
+                {
+                  icon: <ShieldCheck className="w-5 h-5 text-purple-600" />,
+                  name: "Gamblers Anonymous",
+                  desc: "Peer-support fellowship meetings across the UK for people with gambling problems.",
+                  web: "www.gamblersanonymous.org.uk",
+                  phone: "020 7384 3040",
+                },
+                {
+                  icon: <Clock className="w-5 h-5 text-orange-600" />,
+                  name: "Gordon Moody",
+                  desc: "Residential treatment programmes and online therapy for severe gambling addiction.",
+                  web: "www.gordonmoody.org.uk",
+                  phone: "01384 241 292",
+                },
+              ].map((org) => (
+                <div key={org.name} className="rounded-xl border border-slate-200 p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    {org.icon}
+                    <h3 className="font-semibold text-slate-900">{org.name}</h3>
+                  </div>
+                  <p className="text-xs text-slate-600 mb-3 leading-relaxed">{org.desc}</p>
+                  <p className="text-xs"><strong className="text-slate-800">Web:</strong> {org.web}</p>
+                  <p className="text-xs"><strong className="text-slate-800">Phone:</strong> {org.phone}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-3">Support for families and friends</h2>
+            <p className="text-sm leading-relaxed">
+              Gambling harm affects more than the individual. If someone close to you has a gambling problem: do not
+              lend them money; encourage them to seek professional help; look after your own wellbeing; and consider
+              contacting GamCare, which also supports affected family members.
+            </p>
+          </section>
+
+          <div className="rounded-xl border-l-4 border-amber-400 bg-amber-50 p-5">
+            <p className="font-semibold text-amber-900 mb-1 text-sm">A note from the editorial team</p>
+            <p className="text-amber-800 text-sm leading-relaxed">
+              Gambling disorder is a recognised medical condition, not a character flaw. Recovery is possible with the
+              right support. The hardest step is acknowledging there is a problem — and you have already taken it by
+              reading this page.
+            </p>
           </div>
         </div>
       </div>
