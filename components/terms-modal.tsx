@@ -12,69 +12,72 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/75 backdrop-blur-md"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="terms-modal-title"
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-amber-950/15 overflow-hidden"
+        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-card rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden border border-border"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0">
-          <div className="w-1.5 bg-gradient-to-b from-amber-400 to-orange-600" aria-hidden />
-          <div className="flex-1 bg-gradient-to-br from-amber-50/90 to-orange-50/30 px-4 pt-5 pb-4 sm:px-6 relative">
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white border border-amber-200/80 text-slate-700 hover:bg-amber-50 transition-colors shadow-sm"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-start gap-3 pr-12">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-lg shadow-amber-500/35">
-                <ShieldAlert className="w-6 h-6" strokeWidth={2} />
-              </div>
-              <div>
-                <h2 id="terms-modal-title" className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Site rules &amp; 18+
-                </h2>
-                <p className="text-xs text-amber-800 font-semibold mt-0.5 uppercase tracking-wider">Terms of use</p>
-              </div>
+        {/* Header */}
+        <div className="bg-[hsl(var(--navy))] px-5 pt-5 pb-4 relative shrink-0">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/15 text-white hover:bg-white/20 transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <div className="flex items-start gap-3 pr-10">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--gold))]">
+              <ShieldAlert className="w-5 h-5 text-[hsl(var(--navy-deep))]" strokeWidth={2} />
+            </div>
+            <div>
+              <h2 id="terms-modal-title" className="font-display text-lg font-extrabold text-white">
+                Site Rules &amp; 18+
+              </h2>
+              <p className="text-[11px] text-[hsl(var(--gold))]/80 font-semibold uppercase tracking-wider">Terms of use</p>
             </div>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 space-y-4 text-slate-700 text-sm leading-relaxed">
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 text-sm text-foreground/75 leading-relaxed">
           <p>
-            Using <strong>bestbettingsitesie.com</strong> means you accept these rules. They apply on phone, tablet,
-            and desktop.
+            Using <strong className="text-foreground">bestukbettingsiteslist.com</strong> means you accept these
+            rules. They apply on phone, tablet, and desktop.
           </p>
-          <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4">
-            <p className="font-bold text-slate-900 mb-1">Age</p>
-            <p>You must be 18 or older. This site discusses gambling; minors should leave.</p>
+          <div className="rounded-xl border border-[hsl(var(--gold))]/30 bg-[hsl(var(--gold))]/8 p-4">
+            <p className="font-bold text-foreground mb-1">Age restriction</p>
+            <p>You must be 18 or older. This site discusses gambling — minors should leave immediately.</p>
           </div>
-          <div>
-            <p className="font-bold text-slate-900 mb-1">Responsible play</p>
-            <ul className="list-disc list-inside space-y-1 text-sm">
+          <div className="rounded-xl border border-border bg-muted/40 p-4">
+            <p className="font-bold text-foreground mb-2">Responsible play</p>
+            <ul className="list-disc list-inside space-y-1">
               <li>Set time and money limits before you bet</li>
               <li>Never chase losses</li>
-              <li>Ask for help early — GambleAware, GamCare, GA</li>
+              <li>Ask for help early — GambleAware (0808 8020 133)</li>
             </ul>
           </div>
           <p>
-            We can’t guarantee offers stay accurate; operators change terms anytime. External sites have their own
-            policies—we’re not responsible for them.
+            We cannot guarantee offers stay accurate — operators change terms at any time. External sites have their
+            own policies; we are not responsible for third-party content.
           </p>
-          <p className="text-xs text-slate-500">
-            No warranty; don’t rely on this site as legal advice. See our full terms page for more.
+          <p className="text-xs text-muted-foreground">
+            No warranty is provided. Do not rely on this site as legal or financial advice. See our full terms page
+            for details.
           </p>
         </div>
 
-        <div className="shrink-0 border-t border-amber-100 bg-gradient-to-r from-amber-600 to-orange-600 text-white px-4 py-3 sm:px-6 sm:rounded-b-3xl">
-          <p className="text-center text-xs sm:text-sm font-bold">18+ · Wagering &amp; T&amp;Cs apply · Play responsibly</p>
+        {/* Footer */}
+        <div className="shrink-0 border-t border-border bg-[hsl(var(--navy))] px-5 py-3">
+          <p className="text-center text-xs font-semibold text-white/60">
+            18+ · T&amp;Cs apply · BeGambleAware.org · Play responsibly
+          </p>
         </div>
       </div>
     </div>

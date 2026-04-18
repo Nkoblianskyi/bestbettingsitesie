@@ -1,15 +1,20 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Lato, Outfit } from "next/font/google"
+import { Inter, Syne } from "next/font/google"
 import "./globals.css"
 import { Footer } from "../components/footer"
 import { Header } from "../components/header"
 
-const mulish = Lato({ subsets: ["latin"], weight: ["400", "700"] })
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
-  variable: "--font-hero-display",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+})
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-syne",
 })
 
 export const metadata: Metadata = {
@@ -29,27 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB" className={`${outfit.variable} bg-slate-950`}>
-      <body className={mulish.className}>
-        <div
-          className="min-h-screen relative"
-          style={{
-            backgroundImage: "url(/bg-8.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div
-            className="absolute inset-0 z-0 pointer-events-none bg-black/60"
-            aria-hidden
-          />
-          <div className="relative z-10">
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </div>
-        </div>
+    <html lang="en-GB" className={`${inter.variable} ${syne.variable} bg-background`}>
+      <body className="font-sans min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )

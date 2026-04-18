@@ -12,76 +12,78 @@ export function AdvertiserDisclosureModal({ isOpen, onClose }: AdvertiserDisclos
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/75 backdrop-blur-md"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="adv-disclosure-title"
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl shadow-cyan-950/20 overflow-hidden sm:mb-0"
+        className="w-full sm:max-w-lg max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-card rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden border border-border"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0">
-          <div className="w-1.5 bg-emerald-800" aria-hidden />
-          <div className="flex-1 bg-gradient-to-br from-slate-50 to-slate-100 px-4 pt-5 pb-4 sm:px-6 relative">
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors shadow-sm"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-start gap-3 pr-12">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-800 text-white shadow-md">
-                <Megaphone className="w-6 h-6" strokeWidth={2} />
-              </div>
-              <div>
-                <h2 id="adv-disclosure-title" className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Advertiser disclosure
-                </h2>
-                <p className="text-xs text-emerald-700 font-semibold mt-0.5 uppercase tracking-wider">How we’re funded</p>
-              </div>
+        {/* Header */}
+        <div className="bg-[hsl(var(--navy))] px-5 pt-5 pb-4 relative shrink-0">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/15 text-white hover:bg-white/20 transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <div className="flex items-start gap-3 pr-10">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--gold))]">
+              <Megaphone className="w-5 h-5 text-[hsl(var(--navy-deep))]" strokeWidth={2} />
+            </div>
+            <div>
+              <h2 id="adv-disclosure-title" className="font-display text-lg font-extrabold text-white">
+                Advertiser Disclosure
+              </h2>
+              <p className="text-[11px] text-[hsl(var(--gold))]/80 font-semibold uppercase tracking-wider">How we are funded</p>
             </div>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 space-y-5 text-slate-700">
-          <section className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Commercial links</h3>
-            <p className="text-sm leading-relaxed">
-              bestbettingsitesie may receive payment when you use outbound links to bookmakers. That income supports
-              hosting and editorial work.
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 text-sm text-foreground/75 leading-relaxed">
+          <div className="rounded-xl border border-border bg-muted/40 p-4">
+            <h3 className="text-sm font-bold text-foreground mb-1.5">Commercial links</h3>
+            <p>
+              bestukbettingsiteslist.com may receive payment when you use outbound links to bookmakers. That income
+              supports hosting and editorial work.
             </p>
-          </section>
-          <section>
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Editorial independence</h3>
-            <p className="text-sm leading-relaxed mb-2">Fees do not buy placement. We order and score brands by:</p>
-            <ul className="text-sm space-y-1.5 list-none">
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-foreground mb-1.5">Editorial independence</h3>
+            <p className="mb-2">Fees do not buy placement. We order and score brands by:</p>
+            <ul className="space-y-1.5">
               {[
-                "Licence fit for Irish customers",
-                "Odds & market depth",
-                "Promo clarity and payout speed",
-                "App stability and support",
+                "UKGC licence and regulatory compliance",
+                "Odds competitiveness and market depth",
+                "Promotional clarity and payout speed",
+                "App stability, mobile UX, and customer support",
               ].map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="text-emerald-700 font-bold">·</span>
+                <li key={item} className="flex gap-2 items-start">
+                  <span className="text-[hsl(var(--gold))] font-bold mt-0.5 shrink-0">·</span>
                   {item}
                 </li>
               ))}
             </ul>
-          </section>
-          <section className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">Your check</h3>
-            <p className="text-sm leading-relaxed">
-              Confirm every offer on the operator’s site. Stake only what you can lose.
+          </div>
+          <div className="rounded-xl border border-[hsl(var(--gold))]/30 bg-[hsl(var(--gold))]/8 p-4">
+            <h3 className="text-sm font-bold text-foreground mb-1.5">Your check</h3>
+            <p>
+              Confirm every offer on the operator&apos;s own site. Stake only what you can afford to lose.
             </p>
-          </section>
+          </div>
         </div>
 
-        <div className="shrink-0 border-t border-emerald-900/50 bg-slate-950 text-white px-4 py-3 sm:px-6 sm:rounded-b-3xl">
-          <p className="text-center text-xs sm:text-sm font-semibold text-emerald-200">18+ · IE audience · Play in control</p>
+        {/* Footer */}
+        <div className="shrink-0 border-t border-border bg-[hsl(var(--navy))] px-5 py-3">
+          <p className="text-center text-xs font-semibold text-white/60">
+            18+ · UK customers only · Play responsibly · BeGambleAware.org
+          </p>
         </div>
       </div>
     </div>
