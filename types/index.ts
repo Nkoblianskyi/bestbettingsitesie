@@ -4,7 +4,6 @@ export interface BettingSite {
   logo: string
   score: number
   bonus: string
-  features: string[]
   paymentMethods: string[]
   link: string
   reviews: number

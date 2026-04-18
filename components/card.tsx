@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Star, ChevronDown, ChevronUp, ExternalLink, Check } from "lucide-react"
+import { Star, ChevronDown, ChevronUp, ExternalLink } from "lucide-react"
 import type { BettingSite } from "../types"
 import Link from "next/link"
 
@@ -102,18 +102,10 @@ export function Card({ site, rank }: SiteCardProps) {
         </div>
 
         {/* 3. Offer column */}
-        <div className="flex flex-col justify-center px-6 py-4 border-r border-border gap-1">
+        <div className="flex flex-col items-center justify-center px-6 py-4 border-r border-border gap-1 text-center">
           <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Welcome Offer</p>
           <p className="font-display text-lg font-extrabold text-foreground leading-tight">{site.bonus}</p>
           <p className="text-sm font-semibold text-emerald-700">{site.welcomeOffer}</p>
-          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1">
-            {site.features.slice(0, 3).map((f) => (
-              <span key={f} className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
-                <Check className="w-3 h-3 text-emerald-600 shrink-0" strokeWidth={2.5} />
-                {f}
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* 4. Score column */}
