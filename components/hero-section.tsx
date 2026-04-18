@@ -25,15 +25,16 @@ export function HeroSection({ onAdvertiserModalOpen, onTermsModalOpen }: HeroSec
   return (
     <div className="w-full mb-6 relative overflow-hidden" style={{ borderBottom: "2px solid #C9A84C" }}>
       {/* Sports background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-sports-bg.jpg')" }}
+      <img
+        src="/hero-sports-bg.jpg"
+        alt=""
         aria-hidden
+        className="absolute inset-0 w-full h-full object-cover object-center"
       />
       {/* Deep navy overlay for legibility */}
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(13,27,42,0.96) 0%, rgba(13,27,42,0.82) 55%, rgba(13,27,42,0.60) 100%)" }}
+        style={{ background: "linear-gradient(to right, rgba(13,27,42,0.97) 0%, rgba(13,27,42,0.88) 50%, rgba(13,27,42,0.55) 100%)" }}
         aria-hidden
       />
       {/* Gold top rule */}
