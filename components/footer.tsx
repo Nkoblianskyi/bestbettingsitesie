@@ -64,23 +64,20 @@ export function Footer() {
             Responsible Gambling
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <Link href="https://gambleaware.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/gamble.webp" alt="GambleAware" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://www.begambleaware.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/gamble-aware.png" alt="BeGambleAware" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamcare.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/gamecare.svg" alt="GamCare" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/gamcare.png" alt="GamCare" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblingtherapy.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/gordon.png" alt="Gordon Moody" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://www.gamblingtherapy.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/gordon.png" alt="Gambling Therapy" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblersanonymous.org/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/anonymos.avif" alt="Gamblers Anonymous" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://www.gamblingcommission.gov.uk/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/Gambling_Commission_logo.png" alt="UK Gambling Commission" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
-            <Link href="https://gamblingcare.ie/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/GamblingCare-w.png" alt="GamblingCare" className="h-8 bg-black rounded px-2 py-1" />
-            </Link>
-            <Link href="https://problemgambling.ie/" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src="/ProblemGambling-w.png" alt="ProblemGambling" className="h-8 rounded bg-white px-2 py-1" />
+            <Link href="https://www.gamstop.co.uk/" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src="/gamstop.svg" alt="GamStop" className="h-8 rounded bg-white px-2 py-1" />
             </Link>
           </div>
         </div>
