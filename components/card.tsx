@@ -64,21 +64,11 @@ export function Card({ site, rank }: SiteCardProps) {
           Terms &amp; Conditions
         </p>
         <div
-          className={`font-sans leading-tight ${mobile ? "text-[9px]" : "text-[10px]"} ${!isTermsExpanded ? "line-clamp-2" : ""}`}
+          className={`font-sans leading-tight line-clamp-1 ${mobile ? "text-[9px]" : "text-[10px]"}`}
           style={{ color: "rgba(245,240,232,0.45)" }}
         >
           {termsText}
         </div>
-        {showReadMore && (
-          <button
-            type="button"
-            onClick={handleTermsClick}
-            className="underline mt-0.5 text-[9px] font-sans font-semibold"
-            style={{ color: GOLD }}
-          >
-            {isTermsExpanded ? "Less" : "Full terms"}
-          </button>
-        )}
       </div>
     </div>
   )
@@ -318,24 +308,21 @@ export function Card({ site, rank }: SiteCardProps) {
                 className="flex flex-col items-center justify-center gap-1 py-2 flex-1"
                 style={{ backgroundColor: NAVY_CARD }}
               >
-                <div
-                  className="w-10 h-10 border-2 flex flex-col items-center justify-center"
-                  style={{ borderColor: GOLD }}
-                >
+                <div className="flex items-center gap-1">
                   <span className="font-serif font-bold text-base leading-none" style={{ color: GOLD }}>
                     {site.score.toFixed(1)}
                   </span>
-                </div>
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => {
-                    const fill = getStarFill(i)
-                    return (
-                      <span key={i} className="relative inline-block w-3 h-3 shrink-0">
-                        <Star className="absolute inset-0 w-3 h-3" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
-                        <Star className="absolute inset-0 w-3 h-3" style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }} />
-                      </span>
-                    )
-                  })}
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => {
+                      const fill = getStarFill(i)
+                      return (
+                        <span key={i} className="relative inline-block w-3 h-3 shrink-0">
+                          <Star className="absolute inset-0 w-3 h-3" style={{ fill: "none", stroke: GOLD, strokeWidth: 1.5 }} />
+                          <Star className="absolute inset-0 w-3 h-3" style={{ fill: GOLD, stroke: GOLD, strokeWidth: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }} />
+                        </span>
+                      )
+                    })}
+                  </div>
                 </div>
                 <span className="text-[9px] font-sans" style={{ color: "rgba(245,240,232,0.4)" }}>
                   ({formatVotes(site.reviews)})
