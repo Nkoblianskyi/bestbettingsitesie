@@ -307,7 +307,7 @@ export function Card({ site, rank }: SiteCardProps) {
               style={{ backgroundColor: "#fff", borderColor: "rgba(201,168,76,0.2)" }}
             >
               <div className="flex items-center justify-center w-full mb-2">
-                <img src={site.logo || "/placeholder.svg"} alt={site.name} className="h-14 w-auto max-w-full object-contain" />
+                <img src={site.logo || "/placeholder.svg"} alt={site.name} className="h-24 w-auto max-w-full object-contain" />
               </div>
               <div className="flex flex-col items-center gap-0.5 w-full">
                 <div className="flex gap-0.5">
@@ -326,29 +326,15 @@ export function Card({ site, rank }: SiteCardProps) {
             </div>
 
             {/* Right: rank + bonus + CTA */}
-            <div className="flex flex-col justify-between py-3 px-3">
+            <div className="flex flex-col items-center justify-between py-3 px-3">
               <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span
-                    className="font-serif font-bold text-lg leading-none"
-                    style={{ color: GOLD }}
-                  >
-                    #{rank}
-                  </span>
-                  <span
-                    className="text-[8px] font-sans uppercase tracking-wider"
-                    style={{ color: "rgba(201,168,76,0.6)" }}
-                  >
-                    Rank
-                  </span>
-                </div>
                 <p className="text-[9px] font-sans uppercase tracking-wider mb-0.5" style={{ color: "rgba(201,168,76,0.5)" }}>
                   Welcome Offer
                 </p>
                 <p className="font-serif font-bold text-base leading-tight" style={{ color: IVORY }}>
                   {site.bonus}
                 </p>
-                <p className="font-sans text-[11px] mt-0.5" style={{ color: "rgba(245,240,232,0.5)" }}>
+                <p className="font-sans text-[13px] mt-0.5" style={{ color: "rgba(245,240,232,0.5)" }}>
                   {welcomeOffer}
                 </p>
               </div>
