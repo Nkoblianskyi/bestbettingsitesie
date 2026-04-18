@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { Modal } from "./modal"
 import { CookieBanner } from "./cookie-banner"
-import { InfoSections } from "./info-sections"
 import { AdvertiserDisclosureModal } from "./advertiser-disclosure-modal"
 import { TermsModal } from "./terms-modal"
 import { bettingSites } from "../data/mock-data"
@@ -24,7 +23,6 @@ export default function IrishPage() {
             onTermsModalOpen={() => setIsTermsModalOpen(true)}
           />
           <SitesList />
-          <InfoSections />
         </div>
       </MainLayout>
 
