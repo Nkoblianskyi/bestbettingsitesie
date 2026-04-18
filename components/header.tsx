@@ -5,29 +5,6 @@ import { ShieldCheck } from "lucide-react"
 export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-[hsl(var(--navy-deep))] shadow-lg">
-      {/* Top bar */}
-      <div className="bg-[hsl(var(--gold))]">
-        <div className="container mx-auto max-w-5xl px-4 xl:max-w-6xl">
-          <div className="flex items-center justify-between py-1.5">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--navy-deep))]">
-              bestukbettingsiteslist.com — Independent UK Betting Reviews
-            </p>
-            <div className="hidden sm:flex items-center gap-3">
-              <span className="text-[10px] font-bold text-[hsl(var(--navy-deep))]">18+ Only</span>
-              <span className="text-[hsl(var(--navy-deep))]/40">|</span>
-              <a
-                href="https://www.begambleaware.org"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[10px] font-bold text-[hsl(var(--navy-deep))] hover:underline"
-              >
-                BeGambleAware.org
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main bar */}
       <div className="container mx-auto max-w-5xl px-4 xl:max-w-6xl">
         <div className="flex items-center justify-between py-3 md:py-4">
