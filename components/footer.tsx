@@ -19,12 +19,13 @@ export function Footer() {
           <p className="text-center text-[10px] font-bold uppercase tracking-widest text-white/40 mb-3">
             Safer Gambling Support
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             {[
-              { href: "https://www.gambleaware.org/", src: "/gamble.webp", alt: "GambleAware" },
-              { href: "https://www.gamcare.org.uk/", src: "/gamecare.svg", alt: "GamCare" },
-              { href: "https://www.gordonmoody.org.uk/", src: "/gordon.png", alt: "Gordon Moody" },
-              { href: "https://www.gamblersanonymous.org.uk/", src: "/anonymos.avif", alt: "Gamblers Anonymous" },
+              { href: "https://www.gamstop.co.uk/", src: "/gamstop.svg", alt: "GamStop" },
+              { href: "https://www.begambleaware.org/", src: "/gamble-aware.png", alt: "BeGambleAware" },
+              { href: "https://www.gamcare.org.uk/", src: "/gamcare.png", alt: "GamCare" },
+              { href: "https://www.gamblingtherapy.org/", src: "/gordon.png", alt: "Gambling Therapy" },
+              { href: "https://www.gamblingcommission.gov.uk/", src: "/Gambling_Commission_logo.png", alt: "UK Gambling Commission" },
             ].map((org) => (
               <Link
                 key={org.alt}
